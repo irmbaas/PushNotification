@@ -6,6 +6,16 @@
         android:label="@string/app_name"
         android:supportsRtl="true">
 
+        <service android:name="ir.mbaas.push.service.MBaaSGcmListenerService" android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+        <service android:name="ir.mbaas.push.service.MBaaSInstanceIDListenerService" android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
