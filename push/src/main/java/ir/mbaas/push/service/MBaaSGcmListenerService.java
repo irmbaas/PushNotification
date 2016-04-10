@@ -17,10 +17,11 @@ public class MBaaSGcmListenerService extends GcmListenerService {
     @Override
     public void onMessageReceived(String from, Bundle data) {
         String message = data.getString("message");
+        String title   = data.getString("title");
         NotificationManager notificationManager= (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_launcher)
-                .setContentTitle("Test")
+                .setContentTitle(title)
                 .setContentText(message);
         notificationManager.notify(1, mBuilder.build());
     }

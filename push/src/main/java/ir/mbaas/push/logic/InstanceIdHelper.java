@@ -24,6 +24,8 @@ import com.google.android.gms.iid.InstanceID;
 
 import java.io.IOException;
 
+import ir.mbaas.push.mbaas.Registration;
+
 public class InstanceIdHelper {
     private String TAG = "InstanceIdHelper";
     private final Context mContext;
@@ -36,17 +38,26 @@ public class InstanceIdHelper {
      * Get a Instance ID authorization Token
      */
     public void getToken(final String senderId, final String scope, final Bundle extras) {
-        new AsyncTask<Void, Void, Void>() {
+        new AsyncTask<Void, Void, String>() {
             @Override
-            protected Void doInBackground(Void... params) {
+            protected String doInBackground(Void... params) {
                 try {
                     InstanceID instanceID = InstanceID.getInstance(mContext);
                     String token = instanceID.getToken(senderId, scope, extras);
                     Log.d(TAG, " senderId: " + senderId + " token: " + token);
+                    return token;
                 } catch (final IOException e) {
                     e.printStackTrace();
                 }
                 return null;
+            }
+
+            @Override
+            protected void onPostExecute(String token) {
+                if (token != null) {
+                    Registration regApi = new Registration(mContext, token);
+                    regApi.execute();
+                }
             }
         }.execute();
     }
