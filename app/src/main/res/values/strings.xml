@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Push Notification</string>
     <string name="app_url">www.mbaas.ir</string>
+
+    <string name="contact_tab_title">تماس با ما</string>
+    <string name="help_tab_title">آموزش</string>
+    <string name="intro_tab_title">معرفی MBaaS</string>
+    <string name="report_tab_title">گزارشات</string>
 </resources>
