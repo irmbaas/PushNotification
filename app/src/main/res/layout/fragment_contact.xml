@@ -1,13 +1,41 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
     tools:context="ir.mbaas.pushnotification.fragment.ContactFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Contact Fragment" />
+    <ir.mbaas.pushnotification.view.MATextView
+        android:id="@+id/tv_email_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/mbaas_email_title" />
+    <ir.mbaas.pushnotification.view.MATextView
+        android:id="@+id/tv_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/tv_email_title"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:text="@string/mbaas_email" />
 
-</FrameLayout>
+    <ir.mbaas.pushnotification.view.MATextView
+        android:id="@+id/tv_tel_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/tv_email_title"
+        android:text="@string/mbaas_tel_title" />
+    <ir.mbaas.pushnotification.view.MATextView
+        android:id="@+id/tv_tel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/tv_tel_title"
+        android:layout_below="@id/tv_email_title"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:text="@string/mbaas_tel" />
+
+</RelativeLayout>
