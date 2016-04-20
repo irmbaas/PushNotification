@@ -15,17 +15,36 @@ import ir.mbaas.push.model.DeviceInfo;
 public class StaticMethods {
 
     public static String getSenderId(Context ctx) {
+        String senderId = "";
+        Bundle bundle = getMetaData(ctx);
+
+        if(bundle == null)
+            return senderId;
+
+        senderId = bundle.getString(ctx.getResources().getString(R.string.push_metadata));
+        return senderId.substring(senderId.lastIndexOf("_") + 1);
+    }
+
+    public static String getAppKey(Context ctx) {
+        String appKey = "";
+        Bundle bundle = getMetaData(ctx);
+
+        if(bundle == null)
+            return appKey;
+
+        appKey = bundle.getString(ctx.getResources().getString(R.string.push_metadata));
+        return appKey.substring(0, appKey.lastIndexOf("_"));
+    }
+
+    public static Bundle getMetaData(Context ctx) {
         try {
-            ApplicationInfo ai = null;
-            ai = ctx.getPackageManager().getApplicationInfo(ctx.getPackageName(),
+            ApplicationInfo ai = ctx.getPackageManager().getApplicationInfo(ctx.getPackageName(),
                     PackageManager.GET_META_DATA);
-            Bundle bundle = ai.metaData;
-            String senderId = bundle.getString(ctx.getResources().getString(R.string.senderid_metadata));;
-            return senderId.substring(senderId.lastIndexOf("_") + 1);
+            return ai.metaData;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
-            return null;
         }
+        return null;
     }
 
     public static DeviceInfo getDeviceInfo(Context ctx) {

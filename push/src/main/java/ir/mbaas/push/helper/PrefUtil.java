@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 public class PrefUtil {
     public static String SESSION_TOKEN    = "session_token";
+    public static String REGISTRATION_ID  = "registration_id";
 
     static public final class Prefs {
         public static SharedPreferences get(Context context) {

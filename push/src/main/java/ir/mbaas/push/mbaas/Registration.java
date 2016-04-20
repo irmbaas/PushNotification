@@ -1,6 +1,9 @@
 package ir.mbaas.push.mbaas;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,10 +24,12 @@ public class Registration extends BaseAsyncRequest {
 
     private Context ctx;
     private String regId;
+    private String appKey;
 
     public Registration(Context ctx, String regId) {
         this.ctx = ctx;
         this.regId = regId;
+        this.appKey = StaticMethods.getAppKey(ctx);
     }
 
     @Override
@@ -33,18 +38,23 @@ public class Registration extends BaseAsyncRequest {
 
         serviceName = AppConstants.GCM_SERVICE;
         endPoint = AppConstants.GCM_REGISTER_API;
-        contentType = "";
+        contentType = "application/json";
         verb = "POST";
 
         DeviceInfo devInfo = StaticMethods.getDeviceInfo(ctx);
 
-        requestBody = new JSONObject();
-        requestBody.put("regid", regId);
-        requestBody.put("IMEI", devInfo.getIMEI());
+        /*requestBody = devInfo.getDeviceInfoJson();
+        requestBody.put("GCMRegId", regId);
+        requestBody.put("AppKey", appKey);
+        requestBody.put("GeoLocation", "TODO");*/
+        requestString = devInfo.getDeviceInfoString();
+        requestString += "&GCMRegId=" + regId;
+        requestString += "&AppKey=" + appKey;
+        requestString += "&GeoLocation=" + "TODO";
 
         // need to include the API key and session token
         applicationApiKey = AppConstants.API_KEY;
-        sessionToken = PrefUtil.getString(ctx, PrefUtil.SESSION_TOKEN);
+        //sessionToken = PrefUtil.getString(ctx, PrefUtil.SESSION_TOKEN);
     }
 
     @Override

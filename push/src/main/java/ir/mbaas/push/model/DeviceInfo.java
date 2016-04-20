@@ -27,14 +27,27 @@ public class DeviceInfo {
     public JSONObject getDeviceInfoJson() {
         JSONObject retObj = new JSONObject();
         try {
+            retObj.put("MbaasUserId", userId);
             retObj.put("IMEI", IMEI);
-            retObj.put("device_info", brand + "," + deviceName + "," + osVersion + "," + sdkVersion);
-            retObj.put("userId", userId);
+            retObj.put("OSName", "Android");
+            retObj.put("OSVersion", osVersion);
+            retObj.put("Manufacture", brand);
+            retObj.put("DeviceModel", deviceName);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         return retObj;
+    }
+
+    public String getDeviceInfoString() {
+        String retVal = "MbaasUserId=" + userId;
+        retVal += "&IMEI=" + IMEI;
+        retVal += "&OSName=" + "Android";
+        retVal += "&OSVersion=" + osVersion;
+        retVal += "&Manufacture=" + brand;
+        retVal += "&DeviceModel=" + deviceName;
+        return retVal;
     }
 
     public String getIMEI() {
