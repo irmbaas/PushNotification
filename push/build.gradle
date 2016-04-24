@@ -40,4 +40,5 @@ dependencies {
     compile 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.6.0-rc3'
     compile 'com.google.android.gms:play-services-gcm:8.4.0'
+    compile 'com.google.android.gms:play-services-location:8.4.0'
 }
