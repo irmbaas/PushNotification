@@ -7,6 +7,7 @@ public interface AppConstants {
 
     String GCM_REGISTER_API  = "";
     String GCM_DELIVER_API   = "deliver";
+    String GCM_LOCATIONS_API = "locations";
 
     String AUTH_SVC = "user";
     String DB_SVC = "db/_table";

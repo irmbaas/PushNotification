@@ -5,37 +5,33 @@ import android.content.Context;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ir.mbaas.push.R;
 import ir.mbaas.push.dfapi.ApiException;
 import ir.mbaas.push.dfapi.BaseAsyncRequest;
 import ir.mbaas.push.helper.AppConstants;
-import ir.mbaas.push.helper.CustomDialogs;
 import ir.mbaas.push.helper.PrefUtil;
-import ir.mbaas.push.helper.StaticMethods;
-import ir.mbaas.push.model.DeviceInfo;
 
 /**
- * Created by Mahdi on 4/20/2016.
+ * Created by Mahdi on 4/25/2016.
  */
-public class Delivery extends BaseAsyncRequest {
+public class GeoLocation extends BaseAsyncRequest {
     private Context ctx;
-    private String pushSendId;
+    private String geoLocations;
 
-    public Delivery(Context ctx, String pushSendId) {
+    public GeoLocation(Context ctx, String geoLocations) {
         this.ctx = ctx;
-        this.pushSendId = pushSendId;
+        this.geoLocations = geoLocations;
     }
 
     @Override
     protected void doSetup() throws ApiException, JSONException {
-        callerName = "pushDelivery";
+        callerName = "sendLocations";
 
         serviceName = AppConstants.GCM_SERVICE;
-        endPoint = AppConstants.GCM_DELIVER_API;
+        endPoint = AppConstants.GCM_LOCATIONS_API;
         contentType = "";
         verb = "POST";
 
-        requestString = "pushSendId=" + pushSendId;
+        requestString = "GeoLocations={ \"locations\": [" + geoLocations + "]}";
 
         // need to include the API key and session token
         applicationApiKey = AppConstants.API_KEY;
@@ -50,7 +46,7 @@ public class Delivery extends BaseAsyncRequest {
     @Override
     protected void onCompletion(boolean success) {
         if(success){
-            int i = 3;
+            PrefUtil.putString(ctx, PrefUtil.GEO_LOCATIONS, "");
         }
     }
 }

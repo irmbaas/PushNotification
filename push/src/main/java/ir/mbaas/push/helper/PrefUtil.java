@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 public class PrefUtil {
     public static String SESSION_TOKEN    = "session_token";
     public static String REGISTRATION_ID  = "registration_id";
+    public static String GEO_LOCATIONS    = "geo_locations";
+    public static String APP_USE_COUNT    = "app_use_count";
 
     static public final class Prefs {
         public static SharedPreferences get(Context context) {
@@ -44,6 +46,22 @@ public class PrefUtil {
         SharedPreferences settings = Prefs.get(context);
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean(key, value);
+        editor.apply();
+    }
+
+    static public int getInt(Context context, String key) {
+        return getInt(context, key, 0);
+    }
+
+    static public int getInt(Context context, String key, int defaultVal) {
+        SharedPreferences settings = Prefs.get(context);
+        return settings.getInt(key, defaultVal);
+    }
+
+    static public synchronized void putInt(Context context, String key, int value) {
+        SharedPreferences settings = Prefs.get(context);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt(key, value);
         editor.apply();
     }
 }

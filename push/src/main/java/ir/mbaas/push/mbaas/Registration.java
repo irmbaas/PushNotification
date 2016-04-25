@@ -50,7 +50,7 @@ public class Registration extends BaseAsyncRequest {
         requestString = devInfo.getDeviceInfoString();
         requestString += "&GCMRegId=" + regId;
         requestString += "&AppKey=" + appKey;
-        requestString += "&GeoLocation=" + "TODO";
+        requestString += "&UseCount=" + PrefUtil.getInt(ctx, PrefUtil.APP_USE_COUNT);
 
         // need to include the API key and session token
         applicationApiKey = AppConstants.API_KEY;
@@ -66,6 +66,7 @@ public class Registration extends BaseAsyncRequest {
     protected void onCompletion(boolean success) {
         if(success){
             CustomDialogs.Toast(ctx, R.string.successfull_registration);
+            PrefUtil.putInt(ctx, PrefUtil.APP_USE_COUNT, 0);
         } else {
             CustomDialogs.Toast(ctx, R.string.registration_failed);
         }

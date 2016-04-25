@@ -19,6 +19,9 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import ir.mbaas.push.helper.PrefUtil;
+import ir.mbaas.push.mbaas.GeoLocation;
+
 /**
  * Created by Mahdi on 4/24/2016.
  */
@@ -74,11 +77,7 @@ public class GoogleLocation implements GoogleApiClient.ConnectionCallbacks,
     }
 
     public boolean isConnected() {
-        if (mGoogleApiClient != null) {
-            return mGoogleApiClient.isConnected();
-        } else {
-            return false;
-        }
+        return mGoogleApiClient != null && mGoogleApiClient.isConnected();
     }
 
     @Override
@@ -121,6 +120,19 @@ public class GoogleLocation implements GoogleApiClient.ConnectionCallbacks,
     }
 
     private void handleNewLocation (Location location) {
-        Log.d(TAG, location.toString());
+        if(location == null)
+            return;
+
+        String locStr = "{\"Lat\":\"" + location.getLatitude() + "\", \"Lng\":\"" +
+                location.getLongitude() + "\"}";
+
+        Log.d(TAG, locStr);
+
+        String geoLocations = PrefUtil.getString(ctx, PrefUtil.GEO_LOCATIONS, "");
+        geoLocations += geoLocations.isEmpty() ? locStr : ',' + locStr;
+        PrefUtil.putString(ctx, PrefUtil.GEO_LOCATIONS, geoLocations);
+
+        GeoLocation geoLocation = new GeoLocation(ctx, geoLocations);
+        geoLocation.execute();
     }
 }
