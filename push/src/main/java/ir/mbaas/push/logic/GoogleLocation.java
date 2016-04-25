@@ -128,11 +128,18 @@ public class GoogleLocation implements GoogleApiClient.ConnectionCallbacks,
 
         Log.d(TAG, locStr);
 
-        String geoLocations = PrefUtil.getString(ctx, PrefUtil.GEO_LOCATIONS, "");
-        geoLocations += geoLocations.isEmpty() ? locStr : ',' + locStr;
-        PrefUtil.putString(ctx, PrefUtil.GEO_LOCATIONS, geoLocations);
+        String geoLocations = PrefUtil.getString(ctx, PrefUtil.GEO_LOCATIONS);
+        String lastLocation = PrefUtil.getString(ctx, PrefUtil.LAST_LOCATION);
 
-        GeoLocation geoLocation = new GeoLocation(ctx, geoLocations);
-        geoLocation.execute();
+        if (!lastLocation.equalsIgnoreCase(locStr)) {
+            geoLocations += geoLocations.isEmpty() ? locStr : ',' + locStr;
+            PrefUtil.putString(ctx, PrefUtil.GEO_LOCATIONS, geoLocations);
+            PrefUtil.putString(ctx, PrefUtil.LAST_LOCATION, locStr);
+        }
+
+        if (!geoLocations.isEmpty()) {
+            GeoLocation geoLocation = new GeoLocation(ctx, geoLocations);
+            geoLocation.execute();
+        }
     }
 }

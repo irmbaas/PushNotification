@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 public class PrefUtil {
     public static String SESSION_TOKEN    = "session_token";
     public static String REGISTRATION_ID  = "registration_id";
+    public static String LAST_LOCATION    = "last_location";
     public static String GEO_LOCATIONS    = "geo_locations";
     public static String APP_USE_COUNT    = "app_use_count";
 
@@ -16,8 +17,7 @@ public class PrefUtil {
     }
 
     static public String getString(Context context, String key) {
-        SharedPreferences settings = Prefs.get(context);
-        return settings.getString(key, "");
+        return getString(context, key, "");
     }
 
     static public String getString(Context context, String key, String defaultString) {
