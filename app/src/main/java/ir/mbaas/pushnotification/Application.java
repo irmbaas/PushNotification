@@ -18,6 +18,6 @@ public class Application extends android.app.Application {
         super.onCreate();
         ACRA.init(this);
 
-        Push.initialize(this);
+        Push.initialize(this, MainActivity.class);
     }
 }

@@ -14,6 +14,8 @@ import ir.mbaas.push.model.DeviceInfo;
  */
 public class StaticMethods {
 
+    public static Class<?> cls;
+
     public static String getSenderId(Context ctx) {
         String senderId = "";
         Bundle bundle = getMetaData(ctx);

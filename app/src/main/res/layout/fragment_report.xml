@@ -13,4 +13,9 @@
         android:layout_marginBottom="10dp"
         android:gravity="center_horizontal"
         android:text="@string/received_pns" />
+
+    <TextView
+        android:id="@+id/tv_push"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </RelativeLayout>

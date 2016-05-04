@@ -16,10 +16,12 @@ public class Push {
 
     public static GoogleLocation googleLocation;
 
-    public static void initialize(Context ctx) {
+    public static void initialize(Context ctx, Class<?> mainActivity) {
 
         int count = PrefUtil.getInt(ctx, PrefUtil.APP_USE_COUNT) + 1;
         PrefUtil.putInt(ctx, PrefUtil.APP_USE_COUNT, count);
+
+        StaticMethods.cls = mainActivity;
 
         InstanceIdHelper instanceIdHelper = new InstanceIdHelper(ctx);
 

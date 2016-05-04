@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class PrefUtil {
-    public static String SESSION_TOKEN    = "session_token";
+    public static String LAST_PUSH_RECEIVED    = "last_push_received";
     public static String REGISTRATION_ID  = "registration_id";
     public static String LAST_LOCATION    = "last_location";
     public static String GEO_LOCATIONS    = "geo_locations";

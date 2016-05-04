@@ -6,7 +6,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import ir.mbaas.push.helper.PrefUtil;
 import ir.mbaas.pushnotification.R;
 
 /**
@@ -24,7 +26,12 @@ public class ReportFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_report, container, false);
+        View retView = inflater.inflate(R.layout.fragment_report, container, false);
+        TextView tv = (TextView) retView.findViewById(R.id.tv_push);
+
+        tv.setText(PrefUtil.getString(getActivity(), PrefUtil.LAST_PUSH_RECEIVED, "nothing!!!"));
+
+        return retView;
     }
 
 }
