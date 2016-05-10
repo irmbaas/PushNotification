@@ -3,7 +3,7 @@ package ir.mbaas.pushnotification;
 import org.acra.ACRA;
 import org.acra.annotation.ReportsCrashes;
 
-import ir.mbaas.push.Push;
+import ir.mbaas.sdk.Push;
 
 /**
  * Created by Mahdi on 4/7/2016.

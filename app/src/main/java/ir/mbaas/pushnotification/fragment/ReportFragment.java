@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import ir.mbaas.push.helper.PrefUtil;
+import ir.mbaas.sdk.helper.PrefUtil;
 import ir.mbaas.pushnotification.R;
 
 /**
