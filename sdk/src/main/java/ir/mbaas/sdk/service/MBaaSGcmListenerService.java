@@ -38,6 +38,8 @@ public class MBaaSGcmListenerService extends GcmListenerService {
                 .setContentTitle(title)
                 .setTicker(summary)
                 .setContentText(message)
+                .setContentIntent(pIntent)
+                .setAutoCancel(true)
                 .addAction(R.drawable.common_google_signin_btn_icon_dark, "Call", pIntent);
         notificationManager.notify(1, mBuilder.build());
 

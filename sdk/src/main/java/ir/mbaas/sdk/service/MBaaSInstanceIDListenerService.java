@@ -22,6 +22,12 @@ public class MBaaSInstanceIDListenerService extends InstanceIDListenerService {
             InstanceID instanceID = InstanceID.getInstance(getApplicationContext());
             String token = instanceID.getToken(senderId, GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
 
+            String localToken =
+                    PrefUtil.getString(this.getApplicationContext(), PrefUtil.REGISTRATION_ID);
+
+            if(localToken.equals(token))
+                return;
+
             PrefUtil.putString(this.getApplicationContext(), PrefUtil.REGISTRATION_ID, token);
             Registration regApi = new Registration(this.getApplicationContext(), token);
             regApi.execute();

@@ -12,7 +12,7 @@ import ir.mbaas.sdk.logic.InstanceIdHelper;
 /**
  * Created by Mahdi on 4/7/2016.
  */
-public class Push {
+public class SDK {
 
     public static GoogleLocation googleLocation;
 

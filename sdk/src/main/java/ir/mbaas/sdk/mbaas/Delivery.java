@@ -1,6 +1,7 @@
 package ir.mbaas.sdk.mbaas;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.json.JSONException;
 
@@ -12,6 +13,8 @@ import ir.mbaas.sdk.helper.AppConstants;
  * Created by Mahdi on 4/20/2016.
  */
 public class Delivery extends BaseAsyncRequest {
+
+    private String TAG = "Delivery";
     private Context ctx;
     private String PushSentId;
     private String guid;
@@ -41,13 +44,13 @@ public class Delivery extends BaseAsyncRequest {
 
     @Override
     protected void processResponse(String response) throws ApiException, JSONException {
-        int i = 2;
+        Log.d(TAG, "Response Received.");
     }
 
     @Override
     protected void onCompletion(boolean success) {
         if(success){
-            int i = 3;
+            Log.d(TAG, "Successful completion.");
         }
     }
 }
