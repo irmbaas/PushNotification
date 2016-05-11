@@ -1,4 +1,4 @@
-package ir.mbaas.sdk.model;
+package ir.mbaas.sdk.models;
 
 import org.json.JSONException;
 import org.json.JSONObject;

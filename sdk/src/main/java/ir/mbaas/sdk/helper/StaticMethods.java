@@ -3,11 +3,18 @@ package ir.mbaas.sdk.helper;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 import ir.mbaas.sdk.R;
-import ir.mbaas.sdk.model.DeviceInfo;
+import ir.mbaas.sdk.models.DeviceInfo;
 
 /**
  * Created by Mahdi on 4/7/2016.
@@ -59,5 +66,18 @@ public class StaticMethods {
         int userId = 0;
 
         return new DeviceInfo(IMEI, deviceName, brand, osVersion, sdkVersion, userId);
+    }
+
+    public static Bitmap downloadImage(String url) {
+        try {
+            URL imgUrl = new URL(url);
+            HttpURLConnection connection = (HttpURLConnection) imgUrl.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            return BitmapFactory.decodeStream(input);
+        } catch (IOException e) {
+            return null;
+        }
     }
 }

@@ -15,4 +15,6 @@ public interface AppConstants {
     String API_KEY = "b48a0426f5943e7196c4523dc661a60144f0fe2c70deb3fb528d90ed33aa0f02";
 
     int VERSION_NUMBER = 1;
+
+    String MBAAS_BASE_URL = "http://acra.mbaas.ir/";
 }

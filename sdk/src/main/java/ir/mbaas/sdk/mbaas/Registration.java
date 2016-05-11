@@ -11,7 +11,7 @@ import ir.mbaas.sdk.helper.AppConstants;
 import ir.mbaas.sdk.helper.CustomDialogs;
 import ir.mbaas.sdk.helper.PrefUtil;
 import ir.mbaas.sdk.helper.StaticMethods;
-import ir.mbaas.sdk.model.DeviceInfo;
+import ir.mbaas.sdk.models.DeviceInfo;
 
 /**
  * Created by Mahdi on 4/10/2016.
