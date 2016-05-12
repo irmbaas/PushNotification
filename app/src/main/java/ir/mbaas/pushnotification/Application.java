@@ -10,7 +10,7 @@ import ir.mbaas.sdk.SDK;
  */
 
 @ReportsCrashes(
-        formUri = "http://acra.mbaas.ir/api/acra/1f656f69"
+        formUri = "http://mbaas.ir/api/acra/78fec8fc"
 )
 public class Application extends android.app.Application {
     @Override
