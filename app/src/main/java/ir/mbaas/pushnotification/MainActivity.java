@@ -1,10 +1,12 @@
 package ir.mbaas.pushnotification;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import ir.mbaas.pushnotification.adapter.ViewPagerAdapter;
 import ir.mbaas.pushnotification.fragment.ContactFragment;
@@ -56,5 +58,19 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new ReportFragment(), getResources().getString(R.string.report_tab_title));
         adapter.addFragment(new ContactFragment(), getResources().getString(R.string.contact_tab_title));
         viewPager.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Intent intent = getIntent();
+        String customData = intent.getStringExtra("CustomData");
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
     }
 }

@@ -54,6 +54,9 @@ public class NotificationBuilder {
         Intent intent = pm.getLaunchIntentForPackage(SDK.context.getPackageName());
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
+        String customData = data.getString("CustomJsonData");
+        intent.putExtra("CustomData", customData);
+
         /*Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse("http://google.com"));*/
 
