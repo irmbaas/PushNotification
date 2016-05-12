@@ -17,4 +17,13 @@ public interface AppConstants {
     int VERSION_NUMBER = 1;
 
     String MBAAS_BASE_URL = "http://acra.mbaas.ir/";
+
+    //Push Notification constants
+    String PN_BODY    = "Body";
+    String PN_TITLE   = "Title";
+    String PN_SENT_ID = "PushSentId";
+    String PN_ID      = "Id";
+    String PN_SUMMARY = "Summary";
+    String PN_BUTTONS = "Buttons";
+    String PN_IMAGES  = "Images";
 }
