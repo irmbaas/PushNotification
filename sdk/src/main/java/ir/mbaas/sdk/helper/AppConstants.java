@@ -26,4 +26,5 @@ public interface AppConstants {
     String PN_SUMMARY = "Summary";
     String PN_BUTTONS = "Buttons";
     String PN_IMAGES  = "Images";
+    String PN_TICKER  = "Ticker";
 }

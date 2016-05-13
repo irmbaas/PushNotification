@@ -66,11 +66,8 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String customData = intent.getStringExtra("CustomData");
-    }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        setIntent(intent);
+        if(customData != null && !customData.isEmpty())
+            Toast.makeText(MainActivity.this, customData, Toast.LENGTH_LONG).show();
     }
 }

@@ -43,16 +43,25 @@ public class NotificationBuilder {
         String message = data.getString(AppConstants.PN_BODY);
         String title   = data.getString(AppConstants.PN_TITLE);
         String summary = data.getString(AppConstants.PN_SUMMARY);
+        String ticker  = data.getString(AppConstants.PN_TICKER);
 
         builder.setContentTitle(title)
-                .setTicker(summary)
+                .setTicker(ticker)
+                .setSubText(summary)
                 .setContentText(message);
+
+        NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
+        bigText.bigText(message);
+        bigText.setBigContentTitle(title);
+        bigText.setSummaryText(summary);
+
+        builder.setStyle(bigText);
     }
 
     private void setIntent() {
         PackageManager pm = SDK.context.getPackageManager();
         Intent intent = pm.getLaunchIntentForPackage(SDK.context.getPackageName());
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         String customData = data.getString("CustomJsonData");
         intent.putExtra("CustomData", customData);
@@ -61,7 +70,7 @@ public class NotificationBuilder {
         intent.setData(Uri.parse("http://google.com"));*/
 
         mainIntent = PendingIntent.getActivity(ctx, IdGenerator.generateIntegerId(),
-                intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_ONE_SHOT);
+                intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         builder.setContentIntent(mainIntent);
     }
