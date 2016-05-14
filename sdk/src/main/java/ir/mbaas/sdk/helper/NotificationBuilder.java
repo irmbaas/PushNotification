@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
@@ -59,15 +60,36 @@ public class NotificationBuilder {
     }
 
     private void setIntent() {
-        PackageManager pm = SDK.context.getPackageManager();
-        Intent intent = pm.getLaunchIntentForPackage(SDK.context.getPackageName());
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-        String customData = data.getString("CustomJsonData");
-        intent.putExtra("CustomData", customData);
+        Intent intent = null;
+        int actionTypeInt = 0;
 
-        /*Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse("http://google.com"));*/
+        try {
+            actionTypeInt = Integer.parseInt(data.getString(AppConstants.PN_ACTION_TYPE));
+        } catch (NumberFormatException nfe) {
+        }
+
+        Enums.ActionType actionType = Enums.ActionType.values()[actionTypeInt];
+
+        switch (actionType) {
+            case None:
+                return;
+            case OpenApp:
+                PackageManager pm = SDK.context.getPackageManager();
+                intent = pm.getLaunchIntentForPackage(SDK.context.getPackageName());
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                String customData = data.getString(AppConstants.PN_CUSTOM_DATA);
+                intent.putExtra(AppConstants.PN_CUSTOM_DATA, customData);
+                break;
+            case OpenUrl:
+                String actionUrl = data.getString(AppConstants.PN_ACTION_URL);
+
+                if(actionUrl == null || actionUrl.isEmpty())
+                    return;
+
+                intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(actionUrl));
+        }
 
         mainIntent = PendingIntent.getActivity(ctx, IdGenerator.generateIntegerId(),
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);

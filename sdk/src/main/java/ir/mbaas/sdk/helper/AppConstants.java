@@ -27,4 +27,7 @@ public interface AppConstants {
     String PN_BUTTONS = "Buttons";
     String PN_IMAGES  = "Images";
     String PN_TICKER  = "Ticker";
+    String PN_ACTION_TYPE  = "ActionType";
+    String PN_ACTION_URL   = "ActionUrl";
+    String PN_CUSTOM_DATA  = "CustomData";
 }
