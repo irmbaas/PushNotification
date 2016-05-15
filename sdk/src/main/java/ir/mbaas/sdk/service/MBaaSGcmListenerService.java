@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.google.android.gms.gcm.GcmListenerService;
 
 import ir.mbaas.sdk.SDK;
-import ir.mbaas.sdk.helper.NotificationBuilder;
+import ir.mbaas.sdk.logic.NotificationBuilder;
 import ir.mbaas.sdk.helper.PrefUtil;
 
 /**

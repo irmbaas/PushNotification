@@ -1,4 +1,4 @@
-package ir.mbaas.sdk.helper;
+package ir.mbaas.sdk.logic;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -12,6 +12,9 @@ import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 
 import ir.mbaas.sdk.SDK;
+import ir.mbaas.sdk.helper.AppConstants;
+import ir.mbaas.sdk.helper.IdGenerator;
+import ir.mbaas.sdk.helper.StaticMethods;
 import ir.mbaas.sdk.mbaas.Delivery;
 import ir.mbaas.sdk.models.Button;
 import ir.mbaas.sdk.models.Buttons;
@@ -24,7 +27,6 @@ import ir.mbaas.sdk.models.Images;
 public class NotificationBuilder {
     Context ctx;
     Bundle data;
-    PendingIntent mainIntent;
     NotificationCompat.Builder builder;
 
     public NotificationBuilder(Context ctx, Bundle data) {
@@ -61,37 +63,15 @@ public class NotificationBuilder {
 
     private void setIntent() {
 
-        Intent intent = null;
-        int actionTypeInt = 0;
+        Intent intent = PushActions.createAction(
+                data.getString(AppConstants.PN_CUSTOM_DATA),
+                data.getString(AppConstants.PN_ACTION_URL),
+                data.getString(AppConstants.PN_ACTION_TYPE));
 
-        try {
-            actionTypeInt = Integer.parseInt(data.getString(AppConstants.PN_ACTION_TYPE));
-        } catch (NumberFormatException nfe) {
-        }
+        if(intent == null)
+            return;
 
-        Enums.ActionType actionType = Enums.ActionType.values()[actionTypeInt];
-
-        switch (actionType) {
-            case None:
-                return;
-            case OpenApp:
-                PackageManager pm = SDK.context.getPackageManager();
-                intent = pm.getLaunchIntentForPackage(SDK.context.getPackageName());
-                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                String customData = data.getString(AppConstants.PN_CUSTOM_DATA);
-                intent.putExtra(AppConstants.PN_CUSTOM_DATA, customData);
-                break;
-            case OpenUrl:
-                String actionUrl = data.getString(AppConstants.PN_ACTION_URL);
-
-                if(actionUrl == null || actionUrl.isEmpty())
-                    return;
-
-                intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(actionUrl));
-        }
-
-        mainIntent = PendingIntent.getActivity(ctx, IdGenerator.generateIntegerId(),
+        PendingIntent mainIntent = PendingIntent.getActivity(ctx, IdGenerator.generateIntegerId(),
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         builder.setContentIntent(mainIntent);
@@ -101,7 +81,17 @@ public class NotificationBuilder {
         Buttons buttons = Buttons.fromJson(data.getString(AppConstants.PN_BUTTONS));
 
         for (Button button : buttons.records) {
-            builder.addAction(0, button.title, mainIntent);
+            Intent intent = PushActions.createAction(
+                    data.getString(AppConstants.PN_CUSTOM_DATA),
+                    button.actionUrl,
+                    button.actionType);
+
+            if (intent == null)
+                continue;
+
+            PendingIntent mainIntent = PendingIntent.getActivity(ctx, IdGenerator.generateIntegerId(),
+                    intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.addAction(button.iconResourceId, button.title, mainIntent);
         }
     }
 

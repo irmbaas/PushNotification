@@ -12,10 +12,6 @@ public class Buttons {
     @JsonProperty("Buttons")
     public List<Button> records = new ArrayList<>();
 
-    public enum ButtonAction {
-        None, OpenUrl, OpenApp
-    }
-
     public static Buttons fromJson(String buttonsStr) {
         try {
             buttonsStr = "{\"Buttons\":" + buttonsStr + "}";

@@ -5,6 +5,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
+import ir.mbaas.sdk.SDK;
+import ir.mbaas.sdk.helper.StaticMethods;
+import ir.mbaas.sdk.logic.PushActions;
+
 /**
  * Created by Mahdi on 5/11/2016.
  */
@@ -15,19 +19,29 @@ public class Button {
     @JsonProperty("Title")
     public String title;
 
-    @JsonProperty("Icon")
-    public String icon;
+    @JsonProperty("ActionUrl")
+    public String actionUrl;
+
+    @JsonSetter("Icon")
+    public void setIcon(String iconName) {
+        iconResourceId = StaticMethods.getIconResourceByMaterialName(SDK.context, iconName);
+        icon = iconName;
+    }
 
     @JsonSetter("Action")
-    public void setButtonAction(int mAction) {
+    public void setButtonAction(String actionTypeStr) {
         try {
-            action = Buttons.ButtonAction.values()[mAction];
+            actionType = PushActions.ActionType.values()[Integer.parseInt(actionTypeStr)];
+        } catch (NumberFormatException nfe) {
+            actionType = PushActions.ActionType.None;
         } catch (Exception exc) {
-            action = Buttons.ButtonAction.None;
+            actionType = PushActions.ActionType.None;
         }
     }
 
-    public Buttons.ButtonAction action;
+    public PushActions.ActionType actionType;
+    public String icon;
+    public int iconResourceId;
 
     public Button() {
     }

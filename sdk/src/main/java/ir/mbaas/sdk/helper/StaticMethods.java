@@ -78,4 +78,11 @@ public class StaticMethods {
             return null;
         }
     }
+
+    public static int getIconResourceByMaterialName(Context context, String name) {
+        if(name == null)
+            return 0; //to prevent null pointer exception
+        String mName = "ic_" + name.replaceAll("[- ]", "_"); //TODO @ak, check name to be not null
+        return context.getResources().getIdentifier(mName, "drawable", context.getPackageName());
+    }
 }
