@@ -13,7 +13,7 @@ public class Images {
     public List<Image> records = new ArrayList<>();
 
     public enum ImageType {
-        Right, Left, TopStretch, BottomStretch
+        Small, Large
     }
 
     public static Images fromJson(String imagesStr) {

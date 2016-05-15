@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
+import ir.mbaas.sdk.logic.PushActions;
+
 /**
  * Created by Mahdi on 5/11/2016.
  */
@@ -19,11 +21,13 @@ public class Image {
     public String url;
 
     @JsonSetter("Type")
-    public void setImageType(int mType) {
+    public void setImageType(String imgTypeStr) {
         try {
-            type = Images.ImageType.values()[mType];
+            type = Images.ImageType.values()[Integer.parseInt(imgTypeStr)];
+        } catch (NumberFormatException nfe) {
+            type = Images.ImageType.Small;
         } catch (Exception exc) {
-            type = Images.ImageType.Left;
+            type = Images.ImageType.Small;
         }
     }
 

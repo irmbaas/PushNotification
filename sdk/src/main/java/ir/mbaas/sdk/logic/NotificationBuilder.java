@@ -28,6 +28,10 @@ public class NotificationBuilder {
     Context ctx;
     Bundle data;
     NotificationCompat.Builder builder;
+    private String message;
+    private String title;
+    private String summary;
+    private String ticker;
 
     public NotificationBuilder(Context ctx, Bundle data) {
         this.ctx  = ctx;
@@ -43,10 +47,10 @@ public class NotificationBuilder {
     }
 
     private void setTexts() {
-        String message = data.getString(AppConstants.PN_BODY);
-        String title   = data.getString(AppConstants.PN_TITLE);
-        String summary = data.getString(AppConstants.PN_SUMMARY);
-        String ticker  = data.getString(AppConstants.PN_TICKER);
+        message = data.getString(AppConstants.PN_BODY);
+        title   = data.getString(AppConstants.PN_TITLE);
+        summary = data.getString(AppConstants.PN_SUMMARY);
+        ticker  = data.getString(AppConstants.PN_TICKER);
 
         builder.setContentTitle(title)
                 .setTicker(ticker)
@@ -98,21 +102,30 @@ public class NotificationBuilder {
     private void setImages() {
         Images images = Images.fromJson(data.getString(AppConstants.PN_IMAGES));
 
-        if(images.records.size() > 0)
-            setNotificationIcon(images);
+        if (images != null && images.records.size() > 0) {
+            for (Image image : images.records) {
+                if (image.type == Images.ImageType.Small) {
+                    setNotificationIcon(image);
+                } else if (image.type == Images.ImageType.Large) {
+                    setBigPicture(image);
+                }
+            }
+
+        }
     }
 
     private void setSound() {
-        builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
+        boolean isSilent = data.getString(AppConstants.PN_IS_SILENT).equalsIgnoreCase("false") ?
+                false : true;
+
+        if(!isSilent)
+            builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
     }
 
-    private void setNotificationIcon(Images images) {
-        Image image = images.records.size() > 0 ? images.records.get(0) : null;
-        boolean hasLargeIcon = (image != null && image.url != null && !image.url.isEmpty());
-
+    private void setNotificationIcon(Image image) {
         builder.setSmallIcon(ctx.getApplicationInfo().icon);
 
-        if (hasLargeIcon) {
+        if (image != null && image.url != null && !image.url.isEmpty()) {
             Bitmap img = StaticMethods.downloadImage(AppConstants.MBAAS_BASE_URL + image.url);
 
             if (img == null) {
@@ -120,6 +133,22 @@ public class NotificationBuilder {
                 return;
             }
             builder.setLargeIcon(img);
+        }
+    }
+
+    private void setBigPicture(Image image) {
+        NotificationCompat.BigPictureStyle bigPic = new NotificationCompat.BigPictureStyle();
+
+        if (image != null && image.url != null && !image.url.isEmpty()) {
+            Bitmap img = StaticMethods.downloadImage(AppConstants.MBAAS_BASE_URL + image.url);
+
+            if (img == null) {
+                return;
+            }
+            bigPic.setBigContentTitle(title);
+            bigPic.setSummaryText(summary);
+            bigPic.bigPicture(img);
+            builder.setStyle(bigPic);
         }
     }
 
