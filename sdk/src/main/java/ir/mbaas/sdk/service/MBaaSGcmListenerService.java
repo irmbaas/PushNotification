@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.google.android.gms.gcm.GcmListenerService;
 
-import ir.mbaas.sdk.SDK;
+import ir.mbaas.sdk.MBaaS;
 import ir.mbaas.sdk.logic.NotificationBuilder;
 import ir.mbaas.sdk.helper.PrefUtil;
 
@@ -18,7 +18,7 @@ public class MBaaSGcmListenerService extends GcmListenerService {
 
         PrefUtil.putString(this, PrefUtil.LAST_PUSH_RECEIVED, data.toString());
 
-        NotificationBuilder nBuilder = new NotificationBuilder(SDK.context, data);
+        NotificationBuilder nBuilder = new NotificationBuilder(MBaaS.context, data);
         nBuilder.notifyPushAndDeliver();
     }
 }

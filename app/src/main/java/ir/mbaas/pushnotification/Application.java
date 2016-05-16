@@ -3,7 +3,7 @@ package ir.mbaas.pushnotification;
 import org.acra.ACRA;
 import org.acra.annotation.ReportsCrashes;
 
-import ir.mbaas.sdk.SDK;
+import ir.mbaas.sdk.MBaaS;
 
 /**
  * Created by Mahdi on 4/7/2016.
@@ -18,6 +18,6 @@ public class Application extends android.app.Application {
         super.onCreate();
         ACRA.init(this);
 
-        SDK.initialize(this);
+        MBaaS.init(this);
     }
 }

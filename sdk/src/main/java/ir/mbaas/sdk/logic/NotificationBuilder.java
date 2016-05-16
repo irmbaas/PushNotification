@@ -4,14 +4,11 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 
-import ir.mbaas.sdk.SDK;
 import ir.mbaas.sdk.helper.AppConstants;
 import ir.mbaas.sdk.helper.IdGenerator;
 import ir.mbaas.sdk.helper.StaticMethods;

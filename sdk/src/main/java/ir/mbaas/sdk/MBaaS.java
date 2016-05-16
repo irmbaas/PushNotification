@@ -1,5 +1,6 @@
 package ir.mbaas.sdk;
 
+import android.app.Application;
 import android.content.Context;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -12,22 +13,22 @@ import ir.mbaas.sdk.logic.InstanceIdHelper;
 /**
  * Created by Mahdi on 4/7/2016.
  */
-public class SDK {
+public class MBaaS {
 
     public static GoogleLocation googleLocation;
     public static Context context;
 
-    public static void initialize(Context ctx) {
-        SDK.context = ctx;
+    public static void init(Application app) {
+        MBaaS.context = app;
 
-        int count = PrefUtil.getInt(ctx, PrefUtil.APP_USE_COUNT) + 1;
-        PrefUtil.putInt(ctx, PrefUtil.APP_USE_COUNT, count);
+        int count = PrefUtil.getInt(app, PrefUtil.APP_USE_COUNT) + 1;
+        PrefUtil.putInt(app, PrefUtil.APP_USE_COUNT, count);
 
-        InstanceIdHelper instanceIdHelper = new InstanceIdHelper(ctx);
+        InstanceIdHelper instanceIdHelper = new InstanceIdHelper(app);
 
-        String senderId = StaticMethods.getSenderId(ctx);
+        String senderId = StaticMethods.getSenderId(app);
         instanceIdHelper.getToken(senderId, GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
 
-        googleLocation = new GoogleLocation(ctx);
+        googleLocation = new GoogleLocation(app);
     }
 }

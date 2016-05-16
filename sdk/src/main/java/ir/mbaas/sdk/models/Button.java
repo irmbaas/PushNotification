@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
-import ir.mbaas.sdk.SDK;
+import ir.mbaas.sdk.MBaaS;
 import ir.mbaas.sdk.helper.StaticMethods;
 import ir.mbaas.sdk.logic.PushActions;
 
@@ -24,7 +24,7 @@ public class Button {
 
     @JsonSetter("Icon")
     public void setIcon(String iconName) {
-        iconResourceId = StaticMethods.getIconResourceByMaterialName(SDK.context, iconName);
+        iconResourceId = StaticMethods.getIconResourceByMaterialName(MBaaS.context, iconName);
         icon = iconName;
     }
 

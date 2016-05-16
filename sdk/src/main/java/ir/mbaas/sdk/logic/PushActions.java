@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 
-import ir.mbaas.sdk.SDK;
+import ir.mbaas.sdk.MBaaS;
 import ir.mbaas.sdk.helper.AppConstants;
 
 /**
@@ -34,8 +34,8 @@ public class PushActions {
             case None:
                 break;
             case OpenApp:
-                PackageManager pm = SDK.context.getPackageManager();
-                intent = pm.getLaunchIntentForPackage(SDK.context.getPackageName());
+                PackageManager pm = MBaaS.context.getPackageManager();
+                intent = pm.getLaunchIntentForPackage(MBaaS.context.getPackageName());
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 intent.putExtra(AppConstants.PN_CUSTOM_DATA, customData);
                 break;
