@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.telephony.TelephonyManager;
 
 import java.io.IOException;
@@ -56,7 +57,7 @@ public class StaticMethods {
 
     public static DeviceInfo getDeviceInfo(Context ctx) {
         TelephonyManager tm = (TelephonyManager)ctx.getSystemService(Context.TELEPHONY_SERVICE);
-        String IMEI = tm.getDeviceId();
+        String IMEI = StaticMethods.getUniqueID(ctx, tm);
         String deviceName = android.os.Build.MODEL;
         String brand = android.os.Build.BRAND;
         String osVersion = android.os.Build.VERSION.RELEASE;
@@ -85,5 +86,16 @@ public class StaticMethods {
 
         String mName = "ic_" + name.replaceAll("[- ]", "_"); //TODO @ak, check name to be not null
         return context.getResources().getIdentifier(mName, "drawable", context.getPackageName());
+    }
+
+    public static String getUniqueID(Context ctx, TelephonyManager tm){
+        String myAndroidDeviceId = tm.getDeviceId();
+
+        if (myAndroidDeviceId == null) {
+            myAndroidDeviceId = Settings.Secure.getString(ctx.getContentResolver(),
+                    Settings.Secure.ANDROID_ID);
+        }
+
+        return myAndroidDeviceId;
     }
 }
