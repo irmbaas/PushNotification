@@ -18,6 +18,8 @@ public interface AppConstants {
 
     String MBAAS_BASE_URL = "http://acra.mbaas.ir/";
 
+    String ACRA_PRIVATE_PROCESS_NAME = ":acra";
+
     //Push Notification constants
     String PN_BODY    = "Body";
     String PN_TITLE   = "Title";

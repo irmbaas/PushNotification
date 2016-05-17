@@ -8,9 +8,12 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -21,6 +24,8 @@ import ir.mbaas.sdk.models.DeviceInfo;
  * Created by Mahdi on 4/7/2016.
  */
 public class StaticMethods {
+
+    static private final String TAG = "StaticMethods";
 
     public static String getSenderId(Context ctx) {
         String senderId = "";
@@ -97,5 +102,32 @@ public class StaticMethods {
         }
 
         return myAndroidDeviceId;
+    }
+
+    static public boolean isACRASenderServiceProcess(int pid) {
+        InputStreamReader reader = null;
+        try {
+            reader = new InputStreamReader(new FileInputStream("/proc/" + pid + "/cmdline"));
+            StringBuilder processName = new StringBuilder();
+            int c;
+            while ((c = reader.read()) > 0) {
+                processName.append((char) c);
+            }
+            Log.v(TAG, "My process name is: " + processName.toString());
+            return processName != null && processName.toString()
+                    .endsWith(AppConstants.ACRA_PRIVATE_PROCESS_NAME);
+        } catch (Exception e) {
+            // ignore
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (Exception e) {
+                    // Ignore
+                }
+            }
+        }
+
+        return false;
     }
 }

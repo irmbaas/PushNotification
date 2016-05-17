@@ -19,6 +19,11 @@ public class MBaaS {
     public static Context context;
 
     public static void init(Application app) {
+
+        if (StaticMethods.isACRASenderServiceProcess(android.os.Process.myPid())) {
+            return;
+        }
+
         MBaaS.context = app;
 
         int count = PrefUtil.getInt(app, PrefUtil.APP_USE_COUNT) + 1;
