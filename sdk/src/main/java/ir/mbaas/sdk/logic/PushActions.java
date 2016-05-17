@@ -13,7 +13,7 @@ import ir.mbaas.sdk.helper.AppConstants;
 public class PushActions {
 
     public enum ActionType {
-        None, OpenApp, OpenUrl
+        OpenApp, OpenUrl
     }
 
     static public Intent createAction(String customData, String actionUrl, String actionType) {
@@ -31,8 +31,6 @@ public class PushActions {
         Intent intent = null;
 
         switch (actionType) {
-            case None:
-                break;
             case OpenApp:
                 PackageManager pm = MBaaS.context.getPackageManager();
                 intent = pm.getLaunchIntentForPackage(MBaaS.context.getPackageName());

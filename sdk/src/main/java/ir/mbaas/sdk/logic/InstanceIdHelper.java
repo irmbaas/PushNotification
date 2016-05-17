@@ -55,9 +55,9 @@ public class InstanceIdHelper {
 
             @Override
             protected void onPostExecute(String token) {
-                String localToken = PrefUtil.getString(mContext, PrefUtil.REGISTRATION_ID);
+                //String localToken = PrefUtil.getString(mContext, PrefUtil.REGISTRATION_ID);
 
-                if (token != null && !localToken.equals(token)) {
+                if (token != null) {
                     PrefUtil.putString(mContext, PrefUtil.REGISTRATION_ID, token);
                     Registration regApi = new Registration(mContext, token);
                     regApi.execute();

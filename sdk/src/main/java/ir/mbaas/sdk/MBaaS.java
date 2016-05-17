@@ -17,13 +17,9 @@ public class MBaaS {
 
     public static GoogleLocation googleLocation;
     public static Context context;
+    private static MBaaS _instance;
 
-    public static void init(Application app) {
-
-        if (StaticMethods.isACRASenderServiceProcess(android.os.Process.myPid())) {
-            return;
-        }
-
+    public MBaaS(Application app) {
         MBaaS.context = app;
 
         int count = PrefUtil.getInt(app, PrefUtil.APP_USE_COUNT) + 1;
@@ -35,5 +31,16 @@ public class MBaaS {
         instanceIdHelper.getToken(senderId, GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
 
         googleLocation = new GoogleLocation(app);
+    }
+
+    public static void init(Application app) {
+
+        if (StaticMethods.isACRASenderServiceProcess(android.os.Process.myPid())) {
+            return;
+        }
+
+        if (_instance == null) {
+            _instance = new MBaaS(app);
+        }
     }
 }

@@ -33,9 +33,9 @@ public class Button {
         try {
             actionType = PushActions.ActionType.values()[Integer.parseInt(actionTypeStr)];
         } catch (NumberFormatException nfe) {
-            actionType = PushActions.ActionType.None;
+            actionType = PushActions.ActionType.OpenApp;
         } catch (Exception exc) {
-            actionType = PushActions.ActionType.None;
+            actionType = PushActions.ActionType.OpenApp;
         }
     }
 
