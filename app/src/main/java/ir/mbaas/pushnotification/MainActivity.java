@@ -9,7 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import ir.mbaas.pushnotification.adapter.ViewPagerAdapter;
-import ir.mbaas.pushnotification.fragment.ContactFragment;
 import ir.mbaas.pushnotification.fragment.HelpFragment;
 import ir.mbaas.pushnotification.fragment.IntroFragment;
 import ir.mbaas.pushnotification.fragment.ReportFragment;
@@ -48,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);
         tabLayout.getTabAt(1).setIcon(tabIcons[1]);
         tabLayout.getTabAt(2).setIcon(tabIcons[2]);
-        tabLayout.getTabAt(3).setIcon(tabIcons[3]);
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -56,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new IntroFragment(), getResources().getString(R.string.intro_tab_title));
         adapter.addFragment(new HelpFragment(), getResources().getString(R.string.help_tab_title));
         adapter.addFragment(new ReportFragment(), getResources().getString(R.string.report_tab_title));
-        adapter.addFragment(new ContactFragment(), getResources().getString(R.string.contact_tab_title));
         viewPager.setAdapter(adapter);
     }
 

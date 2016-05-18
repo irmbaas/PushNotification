@@ -16,7 +16,7 @@ public interface AppConstants {
 
     int VERSION_NUMBER = 1;
 
-    String MBAAS_BASE_URL = "http://acra.mbaas.ir/";
+    String MBAAS_BASE_URL = "http://mbaas.ir/";
 
     String ACRA_PRIVATE_PROCESS_NAME = ":acra";
 

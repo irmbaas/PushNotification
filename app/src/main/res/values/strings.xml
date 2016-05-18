@@ -4,13 +4,13 @@
 
     <string name="contact_tab_title">تماس با ما</string>
     <string name="help_tab_title">آموزش</string>
-    <string name="intro_tab_title">معرفی MBaaS</string>
+    <string name="intro_tab_title">MBaaS</string>
     <string name="report_tab_title">گزارشات</string>
     <string name="mbaas_title">زیرساخت برنامه‌های موبایل</string>
     <string name="mbaas_email_title">ایمیل:</string>
     <string name="mbaas_email">info@mbaas.ir</string>
     <string name="mbaas_tel_title">تلفن:</string>
-    <string name="mbaas_tel">051-38923065</string>
+    <string name="mbaas_tel">021-77511608</string>
     <string name="what_is_push">اعلان‌های موبایل چیست؟</string>
     <string name="received_pns">گزارش اعلان‌های دریافتی</string>
 </resources>

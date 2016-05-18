@@ -24,9 +24,53 @@
         android:text="@string/mbaas_title" />
 
     <ir.mbaas.pushnotification.view.MATextView
+        android:id="@+id/tv_url"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_title"
         android:gravity="center_horizontal"
         android:text="@string/app_url" />
+
+    <View
+        android:id="@+id/divider_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="10dp"
+        android:layout_below="@id/tv_url"
+        android:background="@android:color/darker_gray"/>
+
+    <ir.mbaas.pushnotification.view.MATextView
+        android:id="@+id/tv_email_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/divider_line"
+        android:layout_alignParentRight="true"
+        android:text="@string/mbaas_email_title" />
+
+    <ir.mbaas.pushnotification.view.MATextView
+        android:id="@+id/tv_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/divider_line"
+        android:layout_toLeftOf="@id/tv_email_title"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:text="@string/mbaas_email" />
+
+    <ir.mbaas.pushnotification.view.MATextView
+        android:id="@+id/tv_tel_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/tv_email_title"
+        android:text="@string/mbaas_tel_title" />
+    <ir.mbaas.pushnotification.view.MATextView
+        android:id="@+id/tv_tel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/tv_tel_title"
+        android:layout_below="@id/tv_email_title"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:text="@string/mbaas_tel" />
 </RelativeLayout>
