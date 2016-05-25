@@ -4,6 +4,7 @@ import android.content.Context;
 
 import org.json.JSONException;
 
+import ir.mbaas.sdk.MBaaS;
 import ir.mbaas.sdk.R;
 import ir.mbaas.sdk.dfapi.ApiException;
 import ir.mbaas.sdk.dfapi.BaseAsyncRequest;
@@ -46,6 +47,7 @@ public class Registration extends BaseAsyncRequest {
         requestString = devInfo.getDeviceInfoString();
         requestString += "&GCMRegId=" + regId;
         requestString += "&AppKey=" + appKey;
+        requestString += "&AppVersion=" + MBaaS.versionCode;
         requestString += "&UseCount=" + PrefUtil.getInt(ctx, PrefUtil.APP_USE_COUNT);
 
         // need to include the API key and session token

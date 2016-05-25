@@ -2,6 +2,7 @@ package ir.mbaas.sdk;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.PackageManager;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
@@ -17,6 +18,7 @@ public class MBaaS {
 
     public static GoogleLocation googleLocation;
     public static Context context;
+    public static int versionCode = 1;
     private static MBaaS _instance;
 
     public MBaaS(Application app) {
@@ -29,6 +31,12 @@ public class MBaaS {
 
         String senderId = StaticMethods.getSenderId(app);
         instanceIdHelper.getToken(senderId, GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+
+        try {
+            versionCode = app.getPackageManager().getPackageInfo(app.getPackageName(), 0).versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
 
         googleLocation = new GoogleLocation(app);
     }
