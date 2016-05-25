@@ -5,10 +5,13 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 
+import ir.mbaas.sdk.MBaaS;
+import ir.mbaas.sdk.R;
 import ir.mbaas.sdk.helper.AppConstants;
 import ir.mbaas.sdk.helper.IdGenerator;
 import ir.mbaas.sdk.helper.StaticMethods;
@@ -97,17 +100,22 @@ public class NotificationBuilder {
     }
 
     private void setImages() {
+        boolean smallIconExists = false;
         Images images = Images.fromJson(data.getString(AppConstants.PN_IMAGES));
 
         if (images != null && images.records.size() > 0) {
             for (Image image : images.records) {
                 if (image.type == Images.ImageType.Small) {
+                    smallIconExists = true;
                     setNotificationIcon(image);
                 } else if (image.type == Images.ImageType.Large) {
                     setBigPicture(image);
                 }
             }
+        }
 
+        if (!smallIconExists) {
+            setNotificationIcon(null);
         }
     }
 
@@ -122,15 +130,21 @@ public class NotificationBuilder {
     private void setNotificationIcon(Image image) {
         builder.setSmallIcon(ctx.getApplicationInfo().icon);
 
-        if (image != null && image.url != null && !image.url.isEmpty()) {
-            Bitmap img = StaticMethods.downloadImage(AppConstants.MBAAS_BASE_URL + image.url);
+        Bitmap largeIcon;
 
-            if (img == null) {
-                //TODO: throw Exception
-                return;
-            }
-            builder.setLargeIcon(img);
+        if (image != null && image.url != null && !image.url.isEmpty()) {
+            largeIcon = StaticMethods.downloadImage(AppConstants.MBAAS_BASE_URL + image.url);
+        } else {
+            largeIcon =
+                    BitmapFactory.decodeResource(MBaaS.context.getResources(), R.drawable.ic_mbaas);
         }
+
+        if (largeIcon == null) {
+            //TODO: throw Exception
+            return;
+        }
+
+        builder.setLargeIcon(largeIcon);
     }
 
     private void setBigPicture(Image image) {
