@@ -47,8 +47,8 @@ dependencies {
 // ./gradlew clean build generateRelease
 apply plugin: 'maven'
 
-def sdkGroupId = 'ir.mbaas.sdk'
-def sdkArtifactId = 'mbaas-sdk'
+def sdkGroupId = 'ir.mbaas'
+def sdkArtifactId = 'sdk'
 def sdkVersion = '0.8.2'
 def siteUrl = 'http://git.softwaretalks.ir/mbaas/PushNotification'
 def gitUrl = 'http://git.softwaretalks.ir/mbaas/PushNotification.git'
