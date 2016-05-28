@@ -7,6 +7,7 @@ import org.json.JSONException;
 import ir.mbaas.sdk.dfapi.ApiException;
 import ir.mbaas.sdk.dfapi.BaseAsyncRequest;
 import ir.mbaas.sdk.helper.AppConstants;
+import ir.mbaas.sdk.helper.StaticMethods;
 import ir.mbaas.sdk.models.DeviceInfo;
 
 /**
@@ -31,7 +32,8 @@ public class UpdateInfo extends BaseAsyncRequest {
             contentType = "application/json";
             verb = "POST";
 
-            requestString += device.getDeviceInfoString();
+            requestString = device.getUserInfoString();
+            requestString += "&AppKey=" + StaticMethods.getAppKey(ctx);
 
             // need to include the API key and session token
             applicationApiKey = AppConstants.API_KEY;
@@ -39,10 +41,12 @@ public class UpdateInfo extends BaseAsyncRequest {
 
         @Override
         protected void processResponse(String response) throws ApiException, JSONException {
+            int i = 2;
         }
 
         @Override
         protected void onCompletion(boolean success) {
+            int j = 2;
         }
     }
 

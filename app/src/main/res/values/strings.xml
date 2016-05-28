@@ -13,4 +13,8 @@
     <string name="mbaas_tel">021-77511608</string>
     <string name="what_is_push">اعلان‌های موبایل چیست؟</string>
     <string name="received_pns">گزارش اعلان‌های دریافتی</string>
+    <string name="user_info">اطلاعات کاربر</string>
+    <string name="first_name">نام</string>
+    <string name="last_name">نام خانوادگی</string>
+    <string name="phone_number">شماره تلفن</string>
 </resources>

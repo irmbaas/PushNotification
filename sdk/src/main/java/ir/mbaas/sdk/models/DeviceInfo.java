@@ -50,9 +50,14 @@ public class DeviceInfo {
         retVal += "&OSVersion=" + osVersion;
         retVal += "&Manufacture=" + brand;
         retVal += "&DeviceModel=" + deviceName;
-        retVal += "&FirstName=" + firstName;
-        retVal += "&LastName=" + lastName;
-        retVal += "&PhoneNumber=" + phoneNumber;
+        return retVal;
+    }
+
+    public String getUserInfoString() {
+        String retVal = "IMEI=" + IMEI;
+        retVal += firstName != null && !firstName.isEmpty() ? "&FirstName=" + firstName : "";
+        retVal += lastName != null && !lastName.isEmpty() ? "&LastName=" + lastName : "";
+        retVal += phoneNumber != null && !phoneNumber.isEmpty() ? "&PhoneNumber=" + phoneNumber : "";
         return retVal;
     }
 
