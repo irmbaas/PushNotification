@@ -11,6 +11,9 @@ public class DeviceInfo {
     String deviceName;
     String brand;
     String osVersion;
+    String firstName;
+    String lastName;
+    String phoneNumber;
     int sdkVersion;
     int userId;
 
@@ -47,6 +50,9 @@ public class DeviceInfo {
         retVal += "&OSVersion=" + osVersion;
         retVal += "&Manufacture=" + brand;
         retVal += "&DeviceModel=" + deviceName;
+        retVal += "&FirstName=" + firstName;
+        retVal += "&LastName=" + lastName;
+        retVal += "&PhoneNumber=" + phoneNumber;
         return retVal;
     }
 
@@ -60,5 +66,17 @@ public class DeviceInfo {
 
     public int getUserId() {
         return userId;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

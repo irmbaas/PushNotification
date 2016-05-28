@@ -22,11 +22,13 @@ public class Registration extends BaseAsyncRequest {
     private Context ctx;
     private String regId;
     private String appKey;
+    private DeviceInfo device;
 
-    public Registration(Context ctx, String regId) {
+    public Registration(Context ctx, String regId, DeviceInfo device) {
         this.ctx = ctx;
         this.regId = regId;
         this.appKey = StaticMethods.getAppKey(ctx);
+        this.device = device;
     }
 
     @Override
@@ -38,13 +40,11 @@ public class Registration extends BaseAsyncRequest {
         contentType = "application/json";
         verb = "POST";
 
-        DeviceInfo devInfo = StaticMethods.getDeviceInfo(ctx);
-
         /*requestBody = devInfo.getDeviceInfoJson();
         requestBody.put("GCMRegId", regId);
         requestBody.put("AppKey", appKey);
         requestBody.put("GeoLocation", "TODO");*/
-        requestString = devInfo.getDeviceInfoString();
+        requestString  = device.getDeviceInfoString();
         requestString += "&GCMRegId=" + regId;
         requestString += "&AppKey=" + appKey;
         requestString += "&AppVersion=" + MBaaS.versionCode;

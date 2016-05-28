@@ -10,6 +10,8 @@ import ir.mbaas.sdk.helper.PrefUtil;
 import ir.mbaas.sdk.helper.StaticMethods;
 import ir.mbaas.sdk.logic.GoogleLocation;
 import ir.mbaas.sdk.logic.InstanceIdHelper;
+import ir.mbaas.sdk.mbaas.UpdateInfo;
+import ir.mbaas.sdk.models.DeviceInfo;
 
 /**
  * Created by Mahdi on 4/7/2016.
@@ -17,8 +19,10 @@ import ir.mbaas.sdk.logic.InstanceIdHelper;
 public class MBaaS {
 
     public static GoogleLocation googleLocation;
+    public static DeviceInfo device;
     public static Context context;
     public static int versionCode = 1;
+
     private static MBaaS _instance;
 
     public MBaaS(Application app) {
@@ -31,6 +35,8 @@ public class MBaaS {
 
         String senderId = StaticMethods.getSenderId(app);
         instanceIdHelper.getToken(senderId, GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+
+        device = StaticMethods.getDeviceInfo(app);
 
         try {
             versionCode = app.getPackageManager().getPackageInfo(app.getPackageName(), 0).versionCode;
@@ -50,5 +56,14 @@ public class MBaaS {
         if (_instance == null) {
             _instance = new MBaaS(app);
         }
+    }
+
+    public static void updateInfo(String firstName, String lastName, String phoneNumber) {
+        device.setFirstName(firstName);
+        device.setLastName(lastName);
+        device.setPhoneNumber(phoneNumber);
+
+        UpdateInfo uInfo = new UpdateInfo(context, device);
+        uInfo.execute();
     }
 }

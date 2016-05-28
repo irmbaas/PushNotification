@@ -6,6 +6,7 @@ public interface AppConstants {
     String GCM_SERVICE  = "MBAAS_PUSH";
 
     String GCM_REGISTER_API  = "register";
+    String GCM_UPDATE_API  = "update";
     String GCM_DELIVER_API   = "delivery";
     String GCM_LOCATIONS_API = "locations";
 

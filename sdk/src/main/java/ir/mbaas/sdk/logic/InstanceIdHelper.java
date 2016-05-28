@@ -24,6 +24,7 @@ import com.google.android.gms.iid.InstanceID;
 
 import java.io.IOException;
 
+import ir.mbaas.sdk.MBaaS;
 import ir.mbaas.sdk.helper.PrefUtil;
 import ir.mbaas.sdk.mbaas.Registration;
 
@@ -59,7 +60,7 @@ public class InstanceIdHelper {
 
                 if (token != null) {
                     PrefUtil.putString(mContext, PrefUtil.REGISTRATION_ID, token);
-                    Registration regApi = new Registration(mContext, token);
+                    Registration regApi = new Registration(mContext, token, MBaaS.device);
                     regApi.execute();
                 }
             }
