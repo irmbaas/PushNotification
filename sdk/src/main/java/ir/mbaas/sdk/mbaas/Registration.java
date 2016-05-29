@@ -21,13 +21,11 @@ public class Registration extends BaseAsyncRequest {
 
     private Context ctx;
     private String regId;
-    private String appKey;
     private DeviceInfo device;
 
     public Registration(Context ctx, String regId, DeviceInfo device) {
         this.ctx = ctx;
         this.regId = regId;
-        this.appKey = StaticMethods.getAppKey(ctx);
         this.device = device;
     }
 
@@ -46,7 +44,7 @@ public class Registration extends BaseAsyncRequest {
         requestBody.put("GeoLocation", "TODO");*/
         requestString  = device.getDeviceInfoString();
         requestString += "&GCMRegId=" + regId;
-        requestString += "&AppKey=" + appKey;
+        requestString += "&AppKey=" + MBaaS.appKey;
         requestString += "&AppVersion=" + MBaaS.versionCode;
         requestString += "&UseCount=" + PrefUtil.getInt(ctx, PrefUtil.APP_USE_COUNT);
 

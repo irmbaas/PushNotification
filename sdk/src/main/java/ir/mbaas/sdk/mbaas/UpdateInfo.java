@@ -4,11 +4,13 @@ import android.content.Context;
 
 import org.json.JSONException;
 
+import ir.mbaas.sdk.MBaaS;
 import ir.mbaas.sdk.dfapi.ApiException;
 import ir.mbaas.sdk.dfapi.BaseAsyncRequest;
 import ir.mbaas.sdk.helper.AppConstants;
 import ir.mbaas.sdk.helper.StaticMethods;
 import ir.mbaas.sdk.models.DeviceInfo;
+import ir.mbaas.sdk.models.User;
 
 /**
  * Created by Mahdi on 5/28/2016.
@@ -17,9 +19,11 @@ public class UpdateInfo extends BaseAsyncRequest {
 
         private Context ctx;
         private DeviceInfo device;
+        private User user;
 
-        public UpdateInfo(Context ctx, DeviceInfo device) {
-            this.ctx = ctx;
+        public UpdateInfo(Context ctx, DeviceInfo device, User user) {
+            this.ctx  = ctx;
+            this.user = user;
             this.device = device;
         }
 
@@ -32,8 +36,9 @@ public class UpdateInfo extends BaseAsyncRequest {
             contentType = "application/json";
             verb = "POST";
 
-            requestString = device.getUserInfoString();
-            requestString += "&AppKey=" + StaticMethods.getAppKey(ctx);
+            requestString  = user.toString();
+            requestString += "&IMEI=" + device.getIMEI();
+            requestString += "&AppKey=" + MBaaS.appKey;
 
             // need to include the API key and session token
             applicationApiKey = AppConstants.API_KEY;

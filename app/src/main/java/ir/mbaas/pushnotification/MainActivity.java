@@ -1,5 +1,6 @@
 package ir.mbaas.pushnotification;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
@@ -21,12 +22,19 @@ import ir.mbaas.pushnotification.fragment.HelpFragment;
 import ir.mbaas.pushnotification.fragment.IntroFragment;
 import ir.mbaas.pushnotification.fragment.ReportFragment;
 import ir.mbaas.sdk.MBaaS;
+import ir.mbaas.sdk.helper.PrefUtil;
+import ir.mbaas.sdk.models.User;
 
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private Context ctx;
+
+    private String FIRST_NAME    = "first_name";
+    private String LAST_NAME     = "last_name";
+    private String PHONE_NUMBER  = "phone_number";
 
     private int[] tabIcons = {
             R.drawable.ic_info,
@@ -50,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();
+
+        ctx = this;
     }
 
     private void setupTabIcons() {
@@ -97,7 +107,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateUserInfo() {
         LayoutInflater li = LayoutInflater.from(this);
-        final View promptsView = li.inflate(R.layout.prompts, null);
+        final View promptsView = li.inflate(R.layout.dialog_prompts, null);
+        final EditText firstName = (EditText) promptsView.findViewById(R.id.et_fname);
+        final EditText lastName = (EditText) promptsView.findViewById(R.id.et_lname);
+        final EditText phone = (EditText) promptsView.findViewById(R.id.et_phone);
+
+        firstName.setText(PrefUtil.getString(ctx, FIRST_NAME));
+        lastName.setText(PrefUtil.getString(ctx, LAST_NAME));
+        phone.setText(PrefUtil.getString(ctx, PHONE_NUMBER));
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
@@ -109,13 +126,17 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("OK",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,int id) {
-                                EditText firstName = (EditText) promptsView.findViewById(R.id.et_fname);
-                                EditText lastName = (EditText) promptsView.findViewById(R.id.et_lname);
-                                EditText phone = (EditText) promptsView.findViewById(R.id.et_phone);
+                                String fnStr = firstName.getText().toString();
+                                String lnStr = lastName.getText().toString();
+                                String pnStr = phone.getText().toString();
 
-                                MBaaS.updateInfo(firstName.getText().toString(),
-                                        lastName.getText().toString(),
-                                        phone.getText().toString());
+                                PrefUtil.putString(ctx, FIRST_NAME, fnStr);
+                                PrefUtil.putString(ctx, LAST_NAME, lnStr);
+                                PrefUtil.putString(ctx, PHONE_NUMBER, pnStr);
+
+                                User user = new User(fnStr, lnStr, pnStr);
+
+                                MBaaS.updateInfo(user);
                             }
                         })
                 .setNegativeButton("Cancel",

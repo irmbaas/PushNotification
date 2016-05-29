@@ -11,9 +11,6 @@ public class DeviceInfo {
     String deviceName;
     String brand;
     String osVersion;
-    String firstName;
-    String lastName;
-    String phoneNumber;
     int sdkVersion;
     int userId;
 
@@ -53,14 +50,6 @@ public class DeviceInfo {
         return retVal;
     }
 
-    public String getUserInfoString() {
-        String retVal = "IMEI=" + IMEI;
-        retVal += firstName != null && !firstName.isEmpty() ? "&FirstName=" + firstName : "";
-        retVal += lastName != null && !lastName.isEmpty() ? "&LastName=" + lastName : "";
-        retVal += phoneNumber != null && !phoneNumber.isEmpty() ? "&PhoneNumber=" + phoneNumber : "";
-        return retVal;
-    }
-
     public String getIMEI() {
         return IMEI;
     }
@@ -71,17 +60,5 @@ public class DeviceInfo {
 
     public int getUserId() {
         return userId;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 }
