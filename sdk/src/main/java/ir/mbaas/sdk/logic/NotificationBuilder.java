@@ -120,8 +120,8 @@ public class NotificationBuilder {
     }
 
     private void setSound() {
-        boolean isSilent = data.getString(AppConstants.PN_IS_SILENT).equalsIgnoreCase("false") ?
-                false : true;
+        String silenStr = data.getString(AppConstants.PN_IS_SILENT);
+        boolean isSilent = silenStr != null && silenStr.equalsIgnoreCase("true");
 
         if(!isSilent)
             builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);

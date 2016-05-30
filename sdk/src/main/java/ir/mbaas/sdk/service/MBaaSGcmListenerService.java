@@ -20,6 +20,8 @@ public class MBaaSGcmListenerService extends GcmListenerService {
     public void onMessageReceived(String from, Bundle data) {
 
         PrefUtil.putString(this, PrefUtil.LAST_PUSH_RECEIVED, data.toString());
+        String hiddenStr = data.getString(AppConstants.PN_IS_HIDDEN);
+        boolean isHidden = hiddenStr != null && hiddenStr.equalsIgnoreCase("true");
 
         if (MBaaS.gcmMessageListener != null) {
             String sentId  = data.getString(AppConstants.PN_SENT_ID);
@@ -27,7 +29,9 @@ public class MBaaSGcmListenerService extends GcmListenerService {
             StaticMethods.deliverPush(sentId, id);
 
             MBaaS.gcmMessageListener.onMessageReceived(MBaaS.context, from, data);
-            return;
+
+            if (isHidden)
+                return;
         }
 
         NotificationBuilder nBuilder = new NotificationBuilder(MBaaS.context, data);
