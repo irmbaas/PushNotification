@@ -169,23 +169,15 @@ public class NotificationBuilder {
 
     public void notifyPushAndDeliver() {
         notifyPush();
-        deliverPush();
+
+        String sentId  = data.getString(AppConstants.PN_SENT_ID);
+        String id      = data.getString(AppConstants.PN_ID);
+        StaticMethods.deliverPush(sentId, id);
     }
 
     public void notifyPush() {
         NotificationManager notificationManager =
                 (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(IdGenerator.generateIntegerId(), builder.build());
-    }
-
-    public void deliverPush() {
-        String sentId  = data.getString(AppConstants.PN_SENT_ID);
-        String id      = data.getString(AppConstants.PN_ID);
-
-        if(sentId == null || sentId.isEmpty() || id == null || id.isEmpty())
-            return;
-
-        Delivery delivery = new Delivery(ctx, sentId, id);
-        delivery.execute();
     }
 }

@@ -18,6 +18,6 @@ public class Application extends android.app.Application {
         super.onCreate();
         ACRA.init(this);
 
-        MBaaS.init(this);
+        MBaaS.init(this, new CustomMessageReceivedListener());
     }
 }
