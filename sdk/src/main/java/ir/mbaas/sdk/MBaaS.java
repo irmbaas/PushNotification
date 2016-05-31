@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import ir.mbaas.sdk.helper.GcmMessageListener;
 import ir.mbaas.sdk.helper.PrefUtil;
 import ir.mbaas.sdk.helper.StaticMethods;
 import ir.mbaas.sdk.logic.GoogleLocation;
@@ -23,6 +24,7 @@ public class MBaaS {
     public static DeviceInfo device;
     public static String appKey;
     public static Context context;
+    public static GcmMessageListener gcmMessageListener;
     public static int versionCode = 1;
 
     private static MBaaS _instance;
@@ -51,10 +53,16 @@ public class MBaaS {
     }
 
     public static void init(Application app) {
+        MBaaS.init(app, null);
+    }
+
+    public static void init(Application app, GcmMessageListener gcmMessageListener) {
 
         if (StaticMethods.isACRASenderServiceProcess(android.os.Process.myPid())) {
             return;
         }
+
+        MBaaS.gcmMessageListener = gcmMessageListener;
 
         if (_instance == null) {
             _instance = new MBaaS(app);

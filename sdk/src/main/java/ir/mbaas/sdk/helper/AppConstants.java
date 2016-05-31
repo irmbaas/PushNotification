@@ -34,4 +34,7 @@ public interface AppConstants {
     String PN_ACTION_URL   = "ActionUrl";
     String PN_CUSTOM_DATA  = "CustomData";
     String PN_IS_SILENT    = "IsSilent";
+    String PN_IS_HIDDEN    = "IsHidden";
+
+    String APP_NOTIFICATION_ID = "notification_id";
 }

@@ -17,7 +17,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import ir.mbaas.sdk.MBaaS;
 import ir.mbaas.sdk.R;
+import ir.mbaas.sdk.mbaas.Delivery;
 import ir.mbaas.sdk.models.DeviceInfo;
 
 /**
@@ -129,5 +131,15 @@ public class StaticMethods {
         }
 
         return false;
+    }
+
+    static public boolean deliverPush(String sentId, String id) {
+        if(sentId == null || sentId.isEmpty() || id == null || id.isEmpty())
+            return false;
+
+        Delivery delivery = new Delivery(MBaaS.context, sentId, id);
+        delivery.execute();
+
+        return true;
     }
 }
