@@ -31,15 +31,15 @@ public class Button {
     @JsonSetter("Action")
     public void setButtonAction(String actionTypeStr) {
         try {
-            actionType = PushActions.ActionType.values()[Integer.parseInt(actionTypeStr)];
+            actionType = PushActions.ButtonActionType.values()[Integer.parseInt(actionTypeStr)];
         } catch (NumberFormatException nfe) {
-            actionType = PushActions.ActionType.OpenApp;
+            actionType = PushActions.ButtonActionType.OpenApp;
         } catch (Exception exc) {
-            actionType = PushActions.ActionType.OpenApp;
+            actionType = PushActions.ButtonActionType.OpenApp;
         }
     }
 
-    public PushActions.ActionType actionType;
+    public PushActions.ButtonActionType actionType;
     public String icon;
     public int iconResourceId;
 

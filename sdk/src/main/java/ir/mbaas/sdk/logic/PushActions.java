@@ -6,17 +6,33 @@ import android.net.Uri;
 
 import ir.mbaas.sdk.MBaaS;
 import ir.mbaas.sdk.helper.AppConstants;
+import ir.mbaas.sdk.receivers.NotificationButtonReceiver;
 
 /**
  * Created by Mahdi on 5/15/2016.
  */
 public class PushActions {
 
-    public enum ActionType {
-        OpenApp, OpenUrl
+    public enum ContentActionType {
+        None, OpenApp, OpenUrl;
     }
 
-    static public Intent createAction(String customData, String actionUrl, String actionType) {
+    public enum ButtonActionType {
+        OpenApp(0), OpenUrl(1);
+
+        private final int value;
+
+        private ButtonActionType(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
+
+    static public Intent createContentAction(String customData, String actionUrl,
+                                             String actionType) {
         int actionTypeInt = 0;
 
         try {
@@ -24,10 +40,11 @@ public class PushActions {
         } catch (NumberFormatException nfe) {
         }
 
-        return createAction(customData, actionUrl, ActionType.values()[actionTypeInt]);
+        return createContentAction(customData, actionUrl, ContentActionType.values()[actionTypeInt]);
     }
 
-    static public Intent createAction(String customData, String actionUrl, ActionType actionType) {
+    static public Intent createContentAction(String customData, String actionUrl,
+                                      ContentActionType actionType) {
         Intent intent = null;
 
         switch (actionType) {
@@ -43,6 +60,18 @@ public class PushActions {
                     intent.setData(Uri.parse(actionUrl));
                 }
         }
+
+        return intent;
+    }
+
+    static public Intent createButtonAction(String customData, String actionUrl,
+                                            ButtonActionType actionType, int notificationId) {
+        Intent intent = new Intent(MBaaS.context, NotificationButtonReceiver.class);
+
+        intent.putExtra(AppConstants.PN_CUSTOM_DATA, customData);
+        intent.putExtra(AppConstants.PN_ACTION_URL, actionUrl);
+        intent.putExtra(AppConstants.PN_ACTION_TYPE, actionType.getValue());
+        intent.putExtra(AppConstants.APP_NOTIFICATION_ID,notificationId);
 
         return intent;
     }

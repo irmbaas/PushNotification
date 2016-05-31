@@ -15,7 +15,6 @@ import ir.mbaas.sdk.R;
 import ir.mbaas.sdk.helper.AppConstants;
 import ir.mbaas.sdk.helper.IdGenerator;
 import ir.mbaas.sdk.helper.StaticMethods;
-import ir.mbaas.sdk.mbaas.Delivery;
 import ir.mbaas.sdk.models.Button;
 import ir.mbaas.sdk.models.Buttons;
 import ir.mbaas.sdk.models.Image;
@@ -32,10 +31,12 @@ public class NotificationBuilder {
     private String title;
     private String summary;
     private String ticker;
+    private int notificationId;
 
     public NotificationBuilder(Context ctx, Bundle data) {
         this.ctx  = ctx;
         this.data = data;
+        notificationId = IdGenerator.generateIntegerId();
 
         this.builder = new NotificationCompat.Builder(ctx).setAutoCancel(true);
 
@@ -67,7 +68,7 @@ public class NotificationBuilder {
 
     private void setIntent() {
 
-        Intent intent = PushActions.createAction(
+        Intent intent = PushActions.createContentAction(
                 data.getString(AppConstants.PN_CUSTOM_DATA),
                 data.getString(AppConstants.PN_ACTION_URL),
                 data.getString(AppConstants.PN_ACTION_TYPE));
@@ -85,16 +86,17 @@ public class NotificationBuilder {
         Buttons buttons = Buttons.fromJson(data.getString(AppConstants.PN_BUTTONS));
 
         for (Button button : buttons.records) {
-            Intent intent = PushActions.createAction(
+            Intent intent = PushActions.createButtonAction(
                     data.getString(AppConstants.PN_CUSTOM_DATA),
                     button.actionUrl,
-                    button.actionType);
+                    button.actionType,
+                    notificationId);
 
             if (intent == null)
                 continue;
 
-            PendingIntent mainIntent = PendingIntent.getActivity(ctx, IdGenerator.generateIntegerId(),
-                    intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent mainIntent = PendingIntent.getBroadcast(ctx,
+                    IdGenerator.generateIntegerId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
             builder.addAction(button.iconResourceId, button.title, mainIntent);
         }
     }
@@ -178,6 +180,6 @@ public class NotificationBuilder {
     public void notifyPush() {
         NotificationManager notificationManager =
                 (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(IdGenerator.generateIntegerId(), builder.build());
+        notificationManager.notify(notificationId, builder.build());
     }
 }
