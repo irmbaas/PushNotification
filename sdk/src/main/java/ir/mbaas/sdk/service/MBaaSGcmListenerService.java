@@ -30,7 +30,7 @@ public class MBaaSGcmListenerService extends GcmListenerService {
 
             MBaaS.gcmMessageListener.onMessageReceived(MBaaS.context, from, data);
 
-            if (isHidden)
+            if (MBaaS.hideNotifications || isHidden)
                 return;
         }
 

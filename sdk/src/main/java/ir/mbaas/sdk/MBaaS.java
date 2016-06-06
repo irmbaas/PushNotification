@@ -26,6 +26,7 @@ public class MBaaS {
     public static Context context;
     public static GcmMessageListener gcmMessageListener;
     public static int versionCode = 1;
+    public static boolean hideNotifications = false;
 
     private static MBaaS _instance;
 
@@ -53,16 +54,18 @@ public class MBaaS {
     }
 
     public static void init(Application app) {
-        MBaaS.init(app, null);
+        MBaaS.init(app, null, false);
     }
 
-    public static void init(Application app, GcmMessageListener gcmMessageListener) {
+    public static void init(Application app, GcmMessageListener gcmMessageListener,
+                            boolean hideNotifications) {
 
         if (StaticMethods.isACRASenderServiceProcess(android.os.Process.myPid())) {
             return;
         }
 
         MBaaS.gcmMessageListener = gcmMessageListener;
+        MBaaS.hideNotifications = hideNotifications;
 
         if (_instance == null) {
             _instance = new MBaaS(app);
