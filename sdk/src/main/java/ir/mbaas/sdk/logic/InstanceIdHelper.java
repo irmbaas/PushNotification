@@ -56,9 +56,15 @@ public class InstanceIdHelper {
 
             @Override
             protected void onPostExecute(String token) {
-                //String localToken = PrefUtil.getString(mContext, PrefUtil.REGISTRATION_ID);
+                String localToken = PrefUtil.getString(mContext, PrefUtil.REGISTRATION_ID);
 
                 if (token != null) {
+
+                    if (MBaaS.gcmRegistrationListener != null) {
+                        MBaaS.gcmRegistrationListener.onTokenAvailable(MBaaS.context, token,
+                                !localToken.equals(token));
+                    }
+
                     PrefUtil.putString(mContext, PrefUtil.REGISTRATION_ID, token);
                     Registration regApi = new Registration(mContext, token, MBaaS.device);
                     regApi.execute();

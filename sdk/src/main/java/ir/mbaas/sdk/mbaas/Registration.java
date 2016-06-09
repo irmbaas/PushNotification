@@ -60,11 +60,13 @@ public class Registration extends BaseAsyncRequest {
 
     @Override
     protected void onCompletion(boolean success) {
-        if(success){
-            CustomDialogs.Toast(ctx, R.string.successfull_registration);
+        if (success) {
             PrefUtil.putInt(ctx, PrefUtil.APP_USE_COUNT, 0);
+            if(MBaaS.gcmRegistrationListener != null)
+                MBaaS.gcmRegistrationListener.successRegistrationOnMBaaS(MBaaS.context, regId);
         } else {
-            CustomDialogs.Toast(ctx, R.string.registration_failed);
+            if (MBaaS.gcmRegistrationListener != null)
+                MBaaS.gcmRegistrationListener.failedRegistrationOnMBaaS(MBaaS.context, regId);
         }
     }
 }

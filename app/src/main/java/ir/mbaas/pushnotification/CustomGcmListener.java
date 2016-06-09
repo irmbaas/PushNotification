@@ -9,14 +9,15 @@ import android.support.v4.app.NotificationCompat;
 
 import java.util.Random;
 
-import ir.mbaas.sdk.R;
 import ir.mbaas.sdk.helper.AppConstants;
-import ir.mbaas.sdk.helper.GcmMessageListener;
+import ir.mbaas.sdk.helper.CustomDialogs;
+import ir.mbaas.sdk.listeners.GcmMessageListener;
+import ir.mbaas.sdk.listeners.GcmRegistrationListener;
 
 /**
  * Created by Mahdi on 5/30/2016.
  */
-public class CustomMessageReceivedListener implements GcmMessageListener {
+public class CustomGcmListener implements GcmMessageListener, GcmRegistrationListener {
 
     @Override
     public void onMessageReceived(Context context, String from, Bundle data) {
@@ -53,7 +54,7 @@ public class CustomMessageReceivedListener implements GcmMessageListener {
                 // Set Text
                 .setContentText(message)
                 // Set SubText
-                .setSubText("CustomMessageReceivedListener")
+                .setSubText("CustomGcmListener")
                 // Set PendingIntent into Notification
                 .setContentIntent(pIntent)
                 // Dismiss Notification
@@ -66,5 +67,29 @@ public class CustomMessageReceivedListener implements GcmMessageListener {
         Random random = new Random();
         // Build Notification with Notification Manager
         notificationManager.notify(random.nextInt(), builder.build());
+    }
+
+    @Override
+    public void onTokenAvailable(Context context, String token, boolean updated) {
+
+        if(updated)
+            CustomDialogs.Toast(context, R.string.mbaas_successfull_new_gcm_registration);
+        else
+            CustomDialogs.Toast(context, R.string.mbaas_successfull_gcm_registration);
+    }
+
+    @Override
+    public void onTokenDeleted(Context context) {
+
+    }
+
+    @Override
+    public void successRegistrationOnMBaaS(Context context, String token) {
+        CustomDialogs.Toast(context, R.string.mbaas_successfull_registration);
+    }
+
+    @Override
+    public void failedRegistrationOnMBaaS(Context context, String token) {
+        CustomDialogs.Toast(context, R.string.mbaas_registration_failed);
     }
 }

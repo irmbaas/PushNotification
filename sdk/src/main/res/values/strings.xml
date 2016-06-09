@@ -1,6 +1,4 @@
 <resources>
     <string name="app_name">Push</string>
     <string name="push_metadata">ir.mbaas.sdk.token</string>
-    <string name="successfull_registration">شناسه ثبت نام با موفقیت ثبت شد.</string>
-    <string name="registration_failed">شناسه ثبت نشد.</string>
 </resources>

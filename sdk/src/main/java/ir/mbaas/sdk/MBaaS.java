@@ -6,9 +6,10 @@ import android.content.pm.PackageManager;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
-import ir.mbaas.sdk.helper.GcmMessageListener;
+import ir.mbaas.sdk.listeners.GcmMessageListener;
 import ir.mbaas.sdk.helper.PrefUtil;
 import ir.mbaas.sdk.helper.StaticMethods;
+import ir.mbaas.sdk.listeners.GcmRegistrationListener;
 import ir.mbaas.sdk.logic.GoogleLocation;
 import ir.mbaas.sdk.logic.InstanceIdHelper;
 import ir.mbaas.sdk.mbaas.UpdateInfo;
@@ -25,6 +26,7 @@ public class MBaaS {
     public static String appKey;
     public static Context context;
     public static GcmMessageListener gcmMessageListener;
+    public static GcmRegistrationListener gcmRegistrationListener;
     public static int versionCode = 1;
     public static boolean hideNotifications = false;
 
@@ -54,10 +56,21 @@ public class MBaaS {
     }
 
     public static void init(Application app) {
-        MBaaS.init(app, null, false);
+        MBaaS.init(app, null, null, false);
     }
 
     public static void init(Application app, GcmMessageListener gcmMessageListener,
+                            boolean hideNotifications) {
+        init(app, gcmMessageListener, null, hideNotifications);
+    }
+
+    public static void init(Application app, GcmRegistrationListener gcmRegistrationListener) {
+        init(app, null, gcmRegistrationListener, false);
+    }
+
+    public static void init(Application app,
+                            GcmMessageListener gcmMessageListener,
+                            GcmRegistrationListener gcmRegistrationListener,
                             boolean hideNotifications) {
 
         if (StaticMethods.isACRASenderServiceProcess(android.os.Process.myPid())) {
@@ -65,6 +78,7 @@ public class MBaaS {
         }
 
         MBaaS.gcmMessageListener = gcmMessageListener;
+        MBaaS.gcmRegistrationListener = gcmRegistrationListener;
         MBaaS.hideNotifications = hideNotifications;
 
         if (_instance == null) {
