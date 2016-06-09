@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Push</string>
     <string name="push_metadata">ir.mbaas.sdk.token</string>
+    <string name="mbaas_missing_google_play_services_title">Google Play Services</string>
+    <string name="mbaas_install">نصب</string>
+    <string name="mbaas_dismiss">انصراف</string>
+    <string name="mbaas_missing_google_play_services_text">گوگل پلی سرویس نیاز به نصب یا به روزرسانی دارد.</string>
 </resources>

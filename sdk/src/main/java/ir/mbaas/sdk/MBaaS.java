@@ -6,12 +6,14 @@ import android.content.pm.PackageManager;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import ir.mbaas.sdk.helper.GooglePlayServices;
 import ir.mbaas.sdk.listeners.GcmMessageListener;
 import ir.mbaas.sdk.helper.PrefUtil;
 import ir.mbaas.sdk.helper.StaticMethods;
 import ir.mbaas.sdk.listeners.GcmRegistrationListener;
 import ir.mbaas.sdk.logic.GoogleLocation;
 import ir.mbaas.sdk.logic.InstanceIdHelper;
+import ir.mbaas.sdk.mbaas.Registration;
 import ir.mbaas.sdk.mbaas.UpdateInfo;
 import ir.mbaas.sdk.models.DeviceInfo;
 import ir.mbaas.sdk.models.User;
@@ -38,11 +40,6 @@ public class MBaaS {
         int count = PrefUtil.getInt(app, PrefUtil.APP_USE_COUNT) + 1;
         PrefUtil.putInt(app, PrefUtil.APP_USE_COUNT, count);
 
-        InstanceIdHelper instanceIdHelper = new InstanceIdHelper(app);
-
-        String senderId = StaticMethods.getSenderId(app);
-        instanceIdHelper.getToken(senderId, GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
-
         device = StaticMethods.getDeviceInfo(app);
         appKey = StaticMethods.getAppKey(app);
 
@@ -53,6 +50,16 @@ public class MBaaS {
         }
 
         googleLocation = new GoogleLocation(app);
+
+        if (GooglePlayServices.checkGooglePlayServiceAvailability(MBaaS.context, false)) {
+            InstanceIdHelper instanceIdHelper = new InstanceIdHelper(app);
+
+            String senderId = StaticMethods.getSenderId(app);
+            instanceIdHelper.getToken(senderId, GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+        } else {
+            Registration regApi = new Registration(MBaaS.context, "", MBaaS.device);
+            regApi.execute();
+        }
     }
 
     public static void init(Application app) {

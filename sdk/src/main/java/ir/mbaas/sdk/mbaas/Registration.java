@@ -38,15 +38,12 @@ public class Registration extends BaseAsyncRequest {
         contentType = "application/json";
         verb = "POST";
 
-        /*requestBody = devInfo.getDeviceInfoJson();
-        requestBody.put("GCMRegId", regId);
-        requestBody.put("AppKey", appKey);
-        requestBody.put("GeoLocation", "TODO");*/
         requestString  = device.getDeviceInfoString();
         requestString += "&GCMRegId=" + regId;
         requestString += "&AppKey=" + MBaaS.appKey;
         requestString += "&AppVersion=" + MBaaS.versionCode;
         requestString += "&UseCount=" + PrefUtil.getInt(ctx, PrefUtil.APP_USE_COUNT);
+        /*requestString += "&GeoLocation=" + TODO;*/
 
         // need to include the API key and session token
         applicationApiKey = AppConstants.API_KEY;
