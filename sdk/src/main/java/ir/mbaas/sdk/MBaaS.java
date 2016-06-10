@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import ir.mbaas.sdk.exceptions.MBaaSNotInitializedException;
 import ir.mbaas.sdk.helper.GooglePlayServices;
 import ir.mbaas.sdk.listeners.GcmMessageListener;
 import ir.mbaas.sdk.helper.PrefUtil;
@@ -50,20 +51,6 @@ public class MBaaS {
         }
 
         googleLocation = new GoogleLocation(app);
-
-        if (GooglePlayServices.checkGooglePlayServiceAvailability(MBaaS.context)) {
-            InstanceIdHelper instanceIdHelper = new InstanceIdHelper(app);
-
-            String senderId = StaticMethods.getSenderId(app);
-            instanceIdHelper.getToken(senderId, GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
-        } else {
-            if (MBaaS.gcmRegistrationListener != null) {
-                MBaaS.gcmRegistrationListener.onGooglePlayServiceUnavailable(MBaaS.context);
-            }
-
-            Registration regApi = new Registration(MBaaS.context, "", MBaaS.device);
-            regApi.execute();
-        }
     }
 
     public static void init(Application app) {
@@ -94,10 +81,40 @@ public class MBaaS {
 
         if (_instance == null) {
             _instance = new MBaaS(app);
+
+            try {
+                register();
+            } catch (MBaaSNotInitializedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    public static void updateInfo(User user) {
+    public static void register() throws MBaaSNotInitializedException {
+
+        if(_instance == null)
+            throw new MBaaSNotInitializedException();
+
+        if (GooglePlayServices.checkGooglePlayServiceAvailability(MBaaS.context)) {
+            InstanceIdHelper instanceIdHelper = new InstanceIdHelper(MBaaS.context);
+
+            String senderId = StaticMethods.getSenderId(MBaaS.context);
+            instanceIdHelper.getToken(senderId, GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+        } else {
+            if (MBaaS.gcmRegistrationListener != null) {
+                MBaaS.gcmRegistrationListener.onGooglePlayServiceUnavailable(MBaaS.context);
+            }
+
+            Registration regApi = new Registration(MBaaS.context, "", MBaaS.device);
+            regApi.execute();
+        }
+    }
+
+    public static void updateInfo(User user) throws MBaaSNotInitializedException {
+
+        if(_instance == null)
+            throw new MBaaSNotInitializedException();
+
         UpdateInfo uInfo = new UpdateInfo(context, device, user);
         uInfo.execute();
     }
