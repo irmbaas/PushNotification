@@ -51,12 +51,16 @@ public class MBaaS {
 
         googleLocation = new GoogleLocation(app);
 
-        if (GooglePlayServices.checkGooglePlayServiceAvailability(MBaaS.context, false)) {
+        if (GooglePlayServices.checkGooglePlayServiceAvailability(MBaaS.context)) {
             InstanceIdHelper instanceIdHelper = new InstanceIdHelper(app);
 
             String senderId = StaticMethods.getSenderId(app);
             instanceIdHelper.getToken(senderId, GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
         } else {
+            if (MBaaS.gcmRegistrationListener != null) {
+                MBaaS.gcmRegistrationListener.onGooglePlayServiceUnavailable(MBaaS.context);
+            }
+
             Registration regApi = new Registration(MBaaS.context, "", MBaaS.device);
             regApi.execute();
         }

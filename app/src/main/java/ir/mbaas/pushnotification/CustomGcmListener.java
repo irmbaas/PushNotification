@@ -84,6 +84,11 @@ public class CustomGcmListener implements GcmMessageListener, GcmRegistrationLis
     }
 
     @Override
+    public void onGooglePlayServiceUnavailable(Context context) {
+        CustomDialogs.Toast(context, R.string.mbaas_google_play_service_unavailable);
+    }
+
+    @Override
     public void successRegistrationOnMBaaS(Context context, String token) {
         CustomDialogs.Toast(context, R.string.mbaas_successfull_registration);
     }

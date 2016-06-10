@@ -78,7 +78,7 @@ public class GooglePlayServices {
      * @return
      */
 
-    public static boolean checkGooglePlayServiceAvailability(final Context context, boolean showDialog) {
+    public static boolean checkGooglePlayServiceAvailability(final Context context) {
         int status = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(context);
         ApplicationInfo ai = null;
         try {
@@ -92,33 +92,6 @@ public class GooglePlayServices {
             }
         } catch (Exception exc) {
             Log.e(TAG, exc.getMessage());
-        }
-
-        if (showDialog) {
-            if (GoogleApiAvailability.getInstance().isUserResolvableError(status)) {
-                new AlertDialog.Builder(context)
-                    .setTitle(R.string.mbaas_missing_google_play_services_title)
-                    .setMessage(R.string.mbaas_missing_google_play_services_text)
-                    .setCancelable(true)
-                    .setNegativeButton(R.string.mbaas_dismiss, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                        }
-                    })
-                    .setPositiveButton(R.string.mbaas_install, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            Intent intent = new Intent(Intent.ACTION_VIEW);
-                            intent.setData(Uri.parse("market://details?id=com.google.android.gms"));
-                            try {
-                                context.startActivity(intent);
-                            } catch (Exception ex) {
-                                Log.e(TAG, "No market app is installed on this device to launch it "
-                                        + "for installing Google-Play-Service.");
-                            }
-                        }
-                    }).create().show(); //assumed that user has at least one market installed
-            }
         }
 
         return false;

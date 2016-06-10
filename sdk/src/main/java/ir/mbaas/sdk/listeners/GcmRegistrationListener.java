@@ -24,7 +24,26 @@ public interface GcmRegistrationListener {
      */
     void onTokenDeleted(Context context);
 
+    /**
+     * Called when Google Play Service is unavailable.
+     *
+     * @param context An instance of the application {@link Context}
+     */
+    void onGooglePlayServiceUnavailable(Context context);
+
+    /**
+     * Called when device register on MBaaS successfully.
+     *
+     * @param context An instance of the application {@link Context}
+     * @param token   The value of the token.
+     */
     void successRegistrationOnMBaaS(Context context, String token);
 
+    /**
+     * Called when device registration on MBaaS fails.
+     *
+     * @param context An instance of the application {@link Context}
+     * @param token   The value of the token.
+     */
     void failedRegistrationOnMBaaS(Context context, String token);
 }
