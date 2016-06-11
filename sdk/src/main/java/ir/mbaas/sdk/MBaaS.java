@@ -105,7 +105,7 @@ public class MBaaS {
                 MBaaS.gcmRegistrationListener.onGooglePlayServiceUnavailable(MBaaS.context);
             }
 
-            Registration regApi = new Registration(MBaaS.context, "", MBaaS.device);
+            Registration regApi = new Registration(MBaaS.context, "", MBaaS.device, false);
             regApi.execute();
         }
     }

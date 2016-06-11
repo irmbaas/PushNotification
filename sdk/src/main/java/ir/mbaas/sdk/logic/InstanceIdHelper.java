@@ -66,7 +66,7 @@ public class InstanceIdHelper {
                     }
 
                     PrefUtil.putString(mContext, PrefUtil.REGISTRATION_ID, token);
-                    Registration regApi = new Registration(mContext, token, MBaaS.device);
+                    Registration regApi = new Registration(mContext, token, MBaaS.device, true);
                     regApi.execute();
                 }
             }

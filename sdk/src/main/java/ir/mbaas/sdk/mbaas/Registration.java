@@ -22,11 +22,13 @@ public class Registration extends BaseAsyncRequest {
     private Context ctx;
     private String regId;
     private DeviceInfo device;
+    private boolean hasGooglePlayService;
 
-    public Registration(Context ctx, String regId, DeviceInfo device) {
+    public Registration(Context ctx, String regId, DeviceInfo device, boolean hasGooglePlayService) {
         this.ctx = ctx;
         this.regId = regId;
         this.device = device;
+        this.hasGooglePlayService = hasGooglePlayService;
     }
 
     @Override
@@ -43,6 +45,7 @@ public class Registration extends BaseAsyncRequest {
         requestString += "&AppKey=" + MBaaS.appKey;
         requestString += "&AppVersion=" + MBaaS.versionCode;
         requestString += "&UseCount=" + PrefUtil.getInt(ctx, PrefUtil.APP_USE_COUNT);
+        requestString += "&HasGooglePlayService=" + String.valueOf(hasGooglePlayService);
         /*requestString += "&GeoLocation=" + TODO;*/
 
         // need to include the API key and session token
