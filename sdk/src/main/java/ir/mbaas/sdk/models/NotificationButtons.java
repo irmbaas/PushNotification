@@ -8,14 +8,14 @@ import java.util.List;
 import ir.mbaas.sdk.dfapi.ApiException;
 import ir.mbaas.sdk.dfapi.ApiInvoker;
 
-public class Buttons {
+public class NotificationButtons {
     @JsonProperty("Buttons")
-    public List<Button> records = new ArrayList<>();
+    public List<NotificationButton> records = new ArrayList<>();
 
-    public static Buttons fromJson(String buttonsStr) {
+    public static NotificationButtons fromJson(String buttonsStr) {
         try {
             buttonsStr = "{\"Buttons\":" + buttonsStr + "}";
-            return (Buttons) ApiInvoker.deserialize(buttonsStr, "", Buttons.class);
+            return (NotificationButtons) ApiInvoker.deserialize(buttonsStr, "", NotificationButtons.class);
         } catch (ApiException e) {
             e.printStackTrace();
         }

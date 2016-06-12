@@ -14,7 +14,7 @@ import ir.mbaas.sdk.logic.PushActions;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class Button {
+public class NotificationButton {
 
     @JsonProperty("Title")
     public String title;
@@ -43,7 +43,7 @@ public class Button {
     public String icon;
     public int iconResourceId;
 
-    public Button() {
+    public NotificationButton() {
     }
 
     public void setAllNonNull() {

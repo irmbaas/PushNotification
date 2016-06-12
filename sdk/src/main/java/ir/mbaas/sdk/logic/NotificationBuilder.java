@@ -15,10 +15,10 @@ import ir.mbaas.sdk.R;
 import ir.mbaas.sdk.helper.AppConstants;
 import ir.mbaas.sdk.helper.IdGenerator;
 import ir.mbaas.sdk.helper.StaticMethods;
-import ir.mbaas.sdk.models.Button;
-import ir.mbaas.sdk.models.Buttons;
-import ir.mbaas.sdk.models.Image;
-import ir.mbaas.sdk.models.Images;
+import ir.mbaas.sdk.models.NotificationButton;
+import ir.mbaas.sdk.models.NotificationButtons;
+import ir.mbaas.sdk.models.NotificationImage;
+import ir.mbaas.sdk.models.NotificationImages;
 
 /**
  * Created by Mahdi on 5/11/2016.
@@ -83,9 +83,9 @@ public class NotificationBuilder {
     }
 
     private void setButtons() {
-        Buttons buttons = Buttons.fromJson(data.getString(AppConstants.PN_BUTTONS));
+        NotificationButtons buttons = NotificationButtons.fromJson(data.getString(AppConstants.PN_BUTTONS));
 
-        for (Button button : buttons.records) {
+        for (NotificationButton button : buttons.records) {
             Intent intent = PushActions.createButtonAction(
                     data.getString(AppConstants.PN_CUSTOM_DATA),
                     button.actionUrl,
@@ -103,14 +103,14 @@ public class NotificationBuilder {
 
     private void setImages() {
         boolean smallIconExists = false;
-        Images images = Images.fromJson(data.getString(AppConstants.PN_IMAGES));
+        NotificationImages images = NotificationImages.fromJson(data.getString(AppConstants.PN_IMAGES));
 
         if (images != null && images.records.size() > 0) {
-            for (Image image : images.records) {
-                if (image.type == Images.ImageType.Small) {
+            for (NotificationImage image : images.records) {
+                if (image.type == NotificationImages.ImageType.Small) {
                     smallIconExists = true;
                     setNotificationIcon(image);
-                } else if (image.type == Images.ImageType.Large) {
+                } else if (image.type == NotificationImages.ImageType.Large) {
                     setBigPicture(image);
                 }
             }
@@ -129,7 +129,7 @@ public class NotificationBuilder {
             builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
     }
 
-    private void setNotificationIcon(Image image) {
+    private void setNotificationIcon(NotificationImage image) {
         builder.setSmallIcon(ctx.getApplicationInfo().icon);
 
         Bitmap largeIcon;
@@ -149,7 +149,7 @@ public class NotificationBuilder {
         builder.setLargeIcon(largeIcon);
     }
 
-    private void setBigPicture(Image image) {
+    private void setBigPicture(NotificationImage image) {
         NotificationCompat.BigPictureStyle bigPic = new NotificationCompat.BigPictureStyle();
 
         if (image != null && image.url != null && !image.url.isEmpty()) {

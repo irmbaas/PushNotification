@@ -5,14 +5,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
-import ir.mbaas.sdk.logic.PushActions;
-
 /**
  * Created by Mahdi on 5/11/2016.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class Image {
+public class NotificationImage {
 
     @JsonProperty("Size")
     public int size;
@@ -23,17 +21,17 @@ public class Image {
     @JsonSetter("Type")
     public void setImageType(String imgTypeStr) {
         try {
-            type = Images.ImageType.values()[Integer.parseInt(imgTypeStr)];
+            type = NotificationImages.ImageType.values()[Integer.parseInt(imgTypeStr)];
         } catch (NumberFormatException nfe) {
-            type = Images.ImageType.Small;
+            type = NotificationImages.ImageType.Small;
         } catch (Exception exc) {
-            type = Images.ImageType.Small;
+            type = NotificationImages.ImageType.Small;
         }
     }
 
-    public Images.ImageType type;
+    public NotificationImages.ImageType type;
 
-    public Image() {
+    public NotificationImage() {
     }
 
     public void setAllNonNull() {
