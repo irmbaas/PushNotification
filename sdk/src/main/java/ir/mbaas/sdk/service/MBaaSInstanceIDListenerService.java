@@ -30,7 +30,8 @@ public class MBaaSInstanceIDListenerService extends InstanceIDListenerService {
                 return;
 
             PrefUtil.putString(MBaaS.context, PrefUtil.REGISTRATION_ID, token);
-            Registration regApi = new Registration(MBaaS.context, token, MBaaS.device, true);
+            Registration regApi = new Registration(MBaaS.context, token, MBaaS.device,
+                    MBaaS.hasGooglePlayService);
             regApi.execute();
             //send token to app server
         } catch (IOException e) {

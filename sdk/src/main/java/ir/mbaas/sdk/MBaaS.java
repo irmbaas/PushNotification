@@ -31,6 +31,7 @@ public class MBaaS {
     public static GcmMessageListener gcmMessageListener;
     public static GcmRegistrationListener gcmRegistrationListener;
     public static int versionCode = 1;
+    public static boolean hasGooglePlayService = false;
     public static boolean hideNotifications = false;
 
     private static MBaaS _instance;
@@ -95,7 +96,9 @@ public class MBaaS {
         if(_instance == null)
             throw new MBaaSNotInitializedException();
 
-        if (GooglePlayServices.checkGooglePlayServiceAvailability(MBaaS.context)) {
+        hasGooglePlayService = GooglePlayServices.checkGooglePlayServiceAvailability(MBaaS.context);
+
+        if (hasGooglePlayService) {
             InstanceIdHelper instanceIdHelper = new InstanceIdHelper(MBaaS.context);
 
             String senderId = StaticMethods.getSenderId(MBaaS.context);
@@ -105,7 +108,8 @@ public class MBaaS {
                 MBaaS.gcmRegistrationListener.onGooglePlayServiceUnavailable(MBaaS.context);
             }
 
-            Registration regApi = new Registration(MBaaS.context, "", MBaaS.device, false);
+            Registration regApi = new Registration(MBaaS.context, "", MBaaS.device,
+                    hasGooglePlayService);
             regApi.execute();
         }
     }
