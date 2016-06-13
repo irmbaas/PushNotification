@@ -66,10 +66,13 @@ public class InstanceIdHelper {
                     }
 
                     PrefUtil.putString(mContext, PrefUtil.REGISTRATION_ID, token);
-                    Registration regApi = new Registration(mContext, token, MBaaS.device,
-                            MBaaS.hasGooglePlayService);
-                    regApi.execute();
+                } else {
+                    token = "";
                 }
+
+                Registration regApi = new Registration(mContext, token, MBaaS.device,
+                        MBaaS.hasGooglePlayService);
+                regApi.execute();
             }
         }.execute();
     }
