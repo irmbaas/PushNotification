@@ -12,6 +12,7 @@ import ir.mbaas.sdk.listeners.GcmMessageListener;
 import ir.mbaas.sdk.helper.PrefUtil;
 import ir.mbaas.sdk.helper.StaticMethods;
 import ir.mbaas.sdk.listeners.GcmRegistrationListener;
+import ir.mbaas.sdk.listeners.MBaaSListener;
 import ir.mbaas.sdk.logic.GoogleLocation;
 import ir.mbaas.sdk.logic.InstanceIdHelper;
 import ir.mbaas.sdk.mbaas.Registration;
@@ -28,6 +29,7 @@ public class MBaaS {
     public static DeviceInfo device;
     public static String appKey;
     public static Context context;
+    public static MBaaSListener mBaaSListener;
     public static GcmMessageListener gcmMessageListener;
     public static GcmRegistrationListener gcmRegistrationListener;
     public static int versionCode = 1;
@@ -55,21 +57,26 @@ public class MBaaS {
     }
 
     public static void init(Application app) {
-        MBaaS.init(app, null, null, false);
+        MBaaS.init(app, null, null, null, false);
+    }
+
+    public static void init(Application app, MBaaSListener mBaaSListener) {
+        MBaaS.init(app, null, null, mBaaSListener, false);
     }
 
     public static void init(Application app, GcmMessageListener gcmMessageListener,
                             boolean hideNotifications) {
-        init(app, gcmMessageListener, null, hideNotifications);
+        init(app, gcmMessageListener, null, null, hideNotifications);
     }
 
     public static void init(Application app, GcmRegistrationListener gcmRegistrationListener) {
-        init(app, null, gcmRegistrationListener, false);
+        init(app, null, gcmRegistrationListener, null, false);
     }
 
     public static void init(Application app,
                             GcmMessageListener gcmMessageListener,
                             GcmRegistrationListener gcmRegistrationListener,
+                            MBaaSListener mBaaSListener,
                             boolean hideNotifications) {
 
         if (StaticMethods.isACRASenderServiceProcess(android.os.Process.myPid())) {
@@ -79,6 +86,7 @@ public class MBaaS {
         MBaaS.gcmMessageListener = gcmMessageListener;
         MBaaS.gcmRegistrationListener = gcmRegistrationListener;
         MBaaS.hideNotifications = hideNotifications;
+        MBaaS.mBaaSListener = mBaaSListener;
 
         if (_instance == null) {
             _instance = new MBaaS(app);

@@ -1,6 +1,7 @@
 package ir.mbaas.sdk.mbaas;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.json.JSONException;
 
@@ -17,41 +18,42 @@ import ir.mbaas.sdk.models.User;
  */
 public class UpdateInfo extends BaseAsyncRequest {
 
-        private Context ctx;
-        private DeviceInfo device;
-        private User user;
+    private String TAG = "UpdateInfo";
+    private Context ctx;
+    private DeviceInfo device;
+    private User user;
 
-        public UpdateInfo(Context ctx, DeviceInfo device, User user) {
-            this.ctx  = ctx;
-            this.user = user;
-            this.device = device;
-        }
-
-        @Override
-        protected void doSetup() throws ApiException, JSONException {
-            callerName = "updateUserInfo";
-
-            serviceName = AppConstants.GCM_SERVICE;
-            endPoint = AppConstants.GCM_UPDATE_API;
-            contentType = "application/json";
-            verb = "POST";
-
-            requestString  = user.toString();
-            requestString += "&IMEI=" + device.getIMEI();
-            requestString += "&AppKey=" + MBaaS.appKey;
-
-            // need to include the API key and session token
-            applicationApiKey = AppConstants.API_KEY;
-        }
-
-        @Override
-        protected void processResponse(String response) throws ApiException, JSONException {
-            int i = 2;
-        }
-
-        @Override
-        protected void onCompletion(boolean success) {
-            int j = 2;
-        }
+    public UpdateInfo(Context ctx, DeviceInfo device, User user) {
+        this.ctx  = ctx;
+        this.user = user;
+        this.device = device;
     }
+
+    @Override
+    protected void doSetup() throws ApiException, JSONException {
+        callerName = "updateUserInfo";
+
+        serviceName = AppConstants.GCM_SERVICE;
+        endPoint = AppConstants.GCM_UPDATE_API;
+        contentType = "application/json";
+        verb = "POST";
+
+        requestString  = user.toString();
+        requestString += "&IMEI=" + device.getIMEI();
+        requestString += "&AppKey=" + MBaaS.appKey;
+
+        // need to include the API key and session token
+        applicationApiKey = AppConstants.API_KEY;
+    }
+
+    @Override
+    protected void processResponse(String response) throws ApiException, JSONException {
+        Log.d(TAG, "Response Received.");
+    }
+
+    @Override
+    protected void onCompletion(boolean success) {
+        Log.d(TAG, "The request is completed.");
+    }
+}
 

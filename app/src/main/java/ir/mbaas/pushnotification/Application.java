@@ -19,7 +19,8 @@ public class Application extends android.app.Application {
         ACRA.init(this);
 
         CustomGcmListener customGcmListener = new CustomGcmListener();
+        CustomMBaaSListener customMBaaSListener = new CustomMBaaSListener();
 
-        MBaaS.init(this, customGcmListener, customGcmListener, false);
+        MBaaS.init(this, customGcmListener, customGcmListener, customMBaaSListener, false);
     }
 }

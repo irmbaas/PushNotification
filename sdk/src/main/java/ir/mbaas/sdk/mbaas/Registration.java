@@ -7,12 +7,14 @@ import org.json.JSONException;
 import ir.mbaas.sdk.MBaaS;
 import ir.mbaas.sdk.R;
 import ir.mbaas.sdk.dfapi.ApiException;
+import ir.mbaas.sdk.dfapi.ApiInvoker;
 import ir.mbaas.sdk.dfapi.BaseAsyncRequest;
 import ir.mbaas.sdk.helper.AppConstants;
 import ir.mbaas.sdk.helper.CustomDialogs;
 import ir.mbaas.sdk.helper.PrefUtil;
 import ir.mbaas.sdk.helper.StaticMethods;
 import ir.mbaas.sdk.models.DeviceInfo;
+import ir.mbaas.sdk.models.MBaaSRegistrationResponse;
 
 /**
  * Created by Mahdi on 4/10/2016.
@@ -23,6 +25,7 @@ public class Registration extends BaseAsyncRequest {
     private String regId;
     private DeviceInfo device;
     private boolean hasGooglePlayService;
+    private MBaaSRegistrationResponse mBaaSResponse;
 
     public Registration(Context ctx, String regId, DeviceInfo device, boolean hasGooglePlayService) {
         this.ctx = ctx;
@@ -54,8 +57,13 @@ public class Registration extends BaseAsyncRequest {
     }
 
     @Override
-    protected void processResponse(String response) throws ApiException, JSONException {
-        int i = 2;
+    protected void processResponse(String response) {
+        try {
+            mBaaSResponse = (MBaaSRegistrationResponse)
+                    ApiInvoker.deserialize(response, "", MBaaSRegistrationResponse.class);
+        } catch (ApiException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -64,9 +72,20 @@ public class Registration extends BaseAsyncRequest {
             PrefUtil.putInt(ctx, PrefUtil.APP_USE_COUNT, 0);
             if(MBaaS.gcmRegistrationListener != null)
                 MBaaS.gcmRegistrationListener.successRegistrationOnMBaaS(MBaaS.context, regId);
+
+            if (MBaaS.mBaaSListener != null) {
+                MBaaS.mBaaSListener.successRegistration(MBaaS.context, regId);
+
+                if(mBaaSResponse.appVersion != null)
+                    MBaaS.mBaaSListener.versionInfoAvailable(MBaaS.context, mBaaSResponse.appVersion);
+            }
         } else {
             if (MBaaS.gcmRegistrationListener != null)
                 MBaaS.gcmRegistrationListener.failedRegistrationOnMBaaS(MBaaS.context, regId);
+
+            if (MBaaS.mBaaSListener != null) {
+                MBaaS.mBaaSListener.failedRegistration(MBaaS.context, regId);
+            }
         }
     }
 }

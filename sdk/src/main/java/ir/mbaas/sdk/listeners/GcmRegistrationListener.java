@@ -37,6 +37,7 @@ public interface GcmRegistrationListener {
      * @param context An instance of the application {@link Context}
      * @param token   The value of the token.
      */
+    @Deprecated
     void successRegistrationOnMBaaS(Context context, String token);
 
     /**
@@ -45,5 +46,6 @@ public interface GcmRegistrationListener {
      * @param context An instance of the application {@link Context}
      * @param token   The value of the token.
      */
+    @Deprecated
     void failedRegistrationOnMBaaS(Context context, String token);
 }

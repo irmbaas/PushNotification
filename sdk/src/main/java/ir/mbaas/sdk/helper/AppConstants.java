@@ -3,7 +3,7 @@ package ir.mbaas.sdk.helper;
 public interface AppConstants {
     // Note: emulator IP for host's localhost is 10.0.2.2
     String INSTANCE_URL = "http://push.mbaas.ir/api/v2";
-    String GCM_SERVICE  = "mbaas_push";
+    String GCM_SERVICE  = "mbaas_push2";
 
     String GCM_REGISTER_API  = "register";
     String GCM_UPDATE_API  = "update";
@@ -12,7 +12,7 @@ public interface AppConstants {
 
     String API_KEY = "dc7dec8087f417c0c4212309415804690abe38127dfb9bfa5c442633170b068f";
 
-    String MBAAS_BASE_URL = "http://mbaas.ir/";
+    String MBAAS_BASE_URL = "http://acra.mbaas.ir/";
 
     String ACRA_PRIVATE_PROCESS_NAME = ":acra";
 

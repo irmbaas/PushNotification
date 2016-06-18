@@ -1,6 +1,7 @@
 package ir.mbaas.sdk.mbaas;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.json.JSONException;
 
@@ -13,6 +14,8 @@ import ir.mbaas.sdk.helper.PrefUtil;
  * Created by Mahdi on 4/25/2016.
  */
 public class GeoLocation extends BaseAsyncRequest {
+
+    private String TAG = "GeoLocation";
     private Context ctx;
     private String geoLocations;
 
@@ -39,7 +42,7 @@ public class GeoLocation extends BaseAsyncRequest {
 
     @Override
     protected void processResponse(String response) throws ApiException, JSONException {
-        int i = 2;
+        Log.d(TAG, "Response Received.");
     }
 
     @Override
