@@ -4,6 +4,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.support.v4.app.NotificationCompat;
 
 import org.json.JSONException;
@@ -101,18 +102,25 @@ public class Registration extends BaseAsyncRequest {
     }
 
     private boolean showNewVersionNotification() {
-        if (mBaaSResponse.appVersion == null || !mBaaSResponse.appVersion.autoUpdate)
+        if (mBaaSResponse.appVersion == null || !mBaaSResponse.appVersion.autoUpdate ||
+                mBaaSResponse.appVersion.versionCode <= MBaaS.versionCode)
             return false;
 
         Date now = new Date();
-        long updateTime = PrefUtil.getLong(context, PrefUtil.NEXT_UPDATE_TIME, now.getTime());
+        long updateTime = PrefUtil.getLong(context, PrefUtil.NEXT_UPDATE_TIME, 0);
 
         if(now.getTime() < updateTime)
             return false;
 
-        String title   = context.getResources().getString(R.string.app_update_title);
+        String appName = context.getResources().getString(context.getApplicationInfo().labelRes);
+        appName = (appName == null || appName.isEmpty()) ? mBaaSResponse.appVersion.appName : appName;
+
+        String title   = String.format(context.getResources()
+                .getString(R.string.app_update_title), appName);
+
         String ticker  = title;
-        String message = context.getResources().getString(R.string.app_update_text);
+        String message = String.format(context.getResources().getString(R.string.app_update_text),
+                mBaaSResponse.appVersion.versionName, appName);
         String update  = context.getResources().getString(R.string.app_update_btn);
         String later   = context.getResources().getString(R.string.app_later_btn);
         int notificationId = IdGenerator.generateIntegerId();
@@ -144,12 +152,12 @@ public class Registration extends BaseAsyncRequest {
                 // Set SubText
                 //.setSubText("")
                 // Set PendingIntent into Notification
-                .setContentIntent(uMainIntent)
+                //.setContentIntent(lMinIntent)
                 // Dismiss Notification
                 .setAutoCancel(true);
 
-        builder.addAction(R.drawable.ic_history, later, lMinIntent);
         builder.addAction(R.drawable.ic_file_download, update, uMainIntent);
+        builder.addAction(R.drawable.ic_history, later, lMinIntent);
 
         // Create Notification Manager
         NotificationManager notificationManager =

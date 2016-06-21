@@ -25,4 +25,7 @@ public class MBaaSAppVersion {
 
     @JsonProperty("IconLink")
     public String iconUrl;
+
+    @JsonProperty("AppName")
+    public String appName;
 }

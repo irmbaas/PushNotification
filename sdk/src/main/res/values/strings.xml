@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Push</string>
     <string name="push_metadata">ir.mbaas.sdk.token</string>
-    <string name="app_update_title">به روزرسانی برنامه $0%s</string>
-    <string name="app_update_text">نسخه جدید برنامه $0%s را می توانید دانلود کنید.</string>
+    <string name="app_update_title">نسخه جدید %1$s</string>
+    <string name="app_update_text">شما می توانید نسخه %1$s برنامه %2$s را دریافت نمائید.</string>
     <string name="app_update_btn">به روزرسانی</string>
-    <string name="app_later_btn">بعدا</string>
+    <string name="app_later_btn">یادآوری</string>
 </resources>

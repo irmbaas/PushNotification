@@ -11,6 +11,7 @@ import android.os.Environment;
 
 import java.util.Date;
 
+import ir.mbaas.sdk.R;
 import ir.mbaas.sdk.helper.AppConstants;
 import ir.mbaas.sdk.helper.PrefUtil;
 import ir.mbaas.sdk.logic.PushActions;
@@ -35,6 +36,7 @@ public class UpdateButtonReceiver extends BroadcastReceiver {
                 Date now = new Date();
                 PrefUtil.putLong(context, PrefUtil.NEXT_UPDATE_TIME, now.getTime() +
                         AppConstants.UD_LATER_TIME);
+                break;
             case Never:
                 break;
         }
@@ -50,11 +52,22 @@ public class UpdateButtonReceiver extends BroadcastReceiver {
         DownloadManager.Request request = new DownloadManager.Request(Download_Uri);
         request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
         request.setAllowedOverRoaming(false);
-        request.setTitle("App Download");
+
+        String appName = context.getResources().getString(context.getApplicationInfo().labelRes);
+        String pkgName = context.getApplicationInfo().packageName;
+
+        pkgName = pkgName.substring(pkgName.lastIndexOf(".") + 1);
+
+        appName = (appName == null || appName.isEmpty()) ? pkgName : appName;
+
+        String downloadTitle = String.format(context.getResources()
+                .getString(R.string.app_update_title), appName);
+
+        request.setTitle(downloadTitle);
 
         try {
             request.setDestinationInExternalFilesDir(context, Environment.DIRECTORY_DOWNLOADS,
-                    "test.apk");
+                    pkgName + ".apk");
         } catch (Exception exc) {
             exc.printStackTrace();
         }
