@@ -9,6 +9,8 @@ public class PrefUtil {
     public static String LAST_LOCATION    = "last_location";
     public static String GEO_LOCATIONS    = "geo_locations";
     public static String APP_USE_COUNT    = "app_use_count";
+    public static String UPDATE_REFERENCE_ID = "update_reference_id";
+    public static String NEXT_UPDATE_TIME = "next_update_time";
 
     static public final class Prefs {
         public static SharedPreferences get(Context context) {
@@ -62,6 +64,18 @@ public class PrefUtil {
         SharedPreferences settings = Prefs.get(context);
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(key, value);
+        editor.apply();
+    }
+
+    static public long getLong(Context context, String key, long defaultVal) {
+        SharedPreferences settings = Prefs.get(context);
+        return settings.getLong(key, defaultVal);
+    }
+
+    static public synchronized void putLong(Context context, String key, long value) {
+        SharedPreferences settings = Prefs.get(context);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putLong(key, value);
         editor.apply();
     }
 }

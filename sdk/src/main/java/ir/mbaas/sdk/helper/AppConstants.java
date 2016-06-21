@@ -32,4 +32,8 @@ public interface AppConstants {
     String PN_IS_HIDDEN    = "IsHidden";
 
     String APP_NOTIFICATION_ID = "notification_id";
+
+    String UD_ACTION_TYPE = "UpdateActionType";
+    String UD_DOWNLOAD_URL= "UpdateDownloadUrl";
+    long UD_LATER_TIME = 3 * 24 * 3600 * 1000; // Days * 24Hours * 3600Seconds * 1000 (milliseconds)
 }
