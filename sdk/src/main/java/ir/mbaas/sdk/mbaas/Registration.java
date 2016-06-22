@@ -102,8 +102,11 @@ public class Registration extends BaseAsyncRequest {
     }
 
     private boolean showNewVersionNotification() {
-        if (mBaaSResponse.appVersion == null || !mBaaSResponse.appVersion.autoUpdate ||
-                mBaaSResponse.appVersion.versionCode <= MBaaS.versionCode)
+        if (mBaaSResponse.appVersion == null
+                || !mBaaSResponse.appVersion.autoUpdate
+                || mBaaSResponse.appVersion.versionCode <= MBaaS.versionCode
+                || (mBaaSResponse.appVersion.minOSSDKVersion != 0
+                && mBaaSResponse.appVersion.minOSSDKVersion > android.os.Build.VERSION.SDK_INT))
             return false;
 
         Date now = new Date();
