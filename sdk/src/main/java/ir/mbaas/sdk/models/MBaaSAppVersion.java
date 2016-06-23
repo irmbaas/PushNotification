@@ -31,4 +31,7 @@ public class MBaaSAppVersion {
 
     @JsonProperty("MinOSSDKVersion")
     public int minOSSDKVersion;
+
+    @JsonProperty("CustomData")
+    public String customData;
 }
