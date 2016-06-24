@@ -73,4 +73,21 @@
         android:paddingRight="10dp"
         android:paddingLeft="10dp"
         android:text="@string/mbaas_tel" />
+
+    <View
+        android:id="@+id/divider_line2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="10dp"
+        android:layout_below="@id/tv_tel"
+        android:background="@android:color/darker_gray"/>
+
+    <ir.mbaas.pushnotification.view.MATextView
+        android:id="@+id/tv_version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/divider_line2"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:gravity="center_horizontal"
+        android:text="@string/version" />
 </RelativeLayout>

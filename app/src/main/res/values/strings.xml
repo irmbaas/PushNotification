@@ -17,6 +17,7 @@
     <string name="first_name">نام</string>
     <string name="last_name">نام خانوادگی</string>
     <string name="phone_number">شماره تلفن</string>
+    <string name="version">نسخه %1$s</string>
 
     <string name="mbaas_successfull_registration">شناسه در MBaaS ثبت شد.</string>
     <string name="mbaas_registration_failed">شناسه در MBaaS ثبت نشد.</string>
