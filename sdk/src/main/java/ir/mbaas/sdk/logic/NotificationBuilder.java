@@ -85,6 +85,9 @@ public class NotificationBuilder {
     private void setButtons() {
         NotificationButtons buttons = NotificationButtons.fromJson(data.getString(AppConstants.PN_BUTTONS));
 
+        if(buttons == null)
+            return;
+
         for (NotificationButton button : buttons.records) {
             Intent intent = PushActions.createButtonAction(
                     data.getString(AppConstants.PN_CUSTOM_DATA),
