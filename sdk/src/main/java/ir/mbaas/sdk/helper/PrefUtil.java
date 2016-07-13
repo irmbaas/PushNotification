@@ -11,6 +11,7 @@ public class PrefUtil {
     public static String APP_USE_COUNT    = "app_use_count";
     public static String UPDATE_REFERENCE_ID = "update_reference_id";
     public static String NEXT_UPDATE_TIME = "next_update_time";
+    public static String DEVICE_UNIQUE_ID = "device_unique_id";
 
     static public final class Prefs {
         public static SharedPreferences get(Context context) {

@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
@@ -63,8 +62,7 @@ public class StaticMethods {
     }
 
     public static DeviceInfo getDeviceInfo(Context ctx) {
-        TelephonyManager tm = (TelephonyManager)ctx.getSystemService(Context.TELEPHONY_SERVICE);
-        String IMEI = StaticMethods.getUniqueID(ctx, tm);
+        String IMEI = StaticMethods.getUniqueID(ctx);
         String deviceName = android.os.Build.MODEL;
         String brand = android.os.Build.BRAND;
         String osVersion = android.os.Build.VERSION.RELEASE;
@@ -95,15 +93,24 @@ public class StaticMethods {
         return context.getResources().getIdentifier(mName, "drawable", context.getPackageName());
     }
 
-    public static String getUniqueID(Context ctx, TelephonyManager tm){
-        String myAndroidDeviceId = tm.getDeviceId();
+    public static String getUniqueID(Context ctx) {
+        String deviceId = PrefUtil.getString(ctx, PrefUtil.DEVICE_UNIQUE_ID);
 
-        if (myAndroidDeviceId == null) {
-            myAndroidDeviceId = Settings.Secure.getString(ctx.getContentResolver(),
-                    Settings.Secure.ANDROID_ID);
+        if (deviceId != null && !deviceId.isEmpty())
+            return deviceId;
+
+        if (PermissionChecker.hasReadPhoneStatePermission(ctx)) {
+            TelephonyManager tm = (TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
+            deviceId = tm.getDeviceId();
         }
 
-        return myAndroidDeviceId;
+        if (deviceId == null || deviceId.isEmpty()) {
+            deviceId = new DeviceUuidFactory(ctx).getDeviceUuid().toString();
+        }
+
+        PrefUtil.putString(ctx, PrefUtil.DEVICE_UNIQUE_ID, deviceId);
+
+        return deviceId;
     }
 
     static public boolean isACRASenderServiceProcess(int pid) {
