@@ -5,4 +5,6 @@
     <string name="app_update_text">شما می توانید نسخه %1$s برنامه %2$s را دریافت نمائید.</string>
     <string name="app_update_btn">به روزرسانی</string>
     <string name="app_later_btn">یادآوری</string>
+    <string name="error">خطا</string>
+    <string name="no_permission_for_auto_update">دسترسی به حافظه جهت به روزرسانی خودکار وجود ندارد.</string>
 </resources>

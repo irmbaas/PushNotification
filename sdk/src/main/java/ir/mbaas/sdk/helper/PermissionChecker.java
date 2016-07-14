@@ -22,6 +22,10 @@ public class PermissionChecker {
         return hasPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
+    public static boolean hasAccessNetworkState(Context context) {
+        return hasPermission(context, Manifest.permission.ACCESS_NETWORK_STATE);
+    }
+
     public static boolean hasPermission(Context context, String permission) {
         return context.checkCallingOrSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
     }

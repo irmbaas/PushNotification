@@ -5,7 +5,6 @@ import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
 
@@ -13,8 +12,9 @@ import java.util.Date;
 
 import ir.mbaas.sdk.R;
 import ir.mbaas.sdk.helper.AppConstants;
+import ir.mbaas.sdk.helper.PermissionChecker;
 import ir.mbaas.sdk.helper.PrefUtil;
-import ir.mbaas.sdk.logic.PushActions;
+import ir.mbaas.sdk.helper.StaticMethods;
 import ir.mbaas.sdk.logic.UpdateActions;
 
 public class UpdateButtonReceiver extends BroadcastReceiver {
@@ -47,6 +47,13 @@ public class UpdateButtonReceiver extends BroadcastReceiver {
     }
 
     private void updateNow(Context context, String url) {
+        if (!PermissionChecker.hasWriteExternalStorage(context)) {
+            String title   = context.getResources().getString(R.string.error);
+            String content = context.getResources().getString(R.string.no_permission_for_auto_update);
+            StaticMethods.createNotification(context, title, content);
+            return;
+        }
+
         DownloadManager dm = (DownloadManager)context.getSystemService(context.DOWNLOAD_SERVICE);
         Uri Download_Uri = Uri.parse(url);
         DownloadManager.Request request = new DownloadManager.Request(Download_Uri);
@@ -67,7 +74,7 @@ public class UpdateButtonReceiver extends BroadcastReceiver {
 
         try {
             request.setDestinationInExternalFilesDir(context, Environment.DIRECTORY_DOWNLOADS,
-                    pkgName + ".apk");
+                    pkgName + AppConstants.APK_EXTENSION);
         } catch (Exception exc) {
             exc.printStackTrace();
         }

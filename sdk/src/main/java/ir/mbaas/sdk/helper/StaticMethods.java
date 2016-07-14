@@ -1,11 +1,15 @@
 package ir.mbaas.sdk.helper;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.v7.app.NotificationCompat;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
@@ -148,5 +152,19 @@ public class StaticMethods {
         delivery.execute();
 
         return true;
+    }
+
+    public static void createNotification(Context ctx, String title, String content) {
+        Notification notification = new NotificationCompat.Builder(ctx)
+                .setContentTitle(title)
+                .setContentText(content)
+                .setSmallIcon(ctx.getApplicationInfo().icon)
+                .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
+                .setAutoCancel(true)
+                .build();
+        NotificationManager notificationManager = (NotificationManager)
+                ctx.getSystemService(ctx.NOTIFICATION_SERVICE);
+
+        notificationManager.notify(IdGenerator.generateIntegerId(), notification);
     }
 }

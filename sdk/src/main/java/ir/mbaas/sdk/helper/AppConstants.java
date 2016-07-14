@@ -36,4 +36,6 @@ public interface AppConstants {
     String UD_ACTION_TYPE = "UpdateActionType";
     String UD_DOWNLOAD_URL= "UpdateDownloadUrl";
     long UD_LATER_TIME = 1 * 24 * 3600 * 1000; // Epoch = Days * Hours * Seconds * 1000
+
+    String APK_EXTENSION = ".apk";
 }
