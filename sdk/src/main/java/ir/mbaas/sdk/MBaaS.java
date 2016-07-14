@@ -13,7 +13,6 @@ import ir.mbaas.sdk.helper.PrefUtil;
 import ir.mbaas.sdk.helper.StaticMethods;
 import ir.mbaas.sdk.listeners.GcmRegistrationListener;
 import ir.mbaas.sdk.listeners.MBaaSListener;
-import ir.mbaas.sdk.logic.GoogleLocation;
 import ir.mbaas.sdk.logic.InstanceIdHelper;
 import ir.mbaas.sdk.mbaas.Registration;
 import ir.mbaas.sdk.mbaas.UpdateInfo;
@@ -25,7 +24,6 @@ import ir.mbaas.sdk.models.User;
  */
 public class MBaaS {
 
-    public static GoogleLocation googleLocation;
     public static DeviceInfo device;
     public static String appKey;
     public static Context context;
@@ -52,8 +50,6 @@ public class MBaaS {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-
-        googleLocation = new GoogleLocation(app);
     }
 
     public static void init(Application app) {
