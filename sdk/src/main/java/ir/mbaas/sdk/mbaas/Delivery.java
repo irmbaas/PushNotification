@@ -36,30 +36,25 @@ public class Delivery extends BaseAsyncRequest {
     protected void doSetup() throws ApiException, JSONException {
         callerName = "pushDelivery";
 
-        serviceName = AppConstants.GCM_SERVICE;
+        baseInstanceUrl = AppConstants.DIRECT_URL;
+        serviceName = AppConstants.DIRECT_SERVICE;
         endPoint = AppConstants.GCM_DELIVER_API;
-        contentType = "";
+        contentType = "application/json";
         verb = "POST";
-
-        requestString  = "PushSentId=" + PushSentId;
-        requestString += "&Id=" + guid;
-
-        // need to include the API key and session token
-        applicationApiKey = AppConstants.API_KEY;
-        //sessionToken = PrefUtil.getString(ctx, PrefUtil.SESSION_TOKEN);
 
         undelivered = String.format(AppConstants.DELIVERY_JSON_FORMAT, PushSentId, guid);
 
         failedDeliveries = StaticMethods.handleUndeliveredPushes(ctx,
                 AppConstants.FailedDeliveriesStatus.GET, "");
 
-        if (failedDeliveries == null || failedDeliveries.isEmpty())
+        if (failedDeliveries == null || failedDeliveries.isEmpty()) {
+            requestBody = new JSONObject();
+            requestBody.put("PushSentId", PushSentId);
+            requestBody.put("Id", guid);
             return;
+        }
 
-        serviceName = "api/push";
-        baseInstanceUrl = "http://mbaas.ir";
         endPoint = AppConstants.GCM_BULK_DELIVER_API;
-        contentType = "application/json";
         requestString = "[" + failedDeliveries + "," + undelivered + "]";
     }
 

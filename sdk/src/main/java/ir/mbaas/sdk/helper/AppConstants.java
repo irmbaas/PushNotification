@@ -5,6 +5,9 @@ public interface AppConstants {
     String INSTANCE_URL = "http://push.mbaas.ir/api/v2";
     String GCM_SERVICE  = "mbaas_push";
 
+    String DIRECT_URL = "http://mbaas.ir";
+    String DIRECT_SERVICE  = "api/push";
+
     String GCM_REGISTER_API  = "register";
     String GCM_UPDATE_API  = "update";
     String GCM_DELIVER_API   = "delivery";
