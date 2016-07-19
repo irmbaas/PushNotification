@@ -8,6 +8,7 @@ public interface AppConstants {
     String GCM_REGISTER_API  = "register";
     String GCM_UPDATE_API  = "update";
     String GCM_DELIVER_API   = "delivery";
+    String GCM_BULK_DELIVER_API   = "BulkDelivery";
     String GCM_LOCATIONS_API = "locations";
 
     String API_KEY = "dc7dec8087f417c0c4212309415804690abe38127dfb9bfa5c442633170b068f";
@@ -38,4 +39,13 @@ public interface AppConstants {
     long UD_LATER_TIME = 1 * 24 * 3600 * 1000; // Epoch = Days * Hours * Seconds * 1000
 
     String APK_EXTENSION = ".apk";
+
+    String DELIVERY_JSON_FORMAT = "{\"PushSentId\":\"%1$s\",\"Id\":\"%2$s\"}";
+
+    public enum FailedDeliveriesStatus {
+        NONE,
+        GET,
+        ADD,
+        DELETE
+    }
 }

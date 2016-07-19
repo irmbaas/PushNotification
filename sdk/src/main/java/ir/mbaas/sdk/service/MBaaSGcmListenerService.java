@@ -24,14 +24,15 @@ public class MBaaSGcmListenerService extends GcmListenerService {
         boolean isHidden = hiddenStr != null && hiddenStr.equalsIgnoreCase("true");
 
         if (MBaaS.gcmMessageListener != null) {
-            String sentId  = data.getString(AppConstants.PN_SENT_ID);
-            String id      = data.getString(AppConstants.PN_ID);
-            StaticMethods.deliverPush(sentId, id);
 
             MBaaS.gcmMessageListener.onMessageReceived(MBaaS.context, from, data);
 
-            if (MBaaS.hideNotifications || isHidden)
+            if (MBaaS.hideNotifications || isHidden) {
+                String sentId  = data.getString(AppConstants.PN_SENT_ID);
+                String id      = data.getString(AppConstants.PN_ID);
+                StaticMethods.deliverPush(sentId, id);
                 return;
+            }
         }
 
         NotificationBuilder nBuilder = new NotificationBuilder(MBaaS.context, data);

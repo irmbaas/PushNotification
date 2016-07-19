@@ -3,11 +3,16 @@ package ir.mbaas.sdk.mbaas;
 import android.content.Context;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
+import ir.mbaas.sdk.R;
 import ir.mbaas.sdk.dfapi.ApiException;
 import ir.mbaas.sdk.dfapi.BaseAsyncRequest;
 import ir.mbaas.sdk.helper.AppConstants;
+import ir.mbaas.sdk.helper.PrefUtil;
+import ir.mbaas.sdk.helper.StaticMethods;
 
 /**
  * Created by Mahdi on 4/20/2016.
@@ -18,6 +23,8 @@ public class Delivery extends BaseAsyncRequest {
     private Context ctx;
     private String PushSentId;
     private String guid;
+    private String undelivered;
+    private String failedDeliveries;
 
     public Delivery(Context ctx, String PushSentId, String guid) {
         this.ctx = ctx;
@@ -40,6 +47,20 @@ public class Delivery extends BaseAsyncRequest {
         // need to include the API key and session token
         applicationApiKey = AppConstants.API_KEY;
         //sessionToken = PrefUtil.getString(ctx, PrefUtil.SESSION_TOKEN);
+
+        undelivered = String.format(AppConstants.DELIVERY_JSON_FORMAT, PushSentId, guid);
+
+        failedDeliveries = StaticMethods.handleUndeliveredPushes(ctx,
+                AppConstants.FailedDeliveriesStatus.GET, "");
+
+        if (failedDeliveries == null || failedDeliveries.isEmpty())
+            return;
+
+        serviceName = "api/push";
+        baseInstanceUrl = "http://mbaas.ir";
+        endPoint = AppConstants.GCM_BULK_DELIVER_API;
+        contentType = "application/json";
+        requestString = "[" + failedDeliveries + "," + undelivered + "]";
     }
 
     @Override
@@ -49,8 +70,13 @@ public class Delivery extends BaseAsyncRequest {
 
     @Override
     protected void onCompletion(boolean success) {
-        if(success){
+        if (success) {
+            StaticMethods.handleUndeliveredPushes(ctx, AppConstants.FailedDeliveriesStatus.DELETE,
+                    failedDeliveries);
             Log.d(TAG, "Successful completion.");
+        } else {
+            StaticMethods.handleUndeliveredPushes(ctx,  AppConstants.FailedDeliveriesStatus.ADD,
+                    undelivered);
         }
     }
 }

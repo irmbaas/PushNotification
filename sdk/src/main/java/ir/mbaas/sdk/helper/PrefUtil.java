@@ -12,6 +12,7 @@ public class PrefUtil {
     public static String UPDATE_REFERENCE_ID = "update_reference_id";
     public static String NEXT_UPDATE_TIME = "next_update_time";
     public static String DEVICE_UNIQUE_ID = "device_unique_id";
+    public static String UNDELIVERED_PUSHES = "undelivered_pushes";
 
     static public final class Prefs {
         public static SharedPreferences get(Context context) {

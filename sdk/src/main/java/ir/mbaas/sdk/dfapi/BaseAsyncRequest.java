@@ -181,5 +181,6 @@ public class BaseAsyncRequest extends AsyncTask<Void, Void, Boolean> {
      * processResponse
      * @param e exception thrown when trying to make the API call
      */
-    protected void onError(Exception e) {Log.e(callerName + "::baserequest::onError", e.toString());}
+    protected void onError(Exception e) {Log.e(callerName + "::baserequest::onError",
+            e == null ? "" : e.toString());}
 }

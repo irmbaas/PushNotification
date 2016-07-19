@@ -167,4 +167,33 @@ public class StaticMethods {
 
         notificationManager.notify(IdGenerator.generateIntegerId(), notification);
     }
+
+    public static synchronized String handleUndeliveredPushes(Context ctx,
+                                                              AppConstants.FailedDeliveriesStatus fds,
+                                                              String customStr) {
+        String separator = ",";
+        String undeliveredPushes = PrefUtil.getString(ctx, PrefUtil.UNDELIVERED_PUSHES);
+
+        switch (fds) {
+            case DELETE:
+                if (undeliveredPushes.equalsIgnoreCase(customStr)) {
+                    PrefUtil.putString(ctx, PrefUtil.UNDELIVERED_PUSHES, "");
+                } else {
+                    undeliveredPushes.replaceFirst(customStr + separator, "");
+                }
+
+                return undeliveredPushes;
+            case ADD:
+                //if(undeliveredPushes.length() > 2048)
+                    //undeliveredPushes = "";
+
+                undeliveredPushes += undeliveredPushes.isEmpty() ? customStr : separator + customStr;
+                PrefUtil.putString(ctx, PrefUtil.UNDELIVERED_PUSHES, undeliveredPushes);
+                return undeliveredPushes;
+            case GET:
+                return undeliveredPushes;
+        }
+
+        return undeliveredPushes;
+    }
 }
