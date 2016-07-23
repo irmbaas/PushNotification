@@ -41,7 +41,7 @@ import org.apache.http.util.EntityUtils;
 import com.fasterxml.jackson.databind.JavaType;
 
 public class ApiInvoker {
-    private static ApiInvoker INSTANCE = new ApiInvoker();
+    private static ApiInvoker INSTANCE;
     private Map<String, String> defaultHeaderMap = new HashMap<>();
 
     private HttpClient client = null;
@@ -50,11 +50,19 @@ public class ApiInvoker {
 
     private ClientConnectionManager ignoreSSLConnectionManager;
 
-    private ApiInvoker() {
+    private int timeoutConnection = 9000;
+    private int timeoutSocket = 15000;
+
+    private ApiInvoker(int timeoutConnection, int timeoutSocket) {
+        this.timeoutConnection = timeoutConnection;
+        this.timeoutSocket = timeoutSocket;
         initConnectionManager();
     }
 
-    public static ApiInvoker getInstance() {
+    public static ApiInvoker getInstance(int timeoutConnection, int timeoutSocket) {
+        if(INSTANCE == null)
+            INSTANCE = new ApiInvoker(timeoutConnection, timeoutSocket);
+
         return INSTANCE;
     }
 
@@ -268,9 +276,6 @@ public class ApiInvoker {
     }
 
     private HttpClient getClient(String host) {
-        int timeoutConnection = 3000;
-        int timeoutSocket = 5000;
-
         HttpParams httpParameters = new BasicHttpParams();
         HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
         HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);

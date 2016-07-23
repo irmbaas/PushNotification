@@ -73,16 +73,15 @@ public class GooglePlayServices {
      * Check google play services is installed or updated
      *
      * @param context    app context
-     * @param showDialog a flag that indicate show googlePlayServices installation dialog or not,
-     *                   when googlePlayServices is not installed or updated
      * @return
      */
 
     public static boolean checkGooglePlayServiceAvailability(final Context context) {
-        int status = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(context);
-        ApplicationInfo ai = null;
+
         try {
-            ai = context.getPackageManager().getApplicationInfo("com.google.android.gms", 0);
+            int status = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(context);
+            ApplicationInfo ai = context.getPackageManager()
+                    .getApplicationInfo("com.google.android.gms", 0);
             if (ai.enabled) {
                 if ((status == ConnectionResult.SUCCESS) ||
                         (status == ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED) ||

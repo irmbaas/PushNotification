@@ -27,6 +27,10 @@ import ir.mbaas.sdk.helper.AppConstants;
  *      then passed to onError
  */
 public class BaseAsyncRequest extends AsyncTask<Void, Void, Boolean> {
+
+    protected int timeoutConnection = 9000;
+    protected int timeoutSocket = 15000;
+
     // service name, endpoint, verb and appName are needed for every call
     protected String serviceName; // eg files, db etc
     protected String endPoint; // eg table name
@@ -104,7 +108,8 @@ public class BaseAsyncRequest extends AsyncTask<Void, Void, Boolean> {
             }
 
             // send the REST call
-            String response = ApiInvoker.getInstance().invokeAPI(baseInstanceUrl,
+            String response = ApiInvoker.getInstance(timeoutConnection, timeoutSocket)
+                    .invokeAPI(baseInstanceUrl,
                     path,
                     verb,
                     queryParams,
