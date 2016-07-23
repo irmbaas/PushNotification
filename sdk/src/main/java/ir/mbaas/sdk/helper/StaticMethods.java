@@ -22,7 +22,7 @@ import java.net.URL;
 
 import ir.mbaas.sdk.MBaaS;
 import ir.mbaas.sdk.R;
-import ir.mbaas.sdk.mbaas.Delivery;
+import ir.mbaas.sdk.apis.Delivery;
 import ir.mbaas.sdk.models.DeviceInfo;
 
 /**

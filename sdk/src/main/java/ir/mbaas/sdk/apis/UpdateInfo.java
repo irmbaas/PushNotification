@@ -1,4 +1,4 @@
-package ir.mbaas.sdk.mbaas;
+package ir.mbaas.sdk.apis;
 
 import android.content.Context;
 import android.util.Log;
@@ -9,7 +9,6 @@ import ir.mbaas.sdk.MBaaS;
 import ir.mbaas.sdk.dfapi.ApiException;
 import ir.mbaas.sdk.dfapi.BaseAsyncRequest;
 import ir.mbaas.sdk.helper.AppConstants;
-import ir.mbaas.sdk.helper.StaticMethods;
 import ir.mbaas.sdk.models.DeviceInfo;
 import ir.mbaas.sdk.models.User;
 

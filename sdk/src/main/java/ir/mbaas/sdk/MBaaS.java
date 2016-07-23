@@ -14,8 +14,8 @@ import ir.mbaas.sdk.helper.StaticMethods;
 import ir.mbaas.sdk.listeners.GcmRegistrationListener;
 import ir.mbaas.sdk.listeners.MBaaSListener;
 import ir.mbaas.sdk.logic.InstanceIdHelper;
-import ir.mbaas.sdk.mbaas.Registration;
-import ir.mbaas.sdk.mbaas.UpdateInfo;
+import ir.mbaas.sdk.apis.Registration;
+import ir.mbaas.sdk.apis.UpdateInfo;
 import ir.mbaas.sdk.models.DeviceInfo;
 import ir.mbaas.sdk.models.User;
 

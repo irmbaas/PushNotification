@@ -1,16 +1,14 @@
-package ir.mbaas.sdk.mbaas;
+package ir.mbaas.sdk.apis;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.support.v4.app.NotificationCompat;
 
 import org.json.JSONException;
 
 import java.util.Date;
-import java.util.Random;
 
 import ir.mbaas.sdk.MBaaS;
 import ir.mbaas.sdk.R;
@@ -20,7 +18,6 @@ import ir.mbaas.sdk.dfapi.BaseAsyncRequest;
 import ir.mbaas.sdk.helper.AppConstants;
 import ir.mbaas.sdk.helper.IdGenerator;
 import ir.mbaas.sdk.helper.PrefUtil;
-import ir.mbaas.sdk.logic.PushActions;
 import ir.mbaas.sdk.logic.UpdateActions;
 import ir.mbaas.sdk.models.DeviceInfo;
 import ir.mbaas.sdk.models.MBaaSRegistrationResponse;

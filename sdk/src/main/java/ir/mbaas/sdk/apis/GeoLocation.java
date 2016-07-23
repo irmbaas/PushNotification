@@ -1,4 +1,4 @@
-package ir.mbaas.sdk.mbaas;
+package ir.mbaas.sdk.apis;
 
 import android.content.Context;
 import android.util.Log;

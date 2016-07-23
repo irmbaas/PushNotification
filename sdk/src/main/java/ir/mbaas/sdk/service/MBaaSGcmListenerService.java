@@ -9,7 +9,6 @@ import ir.mbaas.sdk.helper.AppConstants;
 import ir.mbaas.sdk.helper.StaticMethods;
 import ir.mbaas.sdk.logic.NotificationBuilder;
 import ir.mbaas.sdk.helper.PrefUtil;
-import ir.mbaas.sdk.mbaas.Delivery;
 
 /**
  * Created by Mahdi on 4/7/2016.

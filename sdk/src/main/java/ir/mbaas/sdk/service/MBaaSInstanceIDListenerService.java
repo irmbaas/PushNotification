@@ -9,7 +9,7 @@ import java.io.IOException;
 import ir.mbaas.sdk.MBaaS;
 import ir.mbaas.sdk.helper.PrefUtil;
 import ir.mbaas.sdk.helper.StaticMethods;
-import ir.mbaas.sdk.mbaas.Registration;
+import ir.mbaas.sdk.apis.Registration;
 
 /**
  * Created by Mahdi on 4/7/2016.

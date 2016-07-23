@@ -17,7 +17,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 import ir.mbaas.sdk.helper.PrefUtil;
-import ir.mbaas.sdk.mbaas.GeoLocation;
+import ir.mbaas.sdk.apis.GeoLocation;
 
 /**
  * Created by Mahdi on 4/24/2016.

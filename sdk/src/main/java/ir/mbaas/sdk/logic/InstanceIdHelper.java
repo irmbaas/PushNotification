@@ -26,7 +26,7 @@ import java.io.IOException;
 
 import ir.mbaas.sdk.MBaaS;
 import ir.mbaas.sdk.helper.PrefUtil;
-import ir.mbaas.sdk.mbaas.Registration;
+import ir.mbaas.sdk.apis.Registration;
 
 public class InstanceIdHelper {
     private String TAG = "InstanceIdHelper";
