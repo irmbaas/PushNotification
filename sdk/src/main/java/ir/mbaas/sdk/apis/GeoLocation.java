@@ -28,16 +28,12 @@ public class GeoLocation extends BaseAsyncRequest {
     protected void doSetup() throws ApiException, JSONException {
         callerName = "sendLocations";
 
-        serviceName = AppConstants.GCM_SERVICE;
+        serviceName = AppConstants.MBAAS_SERVICE;
         endPoint = AppConstants.GCM_LOCATIONS_API;
         contentType = "";
         verb = "POST";
 
         requestString = "GeoLocations={ \"locations\": [" + geoLocations + "]}";
-
-        // need to include the API key and session token
-        applicationApiKey = AppConstants.API_KEY;
-        //sessionToken = PrefUtil.getString(ctx, PrefUtil.SESSION_TOKEN);
     }
 
     @Override

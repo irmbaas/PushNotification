@@ -44,23 +44,19 @@ public class Registration extends BaseAsyncRequest {
     @Override
     protected void doSetup() throws ApiException, JSONException {
         callerName = "registerRegID";
+        timeoutConnection = 20000;
+        timeoutSocket = 30000;
 
-        serviceName = AppConstants.GCM_SERVICE;
+        serviceName = AppConstants.MBAAS_SERVICE;
         endPoint = AppConstants.GCM_REGISTER_API;
-        contentType = "application/json";
         verb = "POST";
 
-        requestString  = device.getDeviceInfoString();
-        requestString += "&GCMRegId=" + regId;
-        requestString += "&AppKey=" + MBaaS.appKey;
-        requestString += "&AppVersion=" + MBaaS.versionCode;
-        requestString += "&UseCount=" + PrefUtil.getInt(context, PrefUtil.APP_USE_COUNT);
-        requestString += "&HasGooglePlayService=" + String.valueOf(hasGooglePlayService);
-        /*requestString += "&GeoLocation=" + TODO;*/
-
-        // need to include the API key and session token
-        applicationApiKey = AppConstants.API_KEY;
-        //sessionToken = PrefUtil.getString(context, PrefUtil.SESSION_TOKEN);
+        requestBody  = device.getDeviceInfoJson();
+        requestBody.put("GCMRegId", regId);
+        requestBody.put("AppKey", MBaaS.appKey);
+        requestBody.put("AppVersion", MBaaS.versionCode);
+        requestBody.put("UseCount", PrefUtil.getInt(context, PrefUtil.APP_USE_COUNT));
+        requestBody.put("HasGooglePlayService", String.valueOf(hasGooglePlayService));
     }
 
     @Override

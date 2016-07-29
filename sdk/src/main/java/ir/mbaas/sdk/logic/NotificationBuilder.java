@@ -140,8 +140,8 @@ public class NotificationBuilder {
         if (image != null && image.url != null && !image.url.isEmpty()) {
             largeIcon = StaticMethods.downloadImage(AppConstants.MBAAS_BASE_URL + image.url);
         } else {
-            largeIcon =
-                    BitmapFactory.decodeResource(MBaaS.context.getResources(), R.drawable.ic_mbaas);
+            largeIcon = BitmapFactory.decodeResource(MBaaS.context.getResources(),
+                    ctx.getApplicationInfo().icon);
         }
 
         if (largeIcon == null) {

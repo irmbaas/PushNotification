@@ -33,10 +33,8 @@ public class Delivery extends BaseAsyncRequest {
     protected void doSetup() throws ApiException, JSONException {
         callerName = "pushDelivery";
 
-        baseInstanceUrl = AppConstants.DIRECT_URL;
-        serviceName = AppConstants.DIRECT_SERVICE;
+        serviceName = AppConstants.MBAAS_SERVICE;
         endPoint = AppConstants.GCM_DELIVER_API;
-        contentType = "application/json";
         verb = "POST";
 
         undelivered = String.format(AppConstants.DELIVERY_JSON_FORMAT, PushSentId, guid);

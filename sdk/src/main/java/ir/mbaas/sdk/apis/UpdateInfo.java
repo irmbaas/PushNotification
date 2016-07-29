@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import ir.mbaas.sdk.MBaaS;
 import ir.mbaas.sdk.dfapi.ApiException;
@@ -32,17 +33,13 @@ public class UpdateInfo extends BaseAsyncRequest {
     protected void doSetup() throws ApiException, JSONException {
         callerName = "updateUserInfo";
 
-        serviceName = AppConstants.GCM_SERVICE;
+        serviceName = AppConstants.MBAAS_SERVICE;
         endPoint = AppConstants.GCM_UPDATE_API;
-        contentType = "application/json";
         verb = "POST";
 
-        requestString  = user.toString();
-        requestString += "&IMEI=" + device.getIMEI();
-        requestString += "&AppKey=" + MBaaS.appKey;
-
-        // need to include the API key and session token
-        applicationApiKey = AppConstants.API_KEY;
+        requestBody = user.toJSON();
+        requestBody.put("IMEI", device.getIMEI());
+        requestBody.put("AppKey", MBaaS.appKey);
     }
 
     @Override

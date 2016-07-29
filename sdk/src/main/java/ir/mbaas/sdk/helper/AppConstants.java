@@ -1,20 +1,14 @@
 package ir.mbaas.sdk.helper;
 
 public interface AppConstants {
-    // Note: emulator IP for host's localhost is 10.0.2.2
-    String INSTANCE_URL = "http://push.mbaas.ir/api/v2";
-    String GCM_SERVICE  = "mbaas_push";
-
-    String DIRECT_URL = "http://mbaas.ir";
-    String DIRECT_SERVICE  = "api/push";
+    String INSTANCE_URL = "http://mbaas.ir";
+    String MBAAS_SERVICE  = "api/push";
 
     String GCM_REGISTER_API  = "register";
     String GCM_UPDATE_API  = "update";
     String GCM_DELIVER_API   = "delivery";
     String GCM_BULK_DELIVER_API   = "BulkDelivery";
     String GCM_LOCATIONS_API = "locations";
-
-    String API_KEY = "dc7dec8087f417c0c4212309415804690abe38127dfb9bfa5c442633170b068f";
 
     String MBAAS_BASE_URL = "http://mbaas.ir/";
 
