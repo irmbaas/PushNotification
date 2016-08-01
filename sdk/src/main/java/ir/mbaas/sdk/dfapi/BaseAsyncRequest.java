@@ -80,7 +80,13 @@ public class BaseAsyncRequest extends AsyncTask<Void, Void, Boolean> {
             doSetup();
 
             // build the path to append onto the the instance url
-            String path = "/" + serviceName + "/" + endPoint;
+            String path = "";
+
+            if(serviceName != null && !serviceName.isEmpty())
+                path += "/" + serviceName;
+
+            if(endPoint != null && !endPoint.isEmpty())
+                path += "/" + endPoint;
 
             // add sessionToken and API key into the header params
             if(applicationApiKey == null || applicationApiKey.isEmpty()){
