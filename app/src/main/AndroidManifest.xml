@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ir.mbaas.pushnotification" >
+    package="ir.mbaas.pushnotification">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <permission android:name="ir.mbaas.pushnotification.permission.C2D_MESSAGE"
+
+    <permission
+        android:name="ir.mbaas.pushnotification.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
     <uses-permission android:name="ir.mbaas.pushnotification.permission.C2D_MESSAGE" />
 
     <application
-        android:allowBackup="true"
         android:name=".Application"
+        android:allowBackup="true"
         android:icon="@mipmap/mbaas"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
-        <activity android:name=".MainActivity" >
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,11 +26,13 @@
         </activity>
 
         <receiver
-            android:name="com.google.android.gms.gcm.GcmReceiver" android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND" >
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
                 <category android:name="ir.mbaas.pushnotification" />
             </intent-filter>
         </receiver>
@@ -36,6 +40,8 @@
         <meta-data
             android:name="ir.mbaas.sdk.token"
             android:value="e0944fca_967440107484" />
+
+        <activity android:name=".TestNewsAPIActivity"></activity>
     </application>
 
 </manifest>

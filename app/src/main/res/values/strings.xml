@@ -24,4 +24,24 @@
     <string name="mbaas_successfull_gcm_registration">شناسه از گوگل دریافت شد.</string>
     <string name="mbaas_successfull_new_gcm_registration">شناسه جدید از گوگل دریافت شد.</string>
     <string name="mbaas_google_play_service_unavailable">Google play service is unavailable.</string>
+    <string name="test_news_api">تست API اخبار</string>
+
+    <string-array name="rss_group">
+        <item>انتخاب کنید</item>
+        <item>همه</item>
+        <item>سیاسی</item>
+        <item>بین المللی</item>
+        <item>ورزشی</item>
+        <item>اجتماعی</item>
+        <item>اقتصادی</item>
+        <item>فضای مجازی</item>
+        <item>فرهنگی</item>
+        <item>پزشکی</item>
+        <item>فیلم</item>
+    </string-array>
+
+    <string-array name="content_source">
+        <item>انتخاب کنید</item>
+        <item>خبرگزاری جوان</item>
+    </string-array>
 </resources>

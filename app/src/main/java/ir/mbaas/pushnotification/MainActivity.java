@@ -100,6 +100,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.update_info:
                 updateUserInfo();
                 return true;
+            case R.id.news_api:
+                startActivity(new Intent(this, TestNewsAPIActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

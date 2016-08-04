@@ -4,4 +4,9 @@
         android:id="@+id/update_info"
         android:title="@string/user_info"
         android:src="@android:drawable/ic_input_add" />
+
+    <item
+        android:id="@+id/news_api"
+        android:title="@string/test_news_api"
+        android:src="@android:drawable/ic_menu_compass" />
 </menu>
