@@ -1,6 +1,5 @@
 package ir.mbaas.sdk.helper;
 
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -155,17 +154,17 @@ public class StaticMethods {
     }
 
     public static void createNotification(Context ctx, String title, String content) {
-        Notification notification = new NotificationCompat.Builder(ctx)
-                .setContentTitle(title)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx);
+        builder.setContentTitle(title)
                 .setContentText(content)
                 .setSmallIcon(ctx.getApplicationInfo().icon)
                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
-                .setAutoCancel(true)
-                .build();
+                .setAutoCancel(true);
+
         NotificationManager notificationManager = (NotificationManager)
                 ctx.getSystemService(ctx.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(IdGenerator.generateIntegerId(), notification);
+        notificationManager.notify(IdGenerator.generateIntegerId(), builder.build());
     }
 
     public static synchronized String handleUndeliveredPushes(Context ctx,

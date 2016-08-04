@@ -11,7 +11,6 @@ import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 
 import ir.mbaas.sdk.MBaaS;
-import ir.mbaas.sdk.R;
 import ir.mbaas.sdk.helper.AppConstants;
 import ir.mbaas.sdk.helper.IdGenerator;
 import ir.mbaas.sdk.helper.StaticMethods;

@@ -1,6 +1,6 @@
 package ir.mbaas.sdk.logic;
 
-import android.Manifest;
+/*import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -17,12 +17,12 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 import ir.mbaas.sdk.helper.PrefUtil;
-import ir.mbaas.sdk.apis.GeoLocation;
+import ir.mbaas.sdk.apis.GeoLocation;*/
 
 /**
  * Created by Mahdi on 4/24/2016.
  */
-public class GoogleLocation implements GoogleApiClient.ConnectionCallbacks,
+public class GoogleLocation {} /*implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     // http://stackoverflow.com/questions/33398473/accessing-googleapiclient-object-in-all-activities
@@ -32,10 +32,9 @@ public class GoogleLocation implements GoogleApiClient.ConnectionCallbacks,
     private GoogleApiClient mGoogleApiClient;
     private Context ctx;
 
-    /*
-     * Define a request code to send to Google Play services
-     * This code is returned in Activity.onActivityResult
-     */
+    // Define a request code to send to Google Play services
+    // This code is returned in Activity.onActivityResult
+    //
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 
     public GoogleLocation(Context ctx) {
@@ -139,3 +138,4 @@ public class GoogleLocation implements GoogleApiClient.ConnectionCallbacks,
         }
     }
 }
+*/
