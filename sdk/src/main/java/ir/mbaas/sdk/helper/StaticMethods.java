@@ -43,14 +43,15 @@ public class StaticMethods {
     }
 
     public static String getAppKey(Context ctx) {
-        String appKey = "";
-        Bundle bundle = getMetaData(ctx);
+        try {
+            Bundle bundle = getMetaData(ctx);
 
-        if(bundle == null)
-            return appKey;
-
-        appKey = bundle.getString(ctx.getResources().getString(R.string.push_metadata));
-        return appKey.substring(0, appKey.lastIndexOf("_"));
+            String appKey = bundle.getString(ctx.getResources().getString(R.string.push_metadata));
+            return appKey.substring(0, appKey.lastIndexOf("_"));
+        } catch (Exception exc) {
+            throw new RuntimeException("No MBaaS token is provided," +
+                    " please check AndroidManifest.xml.");
+        }
     }
 
     public static Bundle getMetaData(Context ctx) {
