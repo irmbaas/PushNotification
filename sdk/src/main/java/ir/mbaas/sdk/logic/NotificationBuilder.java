@@ -84,7 +84,7 @@ public class NotificationBuilder {
     private void setButtons() {
         NotificationButtons buttons = NotificationButtons.fromJson(data.getString(AppConstants.PN_BUTTONS));
 
-        if(buttons == null)
+        if(buttons == null || buttons.records == null)
             return;
 
         for (NotificationButton button : buttons.records) {
@@ -107,7 +107,7 @@ public class NotificationBuilder {
         boolean smallIconExists = false;
         NotificationImages images = NotificationImages.fromJson(data.getString(AppConstants.PN_IMAGES));
 
-        if (images != null && images.records.size() > 0) {
+        if (images != null && images.records != null) {
             for (NotificationImage image : images.records) {
                 if (image.type == NotificationImages.ImageType.Small) {
                     smallIconExists = true;

@@ -37,4 +37,10 @@ public class MBaaSGcmListenerService extends GcmListenerService {
         NotificationBuilder nBuilder = new NotificationBuilder(MBaaS.context, data);
         nBuilder.notifyPushAndDeliver();
     }
+
+    @Override
+    public void onDeletedMessages() {
+        super.onDeletedMessages();
+
+    }
 }
