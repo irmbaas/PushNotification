@@ -8,6 +8,7 @@ import org.json.JSONObject;
  */
 public class DeviceInfo {
     String IMEI;
+    String softIMEI;
     String deviceName;
     String brand;
     String osVersion;
@@ -15,13 +16,14 @@ public class DeviceInfo {
     int userId;
 
     public DeviceInfo(String IMEI, String deviceName, String brand, String osVersion,
-                      int sdkVersion, int userId) {
+                      int sdkVersion, int userId, String softIMEI) {
         this.IMEI = IMEI;
         this.deviceName = deviceName;
         this.brand = brand;
         this.osVersion = osVersion;
         this.sdkVersion = sdkVersion;
         this.userId = userId;
+        this.softIMEI = softIMEI;
     }
 
     public JSONObject getDeviceInfoJson() {
@@ -29,6 +31,7 @@ public class DeviceInfo {
         try {
             retObj.put("MbaasUserId", userId);
             retObj.put("IMEI", IMEI);
+            retObj.put("SoftIMEI", softIMEI);
             retObj.put("OSName", "Android");
             retObj.put("OSVersion", osVersion);
             retObj.put("Manufacture", brand);
@@ -43,6 +46,7 @@ public class DeviceInfo {
     public String getDeviceInfoString() {
         String retVal = "MbaasUserId=" + userId;
         retVal += "&IMEI=" + IMEI;
+        retVal += "&SoftIMEI=" + softIMEI;
         retVal += "&OSName=" + "Android";
         retVal += "&OSVersion=" + osVersion;
         retVal += "&Manufacture=" + brand;
@@ -52,6 +56,10 @@ public class DeviceInfo {
 
     public String getIMEI() {
         return IMEI;
+    }
+
+    public String getSoftIMEI() {
+        return softIMEI;
     }
 
     public void setUserId(int userId) {

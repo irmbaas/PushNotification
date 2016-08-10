@@ -66,14 +66,15 @@ public class StaticMethods {
     }
 
     public static DeviceInfo getDeviceInfo(Context ctx) {
-        String IMEI = StaticMethods.getUniqueID(ctx);
+        String softIMEI = getSoftIMEI(ctx);
+        String IMEI = StaticMethods.getIMEI(ctx, softIMEI);
         String deviceName = android.os.Build.MODEL;
         String brand = android.os.Build.BRAND;
         String osVersion = android.os.Build.VERSION.RELEASE;
         int sdkVersion = android.os.Build.VERSION.SDK_INT;
         int userId = 0;
 
-        return new DeviceInfo(IMEI, deviceName, brand, osVersion, sdkVersion, userId);
+        return new DeviceInfo(IMEI, deviceName, brand, osVersion, sdkVersion, userId, softIMEI);
     }
 
     public static Bitmap downloadImage(String url) {
@@ -97,24 +98,37 @@ public class StaticMethods {
         return context.getResources().getIdentifier(mName, "drawable", context.getPackageName());
     }
 
-    public static String getUniqueID(Context ctx) {
-        String deviceId = PrefUtil.getString(ctx, PrefUtil.DEVICE_UNIQUE_ID);
+    public static String getIMEI(Context ctx, String softIMEI) {
+        String imei = PrefUtil.getString(ctx, PrefUtil.DEVICE_IMEI);
 
-        if (deviceId != null && !deviceId.isEmpty())
-            return deviceId;
+        if (imei != null && !imei.isEmpty() && !imei.equalsIgnoreCase(softIMEI))
+            return imei;
 
         if (PermissionChecker.hasReadPhoneStatePermission(ctx)) {
             TelephonyManager tm = (TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
-            deviceId = tm.getDeviceId();
+            imei = tm.getDeviceId();
         }
 
-        if (deviceId == null || deviceId.isEmpty()) {
-            deviceId = new DeviceUuidFactory(ctx).getDeviceUuid().toString();
+        if (imei == null || imei.isEmpty()) {
+            imei = softIMEI;
         }
 
-        PrefUtil.putString(ctx, PrefUtil.DEVICE_UNIQUE_ID, deviceId);
+        PrefUtil.putString(ctx, PrefUtil.DEVICE_IMEI, imei);
 
-        return deviceId;
+        return imei;
+    }
+
+    public static String getSoftIMEI(Context ctx) {
+        String softIMEI = PrefUtil.getString(ctx, PrefUtil.DEVICE_SOFT_IMEI);
+
+        if (softIMEI != null && !softIMEI.isEmpty())
+            return softIMEI;
+
+        softIMEI = new DeviceUuidFactory(ctx).getDeviceUuid().toString();
+
+        PrefUtil.putString(ctx, PrefUtil.DEVICE_SOFT_IMEI, softIMEI);
+
+        return softIMEI;
     }
 
     static public boolean isACRASenderServiceProcess(int pid) {
