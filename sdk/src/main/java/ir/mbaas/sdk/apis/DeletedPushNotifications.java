@@ -1,18 +1,17 @@
 package ir.mbaas.sdk.apis;
 
+import android.os.Bundle;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import ir.mbaas.sdk.MBaaS;
 import ir.mbaas.sdk.dfapi.ApiException;
-import ir.mbaas.sdk.dfapi.ApiInvoker;
 import ir.mbaas.sdk.dfapi.BaseAsyncRequest;
 import ir.mbaas.sdk.helper.AppConstants;
-import ir.mbaas.sdk.helper.StaticMethods;
-import ir.mbaas.sdk.logic.JSONNotificationBuilder;
+import ir.mbaas.sdk.helper.PrefUtil;
 import ir.mbaas.sdk.logic.NotificationBuilder;
-import ir.mbaas.sdk.models.NotificationContent;
-import ir.mbaas.sdk.models.NotificationContents;
 
 /**
  * Created by Mehdi on 8/10/2016.
@@ -20,7 +19,7 @@ import ir.mbaas.sdk.models.NotificationContents;
 public class DeletedPushNotifications extends BaseAsyncRequest {
     private String TAG = "DeletedPushNotifications";
     private String regId;
-    private NotificationContents notificationContents;
+    private JSONObject jsonObject;
 
     public DeletedPushNotifications(String regId) {
         verb = "POST";
@@ -32,7 +31,7 @@ public class DeletedPushNotifications extends BaseAsyncRequest {
         callerName = "getDeletedPushNotifications";
 
         serviceName = AppConstants.MBAAS_SERVICE;
-        endPoint = AppConstants.GCM_UPDATE_API;
+        endPoint = AppConstants.GCM_DELETED_API;
         verb = "POST";
 
         requestBody = new JSONObject();
@@ -49,39 +48,87 @@ public class DeletedPushNotifications extends BaseAsyncRequest {
     @Override
     protected void processResponse(String response) {
         try {
-            notificationContents = (NotificationContents)
-                    ApiInvoker.deserialize(response, "", NotificationContents.class);
-        } catch (ApiException e) {
+            jsonObject = new JSONObject(response);
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
     @Override
     protected void onCompletion(boolean success) {
-        if (success && notificationContents != null && notificationContents.records != null &&
-                notificationContents.records.size() > 0) {
-            generateNotification();
+        if (success && jsonObject != null && generateNotification()) {
             DeletedPushNotifications dpns = new DeletedPushNotifications(regId);
             dpns.execute();
         }
     }
 
-    private void generateNotification() {
-        //PrefUtil.putString(this, PrefUtil.LAST_PUSH_RECEIVED, data.toString());
-        for (NotificationContent nc : notificationContents.records) {
+    private boolean generateNotification() {
+        Bundle data = null;
 
-            if (MBaaS.gcmMessageListener != null) {
+        try {
+            JSONArray messages = jsonObject.getJSONArray("Messages");
+            String from = "967440107484";
 
-                //MBaaS.gcmMessageListener.onMessageReceived(MBaaS.context, from, data);
+            int length = messages.length();
 
-                if (MBaaS.hideNotifications || nc.isHidden) {
-                    StaticMethods.deliverPush(nc.pushSentId, nc.id);
-                    return;
+            if(length == 0)
+                return false;
+
+            for(int idx = 0; idx < length; idx++) {
+                data = getBundle(messages.getJSONObject(idx));
+
+                String hiddenStr = data.getString(AppConstants.PN_IS_HIDDEN);
+                boolean isHidden = hiddenStr != null && hiddenStr.equalsIgnoreCase("true");
+
+                if (MBaaS.gcmMessageListener != null) {
+                    MBaaS.gcmMessageListener.onMessageReceived(MBaaS.context, from, data);
+                }
+
+                if (MBaaS.hideNotifications || isHidden) {
+                    break;
+                } else {
+                    NotificationBuilder nBuilder = new NotificationBuilder(MBaaS.context, data);
+                    nBuilder.notifyPush();
                 }
             }
-
-            JSONNotificationBuilder nBuilder = new JSONNotificationBuilder(MBaaS.context, nc);
-            nBuilder.notifyPushAndDeliver();
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
         }
+
+        if(data != null)
+            PrefUtil.putString(MBaaS.context, PrefUtil.LAST_PUSH_RECEIVED, data.toString());
+
+        return true;
+    }
+
+    public Bundle getBundle(JSONObject message) {
+        Bundle bundle = new Bundle();
+        try {
+            bundle.putString(AppConstants.PN_ID, message.getString(AppConstants.PN_ID));
+            bundle.putString(AppConstants.PN_SENT_ID, message.getString(AppConstants.PN_SENT_ID));
+            bundle.putString(AppConstants.PN_TITLE, message.getString(AppConstants.PN_TITLE));
+            bundle.putString(AppConstants.PN_BODY, message.getString(AppConstants.PN_BODY));
+            bundle.putString(AppConstants.PN_TICKER, message.getString(AppConstants.PN_TICKER));
+            bundle.putString(AppConstants.PN_SUMMARY, message.getString(AppConstants.PN_SUMMARY));
+            bundle.putString(AppConstants.PN_BUTTONS,
+                    message.getString(AppConstants.PN_BUTTONS).toString());
+            bundle.putString(AppConstants.PN_IMAGES,
+                    message.getString(AppConstants.PN_IMAGES).toString());
+            bundle.putString(AppConstants.PN_IS_HIDDEN,
+                    message.getString(AppConstants.PN_IS_HIDDEN));
+            bundle.putString(AppConstants.PN_IS_SILENT,
+                    message.getString(AppConstants.PN_IS_SILENT));
+            bundle.putString(AppConstants.PN_CUSTOM_DATA,
+                    message.getString(AppConstants.PN_CUSTOM_DATA));
+            bundle.putString(AppConstants.PN_ACTION_TYPE,
+                    message.getString(AppConstants.PN_ACTION_TYPE));
+            bundle.putString(AppConstants.PN_ACTION_URL,
+                    message.getString(AppConstants.PN_ACTION_URL));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return bundle;
     }
 }

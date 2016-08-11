@@ -9,6 +9,7 @@ public interface AppConstants {
     String GCM_DELIVER_API   = "delivery";
     String GCM_BULK_DELIVER_API   = "BulkDelivery";
     String GCM_LOCATIONS_API = "locations";
+    String GCM_DELETED_API   = "GetDeletedPush";
 
     String MBAAS_BASE_URL = "http://mbaas.ir/";
 
