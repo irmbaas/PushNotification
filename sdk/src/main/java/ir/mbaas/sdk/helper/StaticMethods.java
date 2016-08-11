@@ -32,14 +32,15 @@ public class StaticMethods {
     static private final String TAG = "StaticMethods";
 
     public static String getSenderId(Context ctx) {
-        String senderId = "";
-        Bundle bundle = getMetaData(ctx);
+        try {
+            Bundle bundle = getMetaData(ctx);
 
-        if(bundle == null)
-            return senderId;
-
-        senderId = bundle.getString(ctx.getResources().getString(R.string.push_metadata));
-        return senderId.substring(senderId.lastIndexOf("_") + 1);
+            String senderId = bundle.getString(ctx.getResources().getString(R.string.push_metadata));
+            return senderId.substring(senderId.lastIndexOf("_") + 1);
+        } catch (Exception exc) {
+            throw new RuntimeException("No MBaaS token is provided," +
+                    " please check AndroidManifest.xml.");
+        }
     }
 
     public static String getAppKey(Context ctx) {

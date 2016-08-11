@@ -67,8 +67,6 @@ public class DeletedPushNotifications extends BaseAsyncRequest {
 
         try {
             JSONArray messages = jsonObject.getJSONArray("Messages");
-            String from = "967440107484";
-
             int length = messages.length();
 
             if(length == 0)
@@ -81,12 +79,10 @@ public class DeletedPushNotifications extends BaseAsyncRequest {
                 boolean isHidden = hiddenStr != null && hiddenStr.equalsIgnoreCase("true");
 
                 if (MBaaS.gcmMessageListener != null) {
-                    MBaaS.gcmMessageListener.onMessageReceived(MBaaS.context, from, data);
+                    MBaaS.gcmMessageListener.onMessageReceived(MBaaS.context, MBaaS.senderId, data);
                 }
 
-                if (MBaaS.hideNotifications || isHidden) {
-                    break;
-                } else {
+                if (!MBaaS.hideNotifications && !isHidden) {
                     NotificationBuilder nBuilder = new NotificationBuilder(MBaaS.context, data);
                     nBuilder.notifyPush();
                 }

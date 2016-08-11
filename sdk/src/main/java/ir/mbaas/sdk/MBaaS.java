@@ -26,6 +26,7 @@ public class MBaaS {
 
     public static DeviceInfo device;
     public static String appKey;
+    public static String senderId;
     public static Context context;
     public static MBaaSListener mBaaSListener;
     public static GcmMessageListener gcmMessageListener;
@@ -105,7 +106,7 @@ public class MBaaS {
         if (hasGooglePlayService) {
             InstanceIdHelper instanceIdHelper = new InstanceIdHelper(MBaaS.context);
 
-            String senderId = StaticMethods.getSenderId(MBaaS.context);
+            senderId = StaticMethods.getSenderId(MBaaS.context);
             instanceIdHelper.getToken(senderId, GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
         } else {
             if (MBaaS.gcmRegistrationListener != null) {
