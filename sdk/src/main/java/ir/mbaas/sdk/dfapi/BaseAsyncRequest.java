@@ -28,8 +28,8 @@ import ir.mbaas.sdk.helper.AppConstants;
  */
 public class BaseAsyncRequest extends AsyncTask<Void, Void, Boolean> {
 
-    protected int timeoutConnection = 9000;
-    protected int timeoutSocket = 15000;
+    protected int timeoutConnection = 20000;
+    protected int timeoutSocket = 30000;
 
     // service name, endpoint, verb and appName are needed for every call
     protected String serviceName; // eg files, db etc

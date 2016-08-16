@@ -44,8 +44,6 @@ public class Registration extends BaseAsyncRequest {
     @Override
     protected void doSetup() throws ApiException, JSONException {
         callerName = "registerRegID";
-        timeoutConnection = 20000;
-        timeoutSocket = 30000;
 
         serviceName = AppConstants.MBAAS_SERVICE;
         endPoint = AppConstants.GCM_REGISTER_API;

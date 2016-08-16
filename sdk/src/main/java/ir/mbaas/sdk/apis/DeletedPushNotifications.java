@@ -86,10 +86,14 @@ public class DeletedPushNotifications extends BaseAsyncRequest {
                     NotificationBuilder nBuilder = new NotificationBuilder(MBaaS.context, data);
                     nBuilder.notifyPush();
                 }
+
+                Thread.sleep(500);
             }
         } catch (JSONException e) {
             e.printStackTrace();
             return false;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
         if(data != null)
