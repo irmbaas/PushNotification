@@ -211,4 +211,10 @@ public class StaticMethods {
 
         return undeliveredPushes;
     }
+
+    public static void sendException(Exception exc, int priority) {
+        if (MBaaS.mBaaSListener != null) {
+            MBaaS.mBaaSListener.exception(MBaaS.context, exc, priority);
+        }
+    }
 }

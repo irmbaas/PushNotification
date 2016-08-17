@@ -32,4 +32,6 @@ public interface MBaaSListener {
      * @param mBaaSAppVersion   Last version data model on MBaaS.
      */
     void versionInfoAvailable(Context context, MBaaSAppVersion mBaaSAppVersion);
+
+    void exception(Context context, Exception exc, int priority);
 }

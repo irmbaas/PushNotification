@@ -1,6 +1,7 @@
 package ir.mbaas.sdk.apis;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,6 +12,7 @@ import ir.mbaas.sdk.dfapi.ApiException;
 import ir.mbaas.sdk.dfapi.BaseAsyncRequest;
 import ir.mbaas.sdk.helper.AppConstants;
 import ir.mbaas.sdk.helper.PrefUtil;
+import ir.mbaas.sdk.helper.StaticMethods;
 import ir.mbaas.sdk.logic.NotificationBuilder;
 
 /**
@@ -43,6 +45,7 @@ public class DeletedPushNotifications extends BaseAsyncRequest {
     @Override
     protected void onError(Exception e) {
         super.onError(e);
+        StaticMethods.sendException(e, Log.VERBOSE);
     }
 
     @Override
@@ -51,6 +54,7 @@ public class DeletedPushNotifications extends BaseAsyncRequest {
             jsonObject = new JSONObject(response);
         } catch (JSONException e) {
             e.printStackTrace();
+            StaticMethods.sendException(e, Log.VERBOSE);
         }
     }
 
@@ -91,9 +95,10 @@ public class DeletedPushNotifications extends BaseAsyncRequest {
             }
         } catch (JSONException e) {
             e.printStackTrace();
-            return false;
+            StaticMethods.sendException(e, Log.VERBOSE);
         } catch (InterruptedException e) {
             e.printStackTrace();
+            StaticMethods.sendException(e, Log.VERBOSE);
         }
 
         if(data != null)
@@ -127,6 +132,7 @@ public class DeletedPushNotifications extends BaseAsyncRequest {
                     message.getString(AppConstants.PN_ACTION_URL));
         } catch (JSONException e) {
             e.printStackTrace();
+            StaticMethods.sendException(e, Log.VERBOSE);
         }
 
         return bundle;
