@@ -11,9 +11,7 @@ import ir.mbaas.sdk.MBaaS;
 import ir.mbaas.sdk.dfapi.ApiException;
 import ir.mbaas.sdk.dfapi.BaseAsyncRequest;
 import ir.mbaas.sdk.helper.AppConstants;
-import ir.mbaas.sdk.helper.PrefUtil;
 import ir.mbaas.sdk.helper.StaticMethods;
-import ir.mbaas.sdk.logic.NotificationBuilder;
 
 /**
  * Created by Mehdi on 8/10/2016.
@@ -21,7 +19,7 @@ import ir.mbaas.sdk.logic.NotificationBuilder;
 public class DeletedPushNotifications extends BaseAsyncRequest {
     private String TAG = "DeletedPushNotifications";
     private String regId;
-    private JSONObject jsonObject;
+    private String response;
 
     public DeletedPushNotifications(String regId) {
         verb = "POST";
@@ -50,91 +48,45 @@ public class DeletedPushNotifications extends BaseAsyncRequest {
 
     @Override
     protected void processResponse(String response) {
-        try {
-            jsonObject = new JSONObject(response);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            StaticMethods.sendException(e, Log.VERBOSE);
-        }
+        this.response = response;
     }
 
     @Override
     protected void onCompletion(boolean success) {
-        if (success && jsonObject != null && generateNotification()) {
+        if (success && generateBulkNotifications()) {
             DeletedPushNotifications dpns = new DeletedPushNotifications(regId);
             dpns.execute();
         }
     }
 
-    private boolean generateNotification() {
-        Bundle data = null;
-
+    private boolean generateBulkNotifications() {
         try {
-            JSONArray messages = jsonObject.getJSONArray("Messages");
-            int length = messages.length();
-
-            if(length == 0)
+            if(response == null || response.isEmpty())
                 return false;
 
-            for(int idx = 0; idx < length; idx++) {
-                data = getBundle(messages.getJSONObject(idx));
+            JSONObject jsonObject = new JSONObject(response);
 
-                String hiddenStr = data.getString(AppConstants.PN_IS_HIDDEN);
-                boolean isHidden = hiddenStr != null && hiddenStr.equalsIgnoreCase("true");
+            if(jsonObject == null)
+                return false;
 
-                if (MBaaS.gcmMessageListener != null) {
-                    MBaaS.gcmMessageListener.onMessageReceived(MBaaS.context, MBaaS.senderId, data);
-                }
+            JSONArray messages = jsonObject.getJSONArray("Messages");
 
-                if (!MBaaS.hideNotifications && !isHidden) {
-                    NotificationBuilder nBuilder = new NotificationBuilder(MBaaS.context, data);
-                    nBuilder.notifyPush();
-                }
+            if (messages == null || messages.length() == 0)
+                return false;
 
-                Thread.sleep(500);
+            if (MBaaS.gcmMessageListener != null) {
+                MBaaS.gcmMessageListener.onDeletedMessagesReceived(
+                        MBaaS.context, MBaaS.senderId, messages);
             }
+
         } catch (JSONException e) {
             e.printStackTrace();
             StaticMethods.sendException(e, Log.VERBOSE);
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             StaticMethods.sendException(e, Log.VERBOSE);
         }
-
-        if(data != null)
-            PrefUtil.putString(MBaaS.context, PrefUtil.LAST_PUSH_RECEIVED, data.toString());
 
         return true;
-    }
-
-    public Bundle getBundle(JSONObject message) {
-        Bundle bundle = new Bundle();
-        try {
-            bundle.putString(AppConstants.PN_ID, message.getString(AppConstants.PN_ID));
-            bundle.putString(AppConstants.PN_SENT_ID, message.getString(AppConstants.PN_SENT_ID));
-            bundle.putString(AppConstants.PN_TITLE, message.getString(AppConstants.PN_TITLE));
-            bundle.putString(AppConstants.PN_BODY, message.getString(AppConstants.PN_BODY));
-            bundle.putString(AppConstants.PN_TICKER, message.getString(AppConstants.PN_TICKER));
-            bundle.putString(AppConstants.PN_SUMMARY, message.getString(AppConstants.PN_SUMMARY));
-            bundle.putString(AppConstants.PN_BUTTONS,
-                    message.getString(AppConstants.PN_BUTTONS).toString());
-            bundle.putString(AppConstants.PN_IMAGES,
-                    message.getString(AppConstants.PN_IMAGES).toString());
-            bundle.putString(AppConstants.PN_IS_HIDDEN,
-                    message.getString(AppConstants.PN_IS_HIDDEN));
-            bundle.putString(AppConstants.PN_IS_SILENT,
-                    message.getString(AppConstants.PN_IS_SILENT));
-            bundle.putString(AppConstants.PN_CUSTOM_DATA,
-                    message.getString(AppConstants.PN_CUSTOM_DATA));
-            bundle.putString(AppConstants.PN_ACTION_TYPE,
-                    message.getString(AppConstants.PN_ACTION_TYPE));
-            bundle.putString(AppConstants.PN_ACTION_URL,
-                    message.getString(AppConstants.PN_ACTION_URL));
-        } catch (JSONException e) {
-            e.printStackTrace();
-            StaticMethods.sendException(e, Log.VERBOSE);
-        }
-
-        return bundle;
     }
 }

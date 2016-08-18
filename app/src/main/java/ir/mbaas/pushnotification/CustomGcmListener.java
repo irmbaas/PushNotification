@@ -6,6 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
+
+import org.json.JSONArray;
 
 import java.util.Random;
 
@@ -22,6 +25,11 @@ public class CustomGcmListener implements GcmMessageListener, GcmRegistrationLis
     @Override
     public void onMessageReceived(Context context, String from, Bundle data) {
         showCustomNotification(context, data);
+    }
+
+    @Override
+    public void onDeletedMessagesReceived(Context context, String from, JSONArray messages) {
+        Log.d("CustomGcmListener", "onDeletedMessagesReceived is called.");
     }
 
     public void showCustomNotification(Context context, Bundle data) {

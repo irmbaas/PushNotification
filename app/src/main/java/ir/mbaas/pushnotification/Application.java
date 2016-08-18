@@ -21,6 +21,6 @@ public class Application extends android.app.Application {
         CustomGcmListener customGcmListener = new CustomGcmListener();
         CustomMBaaSListener customMBaaSListener = new CustomMBaaSListener();
 
-        MBaaS.init(this, null, null, null, false);
+        MBaaS.init(this, customGcmListener, null, null, false);
     }
 }
