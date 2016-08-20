@@ -12,6 +12,7 @@ import org.json.JSONArray;
 
 import java.util.Random;
 
+import ir.mbaas.sdk.apis.DeletedPushNotifications;
 import ir.mbaas.sdk.helper.AppConstants;
 import ir.mbaas.sdk.helper.CustomDialogs;
 import ir.mbaas.sdk.listeners.GcmMessageListener;
@@ -21,6 +22,7 @@ import ir.mbaas.sdk.listeners.GcmRegistrationListener;
  * Created by Mahdi on 5/30/2016.
  */
 public class CustomGcmListener implements GcmMessageListener, GcmRegistrationListener {
+    private int retryCount = 0;
 
     @Override
     public void onMessageReceived(Context context, String from, Bundle data) {
@@ -30,6 +32,18 @@ public class CustomGcmListener implements GcmMessageListener, GcmRegistrationLis
     @Override
     public void onDeletedMessagesReceived(Context context, String from, JSONArray messages) {
         Log.d("CustomGcmListener", "onDeletedMessagesReceived is called.");
+        retryCount = 0;
+    }
+
+    @Override
+    public void onReceivingDeletedMessagesFailed(Context context, Exception exc) {
+        Log.d("CustomGcmListener", "onReceivingDeletedMessagesFailed is called.");
+        if (retryCount++ < 3) {
+            DeletedPushNotifications dpns = new DeletedPushNotifications("");
+            dpns.execute();
+        } else {
+            retryCount = 0;
+        }
     }
 
     public void showCustomNotification(Context context, Bundle data) {

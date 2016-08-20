@@ -192,11 +192,14 @@ public class StaticMethods {
         switch (fds) {
             case DELETE:
                 if (undeliveredPushes.equalsIgnoreCase(customStr)) {
-                    PrefUtil.putString(ctx, PrefUtil.UNDELIVERED_PUSHES, "");
+                    undeliveredPushes = "";
                 } else {
-                    undeliveredPushes.replaceFirst(customStr + separator, "");
+                    undeliveredPushes = undeliveredPushes.replace(customStr, "");
+                    undeliveredPushes = undeliveredPushes.startsWith(",") ?
+                            undeliveredPushes.substring(1) : undeliveredPushes;
                 }
 
+                PrefUtil.putString(ctx, PrefUtil.UNDELIVERED_PUSHES, undeliveredPushes);
                 return undeliveredPushes;
             case ADD:
                 //if(undeliveredPushes.length() > 2048)

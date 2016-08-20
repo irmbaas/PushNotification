@@ -28,4 +28,12 @@ public interface GcmMessageListener {
      * @param data    A JSONArray containing messages data as key/value pairs.
      */
     void onDeletedMessagesReceived(Context context, String from, JSONArray messages);
+
+    /**
+     * Called when a receiving deleted GCM messages are failed.
+     *
+     * @param context An instance of the application {@link Context}
+     * @param exc     Exception that is thrown
+     */
+    void onReceivingDeletedMessagesFailed(Context context, Exception exc);
 }

@@ -1,6 +1,5 @@
 package ir.mbaas.sdk.apis;
 
-import android.os.Bundle;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -20,6 +19,7 @@ public class DeletedPushNotifications extends BaseAsyncRequest {
     private String TAG = "DeletedPushNotifications";
     private String regId;
     private String response;
+    private Exception exception;
 
     public DeletedPushNotifications(String regId) {
         verb = "POST";
@@ -43,6 +43,7 @@ public class DeletedPushNotifications extends BaseAsyncRequest {
     @Override
     protected void onError(Exception e) {
         super.onError(e);
+        this.exception = e;
         StaticMethods.sendException(e, Log.VERBOSE);
     }
 
@@ -56,6 +57,10 @@ public class DeletedPushNotifications extends BaseAsyncRequest {
         if (success && generateBulkNotifications()) {
             DeletedPushNotifications dpns = new DeletedPushNotifications(regId);
             dpns.execute();
+        } else if (!success) {
+            if (MBaaS.gcmMessageListener != null) {
+                MBaaS.gcmMessageListener.onReceivingDeletedMessagesFailed(MBaaS.context, exception);
+            }
         }
     }
 
