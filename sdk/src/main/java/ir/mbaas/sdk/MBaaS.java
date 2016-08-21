@@ -85,13 +85,15 @@ public class MBaaS {
         MBaaS.hideNotifications = hideNotifications;
         MBaaS.mBaaSListener = mBaaSListener;
 
-        if (_instance == null) {
-            _instance = new MBaaS(app);
+        synchronized (MBaaS.class) {
+            if (_instance == null) {
+                _instance = new MBaaS(app);
 
-            try {
-                register();
-            } catch (MBaaSNotInitializedException e) {
-                e.printStackTrace();
+                try {
+                    register();
+                } catch (MBaaSNotInitializedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

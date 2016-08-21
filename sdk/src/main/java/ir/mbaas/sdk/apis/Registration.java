@@ -117,7 +117,7 @@ public class Registration extends BaseAsyncRequest {
                 mBaaSResponse.appVersion.versionName, appName);
         String update  = context.getResources().getString(R.string.app_update_btn);
         String later   = context.getResources().getString(R.string.app_later_btn);
-        int notificationId = IdGenerator.generateIntegerId();
+        int notificationId = 86992723; //IdGenerator.generateIntegerId();
 
         // Update Button Intent
         Intent uIntent = UpdateActions.createUpdateButtonAction(UpdateActions.UpdateActionType.Now,
