@@ -19,12 +19,18 @@
     <string name="phone_number">شماره تلفن</string>
     <string name="version">نسخه %1$s</string>
 
+    <string name="phone_state">وضعیت تلفن</string>
+    <string name="write_external_storage">نوشتن در حافظه خارجی</string>
+    <string name="grant_access">جهت استفاده از این برنامه باید مجوز دسترسی به %1$s را بدهید.</string>
+
     <string name="mbaas_successfull_registration">شناسه در MBaaS ثبت شد.</string>
     <string name="mbaas_registration_failed">شناسه در MBaaS ثبت نشد.</string>
     <string name="mbaas_successfull_gcm_registration">شناسه از گوگل دریافت شد.</string>
     <string name="mbaas_successfull_new_gcm_registration">شناسه جدید از گوگل دریافت شد.</string>
     <string name="mbaas_google_play_service_unavailable">Google play service is unavailable.</string>
     <string name="test_news_api">تست API اخبار</string>
+    <string name="ok">تائید</string>
+    <string name="cancel">انصراف</string>
 
     <string-array name="rss_group">
         <item>انتخاب کنید</item>
