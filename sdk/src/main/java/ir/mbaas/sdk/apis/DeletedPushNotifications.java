@@ -1,5 +1,7 @@
 package ir.mbaas.sdk.apis;
 
+import android.os.AsyncTask;
+import android.os.Build;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -56,7 +58,11 @@ public class DeletedPushNotifications extends BaseAsyncRequest {
     protected void onCompletion(boolean success) {
         if (success && generateBulkNotifications()) {
             DeletedPushNotifications dpns = new DeletedPushNotifications(regId);
-            dpns.execute();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                dpns.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            } else {
+                dpns.execute();
+            }
         } else if (!success) {
             if (MBaaS.gcmMessageListener != null) {
                 MBaaS.gcmMessageListener.onReceivingDeletedMessagesFailed(MBaaS.context, exception);

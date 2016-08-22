@@ -6,6 +6,8 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.NotificationCompat;
@@ -164,7 +166,11 @@ public class StaticMethods {
             return false;
 
         Delivery delivery = new Delivery(MBaaS.context, sentId, id);
-        delivery.execute();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            delivery.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } else {
+            delivery.execute();
+        }
 
         return true;
     }

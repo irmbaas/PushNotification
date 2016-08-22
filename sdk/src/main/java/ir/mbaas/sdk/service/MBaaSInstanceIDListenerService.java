@@ -1,5 +1,8 @@
 package ir.mbaas.sdk.service;
 
+import android.os.AsyncTask;
+import android.os.Build;
+
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 import com.google.android.gms.iid.InstanceIDListenerService;
@@ -32,7 +35,11 @@ public class MBaaSInstanceIDListenerService extends InstanceIDListenerService {
             PrefUtil.putString(MBaaS.context, PrefUtil.REGISTRATION_ID, token);
             Registration regApi = new Registration(MBaaS.context, token, MBaaS.device,
                     MBaaS.hasGooglePlayService);
-            regApi.execute();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                regApi.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            } else {
+                regApi.execute();
+            }
             //send token to app server
         } catch (IOException e) {
             e.printStackTrace();

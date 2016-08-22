@@ -3,6 +3,8 @@ package ir.mbaas.sdk;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
+import android.os.Build;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
@@ -117,7 +119,11 @@ public class MBaaS {
 
             Registration regApi = new Registration(MBaaS.context, "", MBaaS.device,
                     hasGooglePlayService);
-            regApi.execute();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                regApi.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            } else {
+                regApi.execute();
+            }
         }
     }
 
@@ -127,6 +133,10 @@ public class MBaaS {
             throw new MBaaSNotInitializedException();
 
         UpdateInfo uInfo = new UpdateInfo(context, device, user);
-        uInfo.execute();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            uInfo.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } else {
+            uInfo.execute();
+        }
     }
 }

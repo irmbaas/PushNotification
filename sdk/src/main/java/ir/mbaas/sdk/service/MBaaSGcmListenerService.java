@@ -1,5 +1,7 @@
 package ir.mbaas.sdk.service;
 
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.google.android.gms.gcm.GcmListenerService;
@@ -44,6 +46,10 @@ public class MBaaSGcmListenerService extends GcmListenerService {
         String regId = PrefUtil.getString(MBaaS.context, PrefUtil.REGISTRATION_ID);
 
         DeletedPushNotifications dpns = new DeletedPushNotifications(regId);
-        dpns.execute();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            dpns.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } else {
+            dpns.execute();
+        }
     }
 }
