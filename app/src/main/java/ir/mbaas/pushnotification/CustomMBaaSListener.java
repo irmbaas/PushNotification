@@ -1,11 +1,10 @@
 package ir.mbaas.pushnotification;
 
 import android.content.Context;
-import android.util.Log;
 
 import org.acra.ACRA;
 
-import ir.mbaas.sdk.helper.CustomDialogs;
+import ir.mbaas.pushnotification.helpers.CustomDialogs;
 import ir.mbaas.sdk.listeners.MBaaSListener;
 import ir.mbaas.sdk.models.MBaaSAppVersion;
 

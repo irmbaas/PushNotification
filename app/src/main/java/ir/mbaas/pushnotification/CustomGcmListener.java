@@ -12,9 +12,9 @@ import org.json.JSONArray;
 
 import java.util.Random;
 
+import ir.mbaas.pushnotification.helpers.CustomDialogs;
 import ir.mbaas.sdk.apis.DeletedPushNotifications;
 import ir.mbaas.sdk.helper.AppConstants;
-import ir.mbaas.sdk.helper.CustomDialogs;
 import ir.mbaas.sdk.listeners.GcmMessageListener;
 import ir.mbaas.sdk.listeners.GcmRegistrationListener;
 
