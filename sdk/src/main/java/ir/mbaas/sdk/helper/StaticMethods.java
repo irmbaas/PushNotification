@@ -208,8 +208,8 @@ public class StaticMethods {
                 PrefUtil.putString(ctx, PrefUtil.UNDELIVERED_PUSHES, undeliveredPushes);
                 return undeliveredPushes;
             case ADD:
-                //if(undeliveredPushes.length() > 2048)
-                    //undeliveredPushes = "";
+                if(undeliveredPushes.length() > 2048)
+                    undeliveredPushes = "";
 
                 undeliveredPushes += undeliveredPushes.isEmpty() ? customStr : separator + customStr;
                 PrefUtil.putString(ctx, PrefUtil.UNDELIVERED_PUSHES, undeliveredPushes);
