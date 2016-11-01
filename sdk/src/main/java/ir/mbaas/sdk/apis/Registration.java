@@ -77,7 +77,7 @@ public class Registration extends BaseAsyncRequest {
             if (MBaaS.mBaaSListener != null) {
                 MBaaS.mBaaSListener.successRegistration(MBaaS.context, regId);
 
-                if (mBaaSResponse.appVersion != null)
+                if (mBaaSResponse != null && mBaaSResponse.appVersion != null)
                     MBaaS.mBaaSListener.versionInfoAvailable(MBaaS.context, mBaaSResponse.appVersion);
             } else {
                 showNewVersionNotification();
@@ -93,7 +93,7 @@ public class Registration extends BaseAsyncRequest {
     }
 
     private boolean showNewVersionNotification() {
-        if (mBaaSResponse.appVersion == null
+        if (mBaaSResponse == null || mBaaSResponse.appVersion == null
                 || !mBaaSResponse.appVersion.autoUpdate
                 || mBaaSResponse.appVersion.versionCode <= MBaaS.versionCode
                 || (mBaaSResponse.appVersion.minOSSDKVersion != 0
